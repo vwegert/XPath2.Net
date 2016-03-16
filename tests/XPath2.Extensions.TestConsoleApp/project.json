@@ -1,0 +1,26 @@
+﻿{
+    "version": "1.0.0-*",
+    "description": "XPath2.Extensions.TestConsoleApp",
+    "authors": [ "Stef Heyenrath" ],
+    "tags": [ "" ],
+    "projectUrl": "",
+    "licenseUrl": "",
+
+    "compilationOptions": {
+        "emitEntryPoint": true
+    },
+
+    "dependencies": {
+        "XPath2.Extensions": "1.0.0-*"
+    },
+
+    "commands": {
+        "XPath2.Extensions.TestConsoleApp": "XPath2.Extensions.TestConsoleApp"
+    },
+
+    "frameworks": {
+        "dnx451": {
+            
+        }
+    }
+}
