@@ -18,7 +18,7 @@ using Wmhelp.XPath2.Value;
 
 namespace Wmhelp.XPath2
 {
-    static class CoreFuncs
+    public static class CoreFuncs
     {
         public static readonly object True = true;
         public static readonly object False = false;
@@ -26,7 +26,7 @@ namespace Wmhelp.XPath2
         static CoreFuncs()
         {
             ValueProxy.AddFactory(
-                new ValueProxyFactory[] { 
+                new ValueProxyFactory[] {
                     new Proxy.ShortFactory(),
                     new Proxy.IntFactory(),
                     new Proxy.LongFactory(),
@@ -52,7 +52,7 @@ namespace Wmhelp.XPath2
 
         public static object OperatorEq(object arg1, object arg2)
         {
-            if (Object.ReferenceEquals(arg1, arg2))
+            if (object.ReferenceEquals(arg1, arg2))
                 return True;
             if (arg1 == null)
                 arg1 = False;
@@ -82,7 +82,7 @@ namespace Wmhelp.XPath2
 
         public static object OperatorGt(object arg1, object arg2)
         {
-            if (Object.ReferenceEquals(arg1, arg2))
+            if (object.ReferenceEquals(arg1, arg2))
                 return False;
             if (arg1 == null)
                 arg1 = False;
@@ -114,7 +114,7 @@ namespace Wmhelp.XPath2
                     new SequenceType(arg1.GetType(), XmlTypeCardinality.One),
                     new SequenceType(arg2.GetType(), XmlTypeCardinality.One));
             return False;
-        }      
+        }
 
         internal static IEnumerable<XPathItem> RootIterator(XPath2NodeIterator iter)
         {
@@ -418,13 +418,13 @@ namespace Wmhelp.XPath2
                                     int n;
                                     if (entity.StartsWith("#x"))
                                     {
-                                        if (entity.Length > 2 && Int32.TryParse(entity.Substring(2, entity.Length - 2),
+                                        if (entity.Length > 2 && int.TryParse(entity.Substring(2, entity.Length - 2),
                                                 System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture, out n))
                                             entity_value = Convert.ToString(Convert.ToChar(n));
                                     }
                                     else
                                     {
-                                        if (entity.Length > 1 && Int32.TryParse(entity.Substring(1, entity.Length - 1), out n))
+                                        if (entity.Length > 1 && int.TryParse(entity.Substring(1, entity.Length - 1), out n))
                                             entity_value = Convert.ToString(Convert.ToChar(n));
                                     }
                                 }
@@ -448,7 +448,7 @@ namespace Wmhelp.XPath2
                                 }
                                 else
                                     if (raiseException)
-                                        throw new XPath2Exception("XPST0003", Properties.Resources.XPST0003, String.Format("Entity reference '&{0};' was not recognized.", entity_value));
+                                    throw new XPath2Exception("XPST0003", Properties.Resources.XPST0003, string.Format("Entity reference '&{0};' was not recognized.", entity_value));
                             }
                         if (!process)
                         {
@@ -504,11 +504,11 @@ namespace Wmhelp.XPath2
                     case XmlTypeCode.String:
                     case XmlTypeCode.AnyUri:
                     case XmlTypeCode.UntypedAtomic:
-                        return item.Value != String.Empty;
+                        return item.Value != string.Empty;
 
                     case XmlTypeCode.Float:
                     case XmlTypeCode.Double:
-                        return !Double.IsNaN(item.ValueAsDouble) && item.ValueAsDouble != 0.0;
+                        return !double.IsNaN(item.ValueAsDouble) && item.ValueAsDouble != 0.0;
 
                     case XmlTypeCode.Decimal:
                     case XmlTypeCode.Integer:
@@ -524,7 +524,7 @@ namespace Wmhelp.XPath2
                     case XmlTypeCode.NonNegativeInteger:
                     case XmlTypeCode.UnsignedLong:
                     case XmlTypeCode.PositiveInteger:
-                        return (decimal)(item.ValueAs(typeof(Decimal))) != 0;
+                        return (decimal)(item.ValueAs(typeof(decimal))) != 0;
 
                     default:
                         throw new XPath2Exception("FORG0006", Properties.Resources.FORG0006, "fn:boolean()",
@@ -545,16 +545,16 @@ namespace Wmhelp.XPath2
                         return Convert.ToBoolean(value, CultureInfo.InvariantCulture);
 
                     case TypeCode.String:
-                        return Convert.ToString(value, CultureInfo.InvariantCulture) != String.Empty;
+                        return Convert.ToString(value, CultureInfo.InvariantCulture) != string.Empty;
 
                     case TypeCode.Single:
                     case TypeCode.Double:
                         return Convert.ToDouble(value, CultureInfo.InvariantCulture) != 0.0 &&
-                            !Double.IsNaN(Convert.ToDouble(value, CultureInfo.InvariantCulture));
+                            !double.IsNaN(Convert.ToDouble(value, CultureInfo.InvariantCulture));
                     default:
                         {
                             if (value is AnyUriValue || value is UntypedAtomic)
-                                return value.ToString() != String.Empty;
+                                return value.ToString() != string.Empty;
                             if (ValueProxy.IsNumeric(value.GetType()))
                                 return Convert.ToDecimal(value) != 0;
                             throw new XPath2Exception("FORG0006", Properties.Resources.FORG0006, "fn:boolean()",
@@ -567,7 +567,7 @@ namespace Wmhelp.XPath2
         public static string NormalizeSpace(object item)
         {
             if (item == Undefined.Value)
-                return String.Empty;
+                return string.Empty;
             string value = (string)item;
             // Copyright (c) 2006 Microsoft Corporation.  All rights reserved.
             // Original source is XsltFunctions.cs (System.Xml.Xsl.Runtime)
@@ -921,7 +921,7 @@ namespace Wmhelp.XPath2
                 if (value == Undefined.Value)
                 {
                     if (destType.TypeCode == XmlTypeCode.String)
-                        return String.Empty;
+                        return string.Empty;
                     return value;
                 }
             }
@@ -932,9 +932,9 @@ namespace Wmhelp.XPath2
         }
 
         public static object InstanceOf(XPath2Context context, object value, SequenceType destType)
-        {            
-            if (value == Undefined.Value)            
-                return destType == SequenceType.Void || 
+        {
+            if (value == Undefined.Value)
+                return destType == SequenceType.Void ||
                     destType.Cardinality == XmlTypeCardinality.ZeroOrOne ||
                     destType.Cardinality == XmlTypeCardinality.ZeroOrMore;
             if (value == null)
@@ -994,7 +994,7 @@ namespace Wmhelp.XPath2
             XPathNavigator nav1 = (XPathNavigator)a;
             XPathNavigator nav2 = (XPathNavigator)b;
             XmlNodeOrder res = nav1.ComparePosition(nav2);
-            if(res != XmlNodeOrder.Unknown)
+            if (res != XmlNodeOrder.Unknown)
                 return res == XmlNodeOrder.Same ? True : False;
             return nav2.ComparePosition(nav1) == XmlNodeOrder.Same ? True : False;
         }
@@ -1025,20 +1025,20 @@ namespace Wmhelp.XPath2
                 if (ValueProxy.IsNumeric(y.GetType()))
                     x = Convert.ToDouble(x, CultureInfo.InvariantCulture);
                 else
-                    if (y is String)
-                        x = x.ToString();
-                    else if (!(y is UntypedAtomic))
-                        x = item1.ChangeType(new SequenceType(item2.GetSchemaType().TypeCode), context).GetTypedValue();
+                    if (y is string)
+                    x = x.ToString();
+                else if (!(y is UntypedAtomic))
+                    x = item1.ChangeType(new SequenceType(item2.GetSchemaType().TypeCode), context).GetTypedValue();
             }
             if (y is UntypedAtomic)
             {
                 if (ValueProxy.IsNumeric(x.GetType()))
                     y = Convert.ToDouble(y, CultureInfo.InvariantCulture);
                 else
-                    if (x is String)
-                        y = y.ToString();
-                    else if (!(x is UntypedAtomic))
-                        y = item2.ChangeType(new SequenceType(item1.GetSchemaType().TypeCode), context).GetTypedValue();
+                    if (x is string)
+                    y = y.ToString();
+                else if (!(x is UntypedAtomic))
+                    y = item2.ChangeType(new SequenceType(item1.GetSchemaType().TypeCode), context).GetTypedValue();
             }
         }
 
@@ -1164,7 +1164,7 @@ namespace Wmhelp.XPath2
             if (lo is UntypedAtomic)
             {
                 int i;
-                if (!Int32.TryParse(lo.ToString(), out i))
+                if (!int.TryParse(lo.ToString(), out i))
                     throw new XPath2Exception("XPTY0004", Properties.Resources.XPTY0004,
                         new SequenceType(lo.GetType(), XmlTypeCardinality.One), "xs:integer in first argument op:range");
                 lo = i;
@@ -1175,7 +1175,7 @@ namespace Wmhelp.XPath2
             if (high is UntypedAtomic)
             {
                 int i;
-                if (!Int32.TryParse(high.ToString(), out i))
+                if (!int.TryParse(high.ToString(), out i))
                     throw new XPath2Exception("XPTY0004", Properties.Resources.XPTY0004,
                         new SequenceType(lo.GetType(), XmlTypeCardinality.One), "xs:integer in second argument op:range");
                 high = i;
@@ -1320,13 +1320,13 @@ namespace Wmhelp.XPath2
                 case TypeCode.Decimal:
                 case TypeCode.Single:
                 case TypeCode.Double:
-                    return XPath2ResultType.Number;               
+                    return XPath2ResultType.Number;
 
                 default:
                     return XPath2ResultType.Other;
             }
         }
-        
+
         public static object GetRoot(IContextProvider provider)
         {
             return GetRoot(NodeValue(ContextNode(provider)));
@@ -1352,9 +1352,19 @@ namespace Wmhelp.XPath2
             return False;
         }
 
-        public static object CastString(XPath2Context context, object value)
+        public static object CastToStringOptional(XPath2Context context, object value)
         {
-            return CastArg(context, Atomize(value), SequenceType.StringX);
+            return CastArg(context, Atomize(value), SequenceType.StringOptional);
+        }
+
+        public static string CastToStringExactOne(XPath2Context context, object value, bool atomize = true)
+        {
+            return (string)CastArg(context, atomize ? Atomize(value) : value, SequenceType.String);
+        }
+
+        public static int CastToInt(XPath2Context context, object value)
+        {
+            return (int)CastArg(context, value, SequenceType.Int);
         }
 
         public static double Number(XPath2Context context, IContextProvider provider)
@@ -1365,18 +1375,19 @@ namespace Wmhelp.XPath2
         public static double Number(XPath2Context context, object value)
         {
             if (value == Undefined.Value || !(value is IConvertible))
-                return Double.NaN;
+                return double.NaN;
+
             try
             {
                 return (double)Convert.ChangeType(value, TypeCode.Double, context.RunningContext.DefaultCulture);
             }
             catch (FormatException)
             {
-                return Double.NaN;
+                return double.NaN;
             }
             catch (InvalidCastException)
             {
-                return Double.NaN;
+                return double.NaN;
             }
         }
 
@@ -1441,33 +1452,38 @@ namespace Wmhelp.XPath2
         public static string StringValue(XPath2Context context, object value)
         {
             if (value == Undefined.Value)
-                return "";
+                return string.Empty;
+
             XPath2NodeIterator iter = value as XPath2NodeIterator;
             if (iter != null)
             {
                 iter = iter.Clone();
                 if (!iter.MoveNext())
-                    return "";
+                    return string.Empty;
+
                 string res = iter.Current.Value;
                 if (iter.MoveNext())
                     throw new XPath2Exception("XPDY0050", Properties.Resources.MoreThanOneItem);
+
                 return res;
             }
+
             XPathItem item = value as XPathItem;
             if (item != null)
                 return item.Value;
+
             return XPath2Convert.ToString(value);
         }
 
-        public static bool TryProcessTypeName(XPath2Context context, String qname, bool raise, out XmlSchemaObject schemaObject)
-        {           
+        public static bool TryProcessTypeName(XPath2Context context, string qname, bool raise, out XmlSchemaObject schemaObject)
+        {
             XmlQualifiedName qualifiedName =
-                (XmlQualifiedName)QNameParser.Parse(qname, context.NamespaceManager, 
+                (XmlQualifiedName)QNameParser.Parse(qname, context.NamespaceManager,
                     context.NamespaceManager.DefaultNamespace, context.NameTable);
-            return TryProcessTypeName(context, qualifiedName, raise, out schemaObject); 
+            return TryProcessTypeName(context, qualifiedName, raise, out schemaObject);
         }
 
-        public static bool TryProcessTypeName(XPath2Context context, XmlQualifiedName qualifiedName, 
+        public static bool TryProcessTypeName(XPath2Context context, XmlQualifiedName qualifiedName,
             bool raise, out XmlSchemaObject schemaObject)
         {
             schemaObject = null;

@@ -5,9 +5,7 @@
 // All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.Text;
-
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.XPath;
@@ -30,7 +28,7 @@ namespace Wmhelp.XPath2
 
         public XmlQualifiedNameTest NameTest { get; set; }
 
-        public XmlTypeCardinality Cardinality { get; set;  }
+        public XmlTypeCardinality Cardinality { get; set; }
 
         public XmlSchemaType SchemaType { get; set; }
 
@@ -209,8 +207,8 @@ namespace Wmhelp.XPath2
                 else
                     return ItemType;
             }
-        }        
-        
+        }
+
         public bool IsNumeric
         {
             get
@@ -304,7 +302,7 @@ namespace Wmhelp.XPath2
                         {
                             if (nav.NodeType == XPathNodeType.Root)
                             {
-                                XPathNavigator cur = nav.Clone();                                
+                                XPathNavigator cur = nav.Clone();
                                 if (SchemaElement == null)
                                 {
                                     if (cur.MoveToChild(XPathNodeType.Element) && MatchName(cur, context))
@@ -374,7 +372,7 @@ namespace Wmhelp.XPath2
                             {
                                 if (MatchName(nav, context))
                                 {
-                                    if (SchemaType == null || SchemaType == XmlSchema.UntypedAtomic) 
+                                    if (SchemaType == null || SchemaType == XmlSchema.UntypedAtomic)
                                         return true;
                                     IXmlSchemaInfo schemaInfo = nav.SchemaInfo;
                                     if (schemaInfo == null)
@@ -417,7 +415,7 @@ namespace Wmhelp.XPath2
                             return nav.NodeType == XPathNodeType.Text ||
                                 nav.NodeType == XPathNodeType.SignificantWhitespace;
                     }
-                    break;                
+                    break;
 
                 case XmlTypeCode.PositiveInteger:
                     switch (item.GetSchemaType().TypeCode)
@@ -578,7 +576,7 @@ namespace Wmhelp.XPath2
                     }
                     else
                     {
-                        sb.Append("schema-element(");                        
+                        sb.Append("schema-element(");
                         sb.Append(SchemaElement.QualifiedName);
                     }
                     sb.Append(")");
@@ -1134,47 +1132,46 @@ namespace Wmhelp.XPath2
 
         public static SequenceType Create(string name)
         {
-            if (name == String.Empty ||
-                name == "empty-sequence()")
+            if (name == string.Empty || name == "empty-sequence()")
                 return null;
-            else
+
+            XmlTypeCardinality cardinality = XmlTypeCardinality.One;
+            if (name.EndsWith("?"))
             {
-                XmlTypeCardinality cardinality = XmlTypeCardinality.One;
-                if (name.EndsWith("?"))
-                {
-                    cardinality = XmlTypeCardinality.ZeroOrOne;
-                    name = name.Substring(1, name.Length - 1);
-                }
-                else if (name.EndsWith("+"))
-                {
-                    cardinality = XmlTypeCardinality.OneOrMore;
-                    name = name.Substring(1, name.Length - 1);
-                }
-                else if (name.EndsWith("*"))
-                {
-                    cardinality = XmlTypeCardinality.ZeroOrMore;
-                    name = name.Substring(1, name.Length - 1);
-                }
-                if (name.Equals("xs:AnyAtomicType"))
-                    return new SequenceType(XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.AnyAtomicType),
-                        cardinality, null);
-                else if (name.Equals("item()"))
-                    return new SequenceType(XmlTypeCode.Item, cardinality);
-                else if (name.Equals("node()"))
-                    return new SequenceType(XmlTypeCode.Node, cardinality);
-                else
-                {
-                    string prefix;
-                    string localName;
-                    QNameParser.Split(name, out prefix, out localName);
-                    if (prefix != "xs")
-                        throw new ArgumentException("name");
-                    XmlSchemaType schemaType = XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName(localName, XmlReservedNs.NsXs));
-                    if (schemaType == null)
-                        throw new ArgumentException("name");
-                    return new SequenceType(schemaType, cardinality, null);
-                }
+                cardinality = XmlTypeCardinality.ZeroOrOne;
+                name = name.Substring(1, name.Length - 1);
             }
+            else if (name.EndsWith("+"))
+            {
+                cardinality = XmlTypeCardinality.OneOrMore;
+                name = name.Substring(1, name.Length - 1);
+            }
+            else if (name.EndsWith("*"))
+            {
+                cardinality = XmlTypeCardinality.ZeroOrMore;
+                name = name.Substring(1, name.Length - 1);
+            }
+
+            if (name.Equals("xs:AnyAtomicType"))
+                return new SequenceType(XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.AnyAtomicType), cardinality, null);
+
+            if (name.Equals("item()"))
+                return new SequenceType(XmlTypeCode.Item, cardinality);
+
+            if (name.Equals("node()"))
+                return new SequenceType(XmlTypeCode.Node, cardinality);
+
+            string prefix;
+            string localName;
+            QNameParser.Split(name, out prefix, out localName);
+            if (prefix != "xs")
+                throw new ArgumentException("name");
+
+            XmlSchemaType schemaType = XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName(localName, XmlReservedNs.NsXs));
+            if (schemaType == null)
+                throw new ArgumentException("name");
+
+            return new SequenceType(schemaType, cardinality, null);
         }
 
         public static class XmlSchema
@@ -1207,7 +1204,7 @@ namespace Wmhelp.XPath2
 
         internal static SequenceType Void = new SequenceType(XmlTypeCode.None);
         internal static SequenceType Item = new SequenceType(XmlTypeCode.Item);
-        internal static SequenceType ItemS = new SequenceType(XmlTypeCode.Item, XmlTypeCardinality.ZeroOrMore);
+        internal static SequenceType Items = new SequenceType(XmlTypeCode.Item, XmlTypeCardinality.ZeroOrMore);
         internal static SequenceType Node = new SequenceType(XmlTypeCode.Node);
         internal static SequenceType ProcessingInstruction = new SequenceType(XmlTypeCode.ProcessingInstruction);
         internal static SequenceType Text = new SequenceType(XmlTypeCode.Text);
@@ -1218,14 +1215,16 @@ namespace Wmhelp.XPath2
 
         internal static SequenceType Boolean = new SequenceType(XmlTypeCode.Boolean);
         internal static SequenceType AnyAtomicType = new SequenceType(XmlTypeCode.AnyAtomicType);
-        internal static SequenceType AnyAtomicTypeO = new SequenceType(XmlTypeCode.AnyAtomicType, XmlTypeCardinality.ZeroOrOne);
+        internal static SequenceType AnyAtomicTypeOptional = new SequenceType(XmlTypeCode.AnyAtomicType, XmlTypeCardinality.ZeroOrOne);
         internal static SequenceType Double = new SequenceType(XmlTypeCode.Double);
 
         internal static SequenceType Date = new SequenceType(XmlTypeCode.Date);
         internal static SequenceType Time = new SequenceType(XmlTypeCode.Time);
         internal static SequenceType DateTime = new SequenceType(XmlTypeCode.DateTime);
 
-        internal static SequenceType StringX = new SequenceType(XmlTypeCode.String, XmlTypeCardinality.ZeroOrOne);
+        internal static SequenceType StringOptional = new SequenceType(XmlTypeCode.String, XmlTypeCardinality.ZeroOrOne);
+        internal static SequenceType String = new SequenceType(XmlTypeCode.String);
+
         internal static SequenceType Int = new SequenceType(XmlTypeCode.Int);
 
         #endregion

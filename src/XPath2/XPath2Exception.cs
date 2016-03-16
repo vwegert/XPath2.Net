@@ -7,28 +7,26 @@
 //        any later version.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.Serialization;
 
 namespace Wmhelp.XPath2
 {
-    public class XPath2Exception: Exception
+    public class XPath2Exception : Exception
     {
         public string ErrorCode { get; internal set; }
 
-		protected XPath2Exception (SerializationInfo info, StreamingContext context) : base (info, context) {}
+        protected XPath2Exception(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
-		public XPath2Exception (string message, Exception innerException) : base (message, innerException) {}
+        public XPath2Exception(string message, Exception innerException) : base(message, innerException) { }
 
-        internal XPath2Exception(string errorCode, string message) : base(message, null) 
+        public XPath2Exception(string errorCode, string message) : base(message, null)
         {
             ErrorCode = errorCode;
         }
 
-        internal XPath2Exception(string errorCode, string message, params object[] args) : base(String.Format(message, args), null) 
-        { 
-            ErrorCode = errorCode;  
+        public XPath2Exception(string errorCode, string message, params object[] args) : base(string.Format(message, args), null)
+        {
+            ErrorCode = errorCode;
         }
     }
 }

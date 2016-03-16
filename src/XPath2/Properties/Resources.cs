@@ -1,6 +1,6 @@
 namespace Wmhelp.XPath2.Properties
 {
-    internal static class Resources
+    public static class Resources
     {
         public static string BadCharRef = "Bad character ref constant &#{0}{1};";
         public static string BinaryOperatorNotDefined = "Operator {0}  is not defined for arguments of type {1} and {2}";
