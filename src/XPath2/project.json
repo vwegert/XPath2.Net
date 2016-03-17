@@ -6,6 +6,7 @@
     "tags": [ "XPath", "XPath2", "XPath2.0", "Xml" ],
     "projectUrl": "https://github.com/StefH/XPath2.Net",
     "licenseUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/license",
+    "releaseNotes": "initial version",
 
     "exclude": [
         "XPath2.cs.original"

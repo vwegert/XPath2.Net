@@ -1,11 +1,12 @@
 ﻿{
     "version": "1.0.0-*",
-    "description": "Non-official extensions for XPath 2.0",
-    "summary": "Non-official extensions for XPath 2.0",
+    "description": "Non-official extensions for XPath2.dll",
+    "summary": "Non-official extensions for XPath2.dll",
     "authors": [ "Stef Heyenrath" ],
     "tags": [ "XPath", "XPath2", "XPath2.0", "Xml", "Extensions" ],
     "projectUrl": "https://github.com/StefH/XPath2.Net",
     "licenseUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/license",
+    "releaseNotes": "initial version",
 
     "dependencies": {
         "XPath2": "1.0.0-*"
