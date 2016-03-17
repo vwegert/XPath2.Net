@@ -3,10 +3,11 @@
     "description": "Non-official extensions for XPath2.dll",
     "summary": "Non-official extensions for XPath2.dll",
     "authors": [ "Stef Heyenrath" ],
-    "tags": [ "XPath", "XPath2", "XPath2.0", "Xml", "Extensions" ],
+    "tags": [ "XPath", "XPath2", "XPath2.0", "Xml", "W3C", "XQuery", "Extensions" ],
     "projectUrl": "https://github.com/StefH/XPath2.Net",
     "licenseUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/license",
     "releaseNotes": "initial version",
+    "iconUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2ex-icon-64x64.png",
 
     "dependencies": {
         "XPath2": "1.0.0-*"
@@ -15,32 +16,32 @@
     "frameworks": {
         "dnx451": {
             "frameworkAssemblies": {
-                "System.Core": "4.0.0.0",
-                "System.Data": "4.0.0.0",
-                "System.Data.DataSetExtensions": "4.0.0.0",
-                "System.Numerics": "4.0.0.0",
-                "System.Xml": "4.0.0.0",
-                "System.Xml.Linq": "4.0.0.0"
+                "System.Core": "",
+                "System.Data": "",
+                "System.Data.DataSetExtensions": "",
+                "System.Numerics": "",
+                "System.Xml": "",
+                "System.Xml.Linq": ""
             }
         },
         "net40": {
             "frameworkAssemblies": {
-                "System.Core": "4.0.0.0",
-                "System.Data": "4.0.0.0",
-                "System.Data.DataSetExtensions": "4.0.0.0",
-                "System.Numerics": "4.0.0.0",
-                "System.Xml": "4.0.0.0",
-                "System.Xml.Linq": "4.0.0.0"
+                "System.Core": "",
+                "System.Data": "",
+                "System.Data.DataSetExtensions": "",
+                "System.Numerics": "",
+                "System.Xml": "",
+                "System.Xml.Linq": ""
             }
         },
         "net452": {
             "frameworkAssemblies": {
-                "System.Core": "4.0.0.0",
-                "System.Data": "4.0.0.0",
-                "System.Data.DataSetExtensions": "4.0.0.0",
-                "System.Numerics": "4.0.0.0",
-                "System.Xml": "4.0.0.0",
-                "System.Xml.Linq": "4.0.0.0"
+                "System.Core": "",
+                "System.Data": "",
+                "System.Data.DataSetExtensions": "",
+                "System.Numerics": "",
+                "System.Xml": "",
+                "System.Xml.Linq": ""
             }
         }
     }
