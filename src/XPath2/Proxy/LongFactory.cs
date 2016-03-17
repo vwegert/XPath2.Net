@@ -24,7 +24,7 @@ namespace Wmhelp.XPath2.Proxy
 
         public override Type GetValueType()
         {
-            return typeof(System.Int64);
+            return typeof(Int64);
         }
 
         public override bool IsNumeric
@@ -44,9 +44,9 @@ namespace Wmhelp.XPath2.Proxy
                 case IntFactory.Code:
                     return 1;
 
-                case LongFactory.Code:
+                case Code:
                     return 0;
-                
+
                 case ULongFactory.Code:
                 case IntegerProxyFactory.Code:
                 case DecimalProxyFactory.Code:

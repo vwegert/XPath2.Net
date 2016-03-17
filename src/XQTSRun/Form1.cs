@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using System.Net;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
+using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Threading;
-
+using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.XPath;
-using System.Xml.Xsl;
-
 using Wmhelp.XPath2;
 
 namespace XQTSRun
@@ -92,7 +87,7 @@ namespace XQTSRun
             _testTab.Columns.Add("FilePath", typeof(String));
             _testTab.Columns.Add("scenario", typeof(String));
             _testTab.Columns.Add("Creator", typeof(String));
-            _testTab.Columns.Add("Node", typeof(System.Object));
+            _testTab.Columns.Add("Node", typeof(Object));
             _testTab.Columns.Add("Description", typeof(String));
             _ignoredTest = new HashSet<string>(s_ignoredTest);
         }

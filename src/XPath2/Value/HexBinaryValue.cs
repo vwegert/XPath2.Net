@@ -11,7 +11,7 @@ using System.Xml.Schema;
 
 namespace Wmhelp.XPath2.Value
 {
-    public class HexBinaryValue: IXmlConvertable
+    public class HexBinaryValue : IXmlConvertable
     {
         public HexBinaryValue(byte[] binaryValue)
         {
@@ -20,7 +20,7 @@ namespace Wmhelp.XPath2.Value
             BinaryValue = binaryValue;
         }
 
-        public byte[] BinaryValue { get; private set; }
+        public byte[] BinaryValue { get; }
 
         public override string ToString()
         {

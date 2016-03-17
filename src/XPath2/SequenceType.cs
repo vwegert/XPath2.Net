@@ -40,9 +40,9 @@ namespace Wmhelp.XPath2
 
         public Type ParameterType { get; set; }
 
-        public Type ItemType { get; private set; }
+        public Type ItemType { get; }
 
-        public bool IsNode { get; private set; }
+        public bool IsNode { get; }
 
         public SequenceType(XmlTypeCode typeCode)
             : this(typeCode, XmlQualifiedNameTest.Wildcard)
@@ -168,7 +168,7 @@ namespace Wmhelp.XPath2
                     return typeof(XPathNavigator);
                 if (Cardinality == XmlTypeCardinality.One)
                     return ItemType;
-                return typeof(System.Object);
+                return typeof(Object);
             }
         }
 
@@ -425,7 +425,7 @@ namespace Wmhelp.XPath2
                         case XmlTypeCode.Int:
                         case XmlTypeCode.Long:
                         case XmlTypeCode.Integer:
-                            return (decimal)item.ValueAs(typeof(System.Decimal)) > 0;
+                            return (decimal)item.ValueAs(typeof(Decimal)) > 0;
                     }
                     break;
 
@@ -437,7 +437,7 @@ namespace Wmhelp.XPath2
                         case XmlTypeCode.Int:
                         case XmlTypeCode.Long:
                         case XmlTypeCode.Integer:
-                            return (decimal)item.ValueAs(typeof(System.Decimal)) < 0;
+                            return (decimal)item.ValueAs(typeof(Decimal)) < 0;
                     }
                     break;
 
@@ -449,7 +449,7 @@ namespace Wmhelp.XPath2
                         case XmlTypeCode.Int:
                         case XmlTypeCode.Long:
                         case XmlTypeCode.Integer:
-                            return (decimal)item.ValueAs(typeof(System.Decimal)) <= 0;
+                            return (decimal)item.ValueAs(typeof(Decimal)) <= 0;
                     }
                     break;
 
@@ -461,7 +461,7 @@ namespace Wmhelp.XPath2
                         case XmlTypeCode.Int:
                         case XmlTypeCode.Long:
                         case XmlTypeCode.Integer:
-                            return (decimal)item.ValueAs(typeof(System.Decimal)) >= 0;
+                            return (decimal)item.ValueAs(typeof(Decimal)) >= 0;
 
                         case XmlTypeCode.UnsignedByte:
                         case XmlTypeCode.UnsignedShort:
@@ -486,7 +486,7 @@ namespace Wmhelp.XPath2
                             return true;
 
                         case XmlTypeCode.Decimal:
-                            decimal value = (decimal)item.ValueAs(typeof(System.Decimal));
+                            decimal value = (decimal)item.ValueAs(typeof(Decimal));
                             return value == Math.Truncate(value);
                     }
                     break;
@@ -873,27 +873,27 @@ namespace Wmhelp.XPath2
             switch (typeCode)
             {
                 case XmlTypeCode.Boolean:
-                    return typeof(System.Boolean);
+                    return typeof(Boolean);
                 case XmlTypeCode.Short:
-                    return typeof(System.Int16);
+                    return typeof(Int16);
                 case XmlTypeCode.Int:
-                    return typeof(System.Int32);
+                    return typeof(Int32);
                 case XmlTypeCode.Long:
-                    return typeof(System.Int64);
+                    return typeof(Int64);
                 case XmlTypeCode.UnsignedShort:
-                    return typeof(System.UInt16);
+                    return typeof(UInt16);
                 case XmlTypeCode.UnsignedInt:
-                    return typeof(System.UInt32);
+                    return typeof(UInt32);
                 case XmlTypeCode.UnsignedLong:
-                    return typeof(System.UInt64);
+                    return typeof(UInt64);
                 case XmlTypeCode.Byte:
-                    return typeof(System.SByte);
+                    return typeof(SByte);
                 case XmlTypeCode.UnsignedByte:
-                    return typeof(System.Byte);
+                    return typeof(Byte);
                 case XmlTypeCode.Float:
-                    return typeof(System.Single);
+                    return typeof(Single);
                 case XmlTypeCode.Decimal:
-                    return typeof(System.Decimal);
+                    return typeof(Decimal);
                 case XmlTypeCode.Integer:
                 case XmlTypeCode.PositiveInteger:
                 case XmlTypeCode.NegativeInteger:
@@ -901,7 +901,7 @@ namespace Wmhelp.XPath2
                 case XmlTypeCode.NonNegativeInteger:
                     return typeof(Integer);
                 case XmlTypeCode.Double:
-                    return typeof(System.Double);
+                    return typeof(Double);
                 case XmlTypeCode.DateTime:
                     return typeof(DateTimeValue);
                 case XmlTypeCode.Date:
@@ -931,7 +931,7 @@ namespace Wmhelp.XPath2
                     if (schemaType == XmlSchema.ENTITIES)
                         return typeof(ENTITIESValue);
                     else
-                        return typeof(System.String);
+                        return typeof(String);
                 case XmlTypeCode.UntypedAtomic:
                     return typeof(UntypedAtomic);
                 case XmlTypeCode.Duration:
@@ -957,7 +957,7 @@ namespace Wmhelp.XPath2
                 case XmlTypeCode.Base64Binary:
                     return typeof(Base64BinaryValue);
                 default:
-                    return typeof(System.Object);
+                    return typeof(Object);
             }
         }
 
@@ -1116,7 +1116,7 @@ namespace Wmhelp.XPath2
         public override bool Equals(object obj)
         {
             SequenceType dest = obj as SequenceType;
-            if (!Object.ReferenceEquals(obj, null))
+            if (!ReferenceEquals(obj, null))
                 return TypeCode == dest.TypeCode &&
                     SchemaElement == dest.SchemaElement &&
                     SchemaAttribute == dest.SchemaAttribute &&

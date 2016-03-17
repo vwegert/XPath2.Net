@@ -6,11 +6,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Wmhelp.XPath2.Proxy
 {
-    internal abstract class ValueProxy: IConvertible
+    internal abstract class ValueProxy : IConvertible
     {
         public const int TYPES_MAX = 24;
 
@@ -154,26 +153,26 @@ namespace Wmhelp.XPath2.Proxy
 
         public static Type GetType(Type type1, Type type2)
         {
-            if (dynamicValueType.IsAssignableFrom(type1) || 
+            if (dynamicValueType.IsAssignableFrom(type1) ||
                 dynamicValueType.IsAssignableFrom(type2))
                 return dynamicValueType;
             ValueProxyFactory factory1;
             if (!valueFactory.TryGetValue(type1, out factory1))
-                return typeof(System.Object);
+                return typeof(Object);
             ValueProxyFactory factory2;
             if (!valueFactory.TryGetValue(type2, out factory2))
-                return typeof(System.Object);
+                return typeof(Object);
             switch (conv_t[factory1.GetValueCode(), factory2.GetValueCode()])
             {
                 case -1:
                     return factory2.GetResultType();
-                
+
                 case 0:
                 case 1:
                     return factory1.GetResultType();
 
                 default:
-                    return typeof(System.Object);
+                    return typeof(Object);
             }
         }
 
@@ -574,67 +573,67 @@ namespace Wmhelp.XPath2.Proxy
 
         public static implicit operator ValueProxy(sbyte value)
         {
-            return new Proxy.SByteProxy(value);
+            return new SByteProxy(value);
         }
 
         public static implicit operator ValueProxy(byte value)
         {
-            return new Proxy.ByteProxy(value);
+            return new ByteProxy(value);
         }
-       
+
         public static implicit operator ValueProxy(short value)
         {
-            return new Proxy.Short(value);
+            return new Short(value);
         }
 
         public static implicit operator ValueProxy(ushort value)
         {
-            return new Proxy.UShort(value);
+            return new UShort(value);
         }
 
         public static implicit operator ValueProxy(int value)
         {
-            return new Proxy.Int(value);
+            return new Int(value);
         }
 
         public static implicit operator ValueProxy(uint value)
         {
-            return new Proxy.UInt(value);
+            return new UInt(value);
         }
-        
+
         public static implicit operator ValueProxy(long value)
         {
-            return new Proxy.Long(value);
+            return new Long(value);
         }
 
         public static implicit operator ValueProxy(ulong value)
         {
-            return new Proxy.ULong(value);
+            return new ULong(value);
         }
 
         public static implicit operator ValueProxy(decimal value)
         {
-            return new Proxy.DecimalProxy(value);
+            return new DecimalProxy(value);
         }
 
         public static implicit operator ValueProxy(Integer value)
         {
-            return new Proxy.IntegerProxy(value);
+            return new IntegerProxy(value);
         }
 
         public static implicit operator ValueProxy(float value)
         {
-            return new Proxy.Float(value);
+            return new Float(value);
         }
 
         public static implicit operator ValueProxy(double value)
         {
-            return new Proxy.DoubleProxy(value);
+            return new DoubleProxy(value);
         }
 
         public static implicit operator ValueProxy(string value)
         {
-            return new Proxy.StringProxy(value);
+            return new StringProxy(value);
         }
 
         public static explicit operator SByte(ValueProxy dv)

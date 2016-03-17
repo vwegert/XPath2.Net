@@ -5,14 +5,7 @@
 // All rights reserved.
 
 using System;
-using System.Text;
 using System.Collections.Generic;
-using System.Diagnostics;
-
-using System.Xml;
-using System.Xml.XPath;
-using System.Xml.Schema;
-
 using Wmhelp.XPath2.Iterator;
 
 namespace Wmhelp.XPath2.AST
@@ -47,8 +40,8 @@ namespace Wmhelp.XPath2.AST
 
         public PathStep(AbstractNode node)
         {
-            this.nodeTest = null;
-            this.type = XPath2ExprType.Expr;
+            nodeTest = null;
+            type = XPath2ExprType.Expr;
             this.node = node;
         }
 
@@ -56,7 +49,7 @@ namespace Wmhelp.XPath2.AST
         {
             this.nodeTest = nodeTest;
             this.type = type;
-            this.node = null;
+            node = null;
         }
 
         public PathStep(XPath2ExprType type)
@@ -119,7 +112,7 @@ namespace Wmhelp.XPath2.AST
                 case XPath2ExprType.PositionFilter:
                     return new PositionFilterNodeIterator(Convert.ToInt32(nodeTest), baseIter);
                 case XPath2ExprType.ChildOverDescendants:
-                    return new ChildOverDescendantsNodeIterator(context, 
+                    return new ChildOverDescendantsNodeIterator(context,
                         (ChildOverDescendantsNodeIterator.NodeTest[])nodeTest, baseIter);
                 default:
                     return null;
@@ -145,13 +138,13 @@ namespace Wmhelp.XPath2.AST
                 ValueNode numexpr = predicate as ValueNode;
                 if (numexpr != null && numexpr.Content is Integer)
                 {
-                    PathStep res = PathStep.Create(context, node);
+                    PathStep res = Create(context, node);
                     res.AddLast(new PathStep(numexpr.Content, XPath2ExprType.PositionFilter));
                     return res;
                 }
             }
-	        AbstractNode filterExpr = new FilterExprNode(context, node, predicateList);
-	        return new PathStep(filterExpr);
+            AbstractNode filterExpr = new FilterExprNode(context, node, predicateList);
+            return new PathStep(filterExpr);
         }
     }
 }

@@ -7,14 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 using System.Xml.Schema;
-using System.Xml.XPath;
 using System.Globalization;
-
 using Wmhelp.XPath2.MS;
-using Wmhelp.XPath2.AST;
 
 namespace Wmhelp.XPath2
 {
@@ -25,7 +21,7 @@ namespace Wmhelp.XPath2
             NameTable = new NameTable();
             NamespaceManager = new XmlNamespaceManager(NameTable);
             SchemaSet = new XmlSchemaSet(NameTable);
-            
+
             if (nsManager != null)
             {
                 foreach (KeyValuePair<String, String> ns in nsManager.GetNamespacesInScope(XmlNamespaceScope.ExcludeXml))
@@ -46,11 +42,11 @@ namespace Wmhelp.XPath2
 
         public XPath2RunningContext RunningContext { get; set; }
 
-        public XmlNameTable NameTable { get; private set; }
+        public XmlNameTable NameTable { get; }
 
-        public XmlNamespaceManager NamespaceManager { get; private set; }
+        public XmlNamespaceManager NamespaceManager { get; }
 
-        public XmlSchemaSet SchemaSet { get; set; }        
+        public XmlSchemaSet SchemaSet { get; set; }
     }
 
     public class XPath2RunningContext
@@ -61,11 +57,11 @@ namespace Wmhelp.XPath2
         {
             now = DateTime.Now;
             NameBinder = new NameBinder();
-            
+
             DefaultCulture = (CultureInfo)CultureInfo.InvariantCulture.Clone();
             DefaultCulture.NumberFormat.CurrencyGroupSeparator = "";
             DefaultCulture.NumberFormat.NumberGroupSeparator = "";
-            
+
             IsOrdered = true;
         }
 
@@ -84,7 +80,7 @@ namespace Wmhelp.XPath2
             }
         }
 
-        public CultureInfo DefaultCulture { get; private set; }
+        public CultureInfo DefaultCulture { get; }
 
         public String BaseUri { get; set; }
 

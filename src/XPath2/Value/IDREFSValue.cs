@@ -18,7 +18,7 @@ namespace Wmhelp.XPath2.Value
             ValueList = value;
         }
 
-        public string[] ValueList { get; private set; }
+        public string[] ValueList { get; }
 
         public override bool Equals(object obj)
         {

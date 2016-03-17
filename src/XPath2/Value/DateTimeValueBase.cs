@@ -8,7 +8,7 @@ using System;
 
 namespace Wmhelp.XPath2.Value
 {
-    public abstract class DateTimeValueBase: IComparable, IConvertible
+    public abstract class DateTimeValueBase : IComparable, IConvertible
     {
         public DateTimeValueBase(bool sign, DateTime value)
         {
@@ -42,7 +42,7 @@ namespace Wmhelp.XPath2.Value
 
         public bool S { get; protected set; }
 
-        public DateTimeOffset Value { get; protected set; }
+        public DateTimeOffset Value { get; }
 
         public bool IsLocal { get; set; }
 
@@ -89,7 +89,7 @@ namespace Wmhelp.XPath2.Value
         }
 
         public GDayValue ToGDay()
-        {            
+        {
             if (IsLocal)
                 return new GDayValue(new DateTime(2008, 1, Value.Day));
             else

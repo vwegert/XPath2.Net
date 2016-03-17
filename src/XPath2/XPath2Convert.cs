@@ -20,17 +20,17 @@ namespace Wmhelp.XPath2
         {
             if (value == null)
                 return "false";
-            if (value is System.Decimal)
+            if (value is Decimal)
                 return ToString((decimal)value);
-            else if (value is System.Double)
+            else if (value is Double)
                 return ToString((double)value);
-            else if (value is System.Single)
+            else if (value is Single)
                 return ToString((float)value);
-            else if (value is System.Boolean)
+            else if (value is Boolean)
                 return ToString((bool)value);
-            else if (value is System.DateTime)
+            else if (value is DateTime)
                 return new DateTimeValue(false, (DateTime)value).ToString();
-            else if (value is System.TimeSpan)
+            else if (value is TimeSpan)
                 return new DayTimeDurationValue((TimeSpan)value).ToString();
             return value.ToString();
         }
@@ -62,7 +62,7 @@ namespace Wmhelp.XPath2
         // Contributor(s): the fppfppExponential routine, and some of the constant declarations 
         // are from the class FloatingPointConverter by Michael H. Kay
 
-        private static char[] charForDigit = 
+        private static char[] charForDigit =
         {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
         };
@@ -109,9 +109,9 @@ namespace Wmhelp.XPath2
                 fppfppExponential(sb, exp, fraction, 52);
             else
                 if (value <= 0.01)
-                    fppfppBig(sb, exp, fraction, 52);               
-                else
-                    fppfpp(sb, exp, fraction, 52);               
+                fppfppBig(sb, exp, fraction, 52);
+            else
+                fppfpp(sb, exp, fraction, 52);
             return sb.ToString();
         }
 
@@ -144,7 +144,7 @@ namespace Wmhelp.XPath2
             int exp = rawExp - floatExpBias;
             if (value < 1E-06F || value >= 1000000F)
                 fppfppExponential(sb, exp, fraction, 23);
-            else                
+            else
                 fppfpp(sb, exp, fraction, 23);
             return sb.ToString();
         }
@@ -164,7 +164,7 @@ namespace Wmhelp.XPath2
                 R = R << 1;
                 S = S << 1;
             }
-            
+
             int k = 0;
             while (R < (S + 9) / 10)
             {  // (S+9)/10 == ceiling(S/10)
@@ -342,7 +342,7 @@ namespace Wmhelp.XPath2
                 S = S << 1;
             }
             int k = 0;
-            while (R < (S + 9) /10)
+            while (R < (S + 9) / 10)
             {  // (S+9)/10 == ceiling(S/10)
                 k--;
                 R *= 10;
@@ -360,7 +360,7 @@ namespace Wmhelp.XPath2
 
             bool low;
             bool high;
-            
+
             int U;
             while (true)
             {
@@ -373,8 +373,8 @@ namespace Wmhelp.XPath2
                 BigInteger R2 = R << 1;
                 low = R2 < Mminus;
                 high = R2 > (S << 1) - Mplus;
-                if (low || high) 
-                    break;                
+                if (low || high)
+                    break;
                 sb.Append(charForDigit[U]);
                 if (initial)
                 {
@@ -390,12 +390,12 @@ namespace Wmhelp.XPath2
             if (!doneDot)
                 sb.Append(".0");
             sb.Append('E');
-            sb.Append(H.ToString());            
+            sb.Append(H.ToString());
             return sb.ToString();
         }
 #endif
 
-        public static object ChangeType(XmlSchemaType xmlType, object value, SequenceType type, 
+        public static object ChangeType(XmlSchemaType xmlType, object value, SequenceType type,
             XmlNameTable nameTable, XmlNamespaceManager nsmgr)
         {
             if (type.TypeCode == XmlTypeCode.AnyAtomicType || xmlType.TypeCode == type.TypeCode)
@@ -502,9 +502,9 @@ namespace Wmhelp.XPath2
                                 return ChangeType(value, type.ItemType);
 
                             case XmlTypeCode.String:
-                                return XPath2Convert.ToString((bool)value);
+                                return ToString((bool)value);
                             case XmlTypeCode.UntypedAtomic:
-                                return new UntypedAtomic(XPath2Convert.ToString((bool)value));
+                                return new UntypedAtomic(ToString((bool)value));
                         }
                         break;
 
@@ -564,8 +564,8 @@ namespace Wmhelp.XPath2
             catch (FormatException)
             {
                 throw new XPath2Exception("XPTY0004", Properties.Resources.XPTY0004,
-                    new SequenceType(xmlType, XmlTypeCardinality.One, null),type);
-            }            
+                    new SequenceType(xmlType, XmlTypeCardinality.One, null), type);
+            }
             throw new XPath2Exception("XPTY0004", Properties.Resources.XPTY0004,
                 new SequenceType(xmlType, XmlTypeCardinality.One, null), type);
         }
@@ -574,7 +574,7 @@ namespace Wmhelp.XPath2
         {
             try
             {
-                if (returnType == typeof(System.Object))
+                if (returnType == typeof(Object))
                     return value;
                 if (returnType == typeof(Integer))
                     return Integer.ToInteger(value);
@@ -610,36 +610,36 @@ namespace Wmhelp.XPath2
                 switch (type.TypeCode)
                 {
                     case XmlTypeCode.Double:
-                        if (value is System.Single)
+                        if (value is Single)
                             return Convert.ToDouble((float)value);
-                        if (value is System.Int32)
+                        if (value is Int32)
                             return Convert.ToDouble((int)value);
-                        if (value is System.Int64)
+                        if (value is Int64)
                             return Convert.ToDouble((long)value);
                         if (value is Decimal)
                             return Convert.ToDouble((decimal)value);
                         if (value is Integer)
                             return Convert.ToDouble((decimal)(Integer)value);
-                        if (value is System.Int16)
+                        if (value is Int16)
                             return Convert.ToDouble((short)value);
-                        if (value is System.SByte)
+                        if (value is SByte)
                             return Convert.ToDouble((sbyte)value);
                         break;
 
                     case XmlTypeCode.Float:
-                        if (value is System.Double)
+                        if (value is Double)
                             return Convert.ToSingle((double)value);
-                        if (value is System.Int32)
+                        if (value is Int32)
                             return Convert.ToSingle((int)value);
-                        if (value is System.Int64)
+                        if (value is Int64)
                             return Convert.ToSingle((long)value);
                         if (value is Decimal)
                             return Convert.ToSingle((decimal)value);
                         if (value is Integer)
                             return Convert.ToSingle((decimal)(Integer)value);
-                        if (value is System.Int16)
+                        if (value is Int16)
                             return Convert.ToSingle((short)value);
-                        if (value is System.SByte)
+                        if (value is SByte)
                             return Convert.ToSingle((sbyte)value);
                         break;
 
@@ -656,24 +656,24 @@ namespace Wmhelp.XPath2
                         break;
 
                     case XmlTypeCode.Int:
-                        if (value is System.Int16)
+                        if (value is Int16)
                             return (int)(short)value;
-                        if (value is System.UInt16)
+                        if (value is UInt16)
                             return (int)(ushort)value;
-                        if (value is System.SByte)
+                        if (value is SByte)
                             return (int)(sbyte)value;
-                        if (value is System.Byte)
+                        if (value is Byte)
                             return (int)(byte)value;
                         if (value is Integer)
                             return (int)(Integer)value;
                         break;
 
                     case XmlTypeCode.Long:
-                        if (value is System.Int32)
+                        if (value is Int32)
                             return (long)(int)value;
-                        if (value is System.Int16)
+                        if (value is Int16)
                             return (long)(short)value;
-                        if (value is System.SByte)
+                        if (value is SByte)
                             return (long)(sbyte)value;
                         if (value is Integer)
                             return (long)(Integer)value;
@@ -701,43 +701,43 @@ namespace Wmhelp.XPath2
             if (type.TypeCode == XmlTypeCode.None)
                 throw new XPath2Exception("XPTY0004", Properties.Resources.XPTY0004,
                    new SequenceType(value.GetType(), XmlTypeCardinality.One), "empty-sequence()");
-            if (value.GetType() != type.ItemType && 
-                type.ItemType != typeof(System.Object))
+            if (value.GetType() != type.ItemType &&
+                type.ItemType != typeof(Object))
             {
                 if (type.ItemType == typeof(Integer))
                 {
-                    if (value is System.Int32)
+                    if (value is Int32)
                         return (Integer)(int)value;
-                    else if (value is System.UInt32)
+                    else if (value is UInt32)
                         return (Integer)(uint)value;
-                    else if (value is System.Int64)
+                    else if (value is Int64)
                         return (Integer)(long)value;
-                    else if (value is System.UInt64)
+                    else if (value is UInt64)
                         return (Integer)(ulong)value;
-                    else if (value is System.Int16)
+                    else if (value is Int16)
                         return (Integer)(short)value;
-                    else if (value is System.UInt16)
+                    else if (value is UInt16)
                         return (Integer)(ushort)value;
-                    else if (value is System.SByte)
-                        return (Integer)(sbyte)value;                    
+                    else if (value is SByte)
+                        return (Integer)(sbyte)value;
                 }
                 else if (type.ItemType == typeof(Decimal))
                 {
                     if (value is Integer)
                         return (Decimal)(Integer)value;
-                    else if (value is System.Int32)
+                    else if (value is Int32)
                         return (Decimal)(int)value;
-                    if (value is System.UInt32)
+                    if (value is UInt32)
                         return (Decimal)(uint)value;
-                    else if (value is System.Int64)
+                    else if (value is Int64)
                         return (Decimal)(long)value;
-                    else if (value is System.UInt64)
+                    else if (value is UInt64)
                         return (Decimal)(ulong)value;
-                    else if (value is System.Int16)
+                    else if (value is Int16)
                         return (Decimal)(short)value;
-                    else if (value is System.UInt16)
+                    else if (value is UInt16)
                         return (Decimal)(ushort)value;
-                    else if (value is System.SByte)
+                    else if (value is SByte)
                         return (Decimal)(sbyte)value;
                 }
                 throw new XPath2Exception("XPTY0004", Properties.Resources.XPTY0004,

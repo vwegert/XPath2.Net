@@ -16,7 +16,7 @@ namespace Wmhelp.XPath2.Proxy
         {
             return new Float((float)value);
         }
-      
+
         public override int GetValueCode()
         {
             return Code;
@@ -24,7 +24,7 @@ namespace Wmhelp.XPath2.Proxy
 
         public override Type GetValueType()
         {
-            return typeof(System.Single);
+            return typeof(Single);
         }
 
         public override bool IsNumeric
@@ -48,7 +48,7 @@ namespace Wmhelp.XPath2.Proxy
                 case DecimalProxyFactory.Code:
                     return 1;
 
-                case FloatFactory.Code:
+                case Code:
                     return 0;
 
                 case DoubleProxyFactory.Code:

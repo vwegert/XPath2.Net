@@ -46,7 +46,7 @@ namespace Wmhelp.XPath2.Proxy
                 case LongFactory.Code:
                     return 1;
 
-                case IntegerProxyFactory.Code:
+                case Code:
                     return 0;
 
                 case DecimalProxyFactory.Code:

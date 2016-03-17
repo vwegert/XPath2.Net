@@ -50,7 +50,7 @@ namespace Wmhelp.XPath2.Proxy
                 case LongFactory.Code:
                     return 1;
 
-                case ULongFactory.Code:
+                case Code:
                     return 0;
 
                 case IntegerProxyFactory.Code:

@@ -10,7 +10,7 @@ using System.Xml.Schema;
 
 namespace Wmhelp.XPath2.Value
 {
-    public class AnyUriValue: IXmlConvertable, IComparable
+    public class AnyUriValue : IXmlConvertable, IComparable
     {
         public AnyUriValue(string value)
         {
@@ -24,7 +24,7 @@ namespace Wmhelp.XPath2.Value
             Value = uri.OriginalString;
         }
 
-        public string Value { get; private set; }
+        public string Value { get; }
 
         public override bool Equals(object obj)
         {

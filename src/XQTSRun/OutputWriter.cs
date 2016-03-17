@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using System.IO;
-
-using System.Xml;
 using System.Xml.XPath;
 using Wmhelp.XPath2;
 
 namespace XQTSRun
 {
-    public class OutputWriter: TextWriter
+    public class OutputWriter : TextWriter
     {
         private RichTextBox m_textBox;
         private StringBuilder m_textPull;
@@ -64,9 +61,9 @@ namespace XQTSRun
 
         public override Encoding Encoding
         {
-            get 
-            { 
-                return Encoding.Default; 
+            get
+            {
+                return Encoding.Default;
             }
         }
 

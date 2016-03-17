@@ -6,16 +6,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Xml;
 using System.Xml.XPath;
-
 using TimSort;
 using System.Runtime.InteropServices;
 using System.Collections;
 
 namespace Wmhelp.XPath2
 {
-    class ItemSet: IEnumerable, IEnumerable<XPathItem>  
+    class ItemSet : IEnumerable, IEnumerable<XPathItem>
     {
         private int _size;
         private XPathItem[] _items;
@@ -54,7 +52,7 @@ namespace Wmhelp.XPath2
                     {
                         XPathItem[] destinationArray = new XPathItem[value];
                         if (_size > 0)
-                            Array.Copy(_items, 0, destinationArray, 0, this._size);
+                            Array.Copy(_items, 0, destinationArray, 0, _size);
                         _items = destinationArray;
                     }
                     else
@@ -110,7 +108,7 @@ namespace Wmhelp.XPath2
             private ItemSet itemSet;
             private int index;
             private XPathItem current;
-            
+
             internal Enumerator(ItemSet set)
             {
                 itemSet = set;
@@ -142,7 +140,7 @@ namespace Wmhelp.XPath2
                     return current;
                 }
             }
-            
+
             object IEnumerator.Current
             {
                 get
@@ -150,9 +148,9 @@ namespace Wmhelp.XPath2
                     return current;
                 }
             }
-            
+
             void IEnumerator.Reset()
-            {            
+            {
                 index = 0;
                 current = null;
             }

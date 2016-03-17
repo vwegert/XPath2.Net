@@ -9,7 +9,7 @@ using Wmhelp.XPath2.Proxy;
 
 namespace Wmhelp.XPath2.Value
 {
-    public class DayTimeDurationValue: DurationValue, IComparable
+    public class DayTimeDurationValue : DurationValue, IComparable
     {
         new public const int ProxyValueCode = 12;
 
@@ -107,7 +107,7 @@ namespace Wmhelp.XPath2.Value
 
             public override object Value
             {
-                get 
+                get
                 {
                     return _value;
                 }
@@ -126,7 +126,7 @@ namespace Wmhelp.XPath2.Value
             protected override bool TryGt(ValueProxy val, out bool res)
             {
                 res = false;
-                if (val.GetValueCode() != DayTimeDurationValue.ProxyValueCode)
+                if (val.GetValueCode() != ProxyValueCode)
                     return false;
                 res = ((IComparable)_value).CompareTo(val.Value) > 0;
                 return true;
@@ -154,7 +154,7 @@ namespace Wmhelp.XPath2.Value
             {
                 switch (value.GetValueCode())
                 {
-                    case DayTimeDurationValue.ProxyValueCode:
+                    case ProxyValueCode:
                         return new Proxy(new DayTimeDurationValue(_value.LowPartValue + ((DayTimeDurationValue)value.Value).LowPartValue));
                     case DateTimeValue.ProxyValueCode:
                         return new DateTimeValue.Proxy(DateTimeValue.Add((DateTimeValue)value.Value, _value));
@@ -173,7 +173,7 @@ namespace Wmhelp.XPath2.Value
             {
                 switch (value.GetValueCode())
                 {
-                    case DayTimeDurationValue.ProxyValueCode:
+                    case ProxyValueCode:
                         return new Proxy(new DayTimeDurationValue(_value.LowPartValue - ((DayTimeDurationValue)value.Value).LowPartValue));
                     default:
                         throw new XPath2Exception("", Properties.Resources.BinaryOperatorNotDefined, "op:sub",
@@ -185,7 +185,7 @@ namespace Wmhelp.XPath2.Value
             protected override ValueProxy Mul(ValueProxy value)
             {
                 if (value.IsNumeric())
-                    return new Proxy(DayTimeDurationValue.Multiply(_value, Convert.ToDouble(value)));
+                    return new Proxy(Multiply(_value, Convert.ToDouble(value)));
                 throw new XPath2Exception("", Properties.Resources.BinaryOperatorNotDefined, "op:mul",
                     new SequenceType(_value.GetType(), XmlTypeCardinality.One),
                     new SequenceType(value.Value.GetType(), XmlTypeCardinality.One));
@@ -194,9 +194,9 @@ namespace Wmhelp.XPath2.Value
             protected override ValueProxy Div(ValueProxy value)
             {
                 if (value.IsNumeric())
-                    return new Proxy(DayTimeDurationValue.Divide(_value, Convert.ToDouble(value)));
-                else if (value.GetValueCode() == DayTimeDurationValue.ProxyValueCode)
-                    return new DecimalProxy(DayTimeDurationValue.Divide(_value, (DayTimeDurationValue)value.Value));
+                    return new Proxy(Divide(_value, Convert.ToDouble(value)));
+                else if (value.GetValueCode() == ProxyValueCode)
+                    return new DecimalProxy(Divide(_value, (DayTimeDurationValue)value.Value));
                 else
                     throw new XPath2Exception("", Properties.Resources.BinaryOperatorNotDefined, "op:div",
                         new SequenceType(_value.GetType(), XmlTypeCardinality.One),

@@ -4,14 +4,7 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Xml;
 using System.Xml.XPath;
-
 using Wmhelp.XPath2.AST;
 
 namespace Wmhelp.XPath2.Iterator
@@ -61,7 +54,7 @@ namespace Wmhelp.XPath2.Iterator
                     if (!baseIter.MoveNext())
                         return null;
                     sequentialPosition = 0;
-                    iter = XPath2NodeIterator.Create(node.Execute(new NodeProvider(baseIter.Current), dataPool));
+                    iter = Create(node.Execute(new NodeProvider(baseIter.Current), dataPool));
                 }
                 if (iter.MoveNext())
                 {

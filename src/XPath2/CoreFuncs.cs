@@ -27,20 +27,20 @@ namespace Wmhelp.XPath2
         {
             ValueProxy.AddFactory(
                 new ValueProxyFactory[] {
-                    new Proxy.ShortFactory(),
-                    new Proxy.IntFactory(),
-                    new Proxy.LongFactory(),
-                    new Proxy.IntegerProxyFactory(),
-                    new Proxy.DecimalProxyFactory(),
-                    new Proxy.FloatFactory(),
-                    new Proxy.DoubleProxyFactory(),
-                    new Proxy.StringProxyFactory(),
-                    new Proxy.SByteProxyFactory(),
-                    new Proxy.ByteProxyFactory(),
-                    new Proxy.UShortFactory(),
-                    new Proxy.UIntFactory(),
-                    new Proxy.ULongFactory(),
-                    new Proxy.BoolFactory(),
+                    new ShortFactory(),
+                    new IntFactory(),
+                    new LongFactory(),
+                    new IntegerProxyFactory(),
+                    new DecimalProxyFactory(),
+                    new FloatFactory(),
+                    new DoubleProxyFactory(),
+                    new StringProxyFactory(),
+                    new SByteProxyFactory(),
+                    new ByteProxyFactory(),
+                    new UShortFactory(),
+                    new UIntFactory(),
+                    new ULongFactory(),
+                    new BoolFactory(),
                     new DateTimeValue.ProxyFactory(),
                     new DateValue.ProxyFactory(),
                     new TimeValue.ProxyFactory(),
@@ -52,7 +52,7 @@ namespace Wmhelp.XPath2
 
         public static object OperatorEq(object arg1, object arg2)
         {
-            if (object.ReferenceEquals(arg1, arg2))
+            if (ReferenceEquals(arg1, arg2))
                 return True;
             if (arg1 == null)
                 arg1 = False;
@@ -82,7 +82,7 @@ namespace Wmhelp.XPath2
 
         public static object OperatorGt(object arg1, object arg2)
         {
-            if (object.ReferenceEquals(arg1, arg2))
+            if (ReferenceEquals(arg1, arg2))
                 return False;
             if (arg1 == null)
                 arg1 = False;
@@ -419,7 +419,7 @@ namespace Wmhelp.XPath2
                                     if (entity.StartsWith("#x"))
                                     {
                                         if (entity.Length > 2 && int.TryParse(entity.Substring(2, entity.Length - 2),
-                                                System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture, out n))
+                                                NumberStyles.HexNumber, CultureInfo.InvariantCulture, out n))
                                             entity_value = Convert.ToString(Convert.ToChar(n));
                                     }
                                     else
@@ -926,7 +926,7 @@ namespace Wmhelp.XPath2
                 }
             }
             XmlTypeCode typeCode = SequenceType.GetXmlTypeCode(ValueProxy.Unwrap(value).GetType());
-            XmlSchemaType xmlType = XmlSchemaSimpleType.GetBuiltInSimpleType(typeCode);
+            XmlSchemaType xmlType = XmlSchemaType.GetBuiltInSimpleType(typeCode);
             return XPath2Convert.ChangeType(xmlType, value,
                 destType, context.NameTable, context.NamespaceManager);
         }
@@ -1004,7 +1004,7 @@ namespace Wmhelp.XPath2
             XPathNavigator nav1 = (XPathNavigator)a;
             XPathNavigator nav2 = (XPathNavigator)b;
             XPathComparer comp = new XPathComparer();
-            return comp.Compare(nav1, nav2) == -1 ? CoreFuncs.True : CoreFuncs.False;
+            return comp.Compare(nav1, nav2) == -1 ? True : False;
         }
 
         public static object FollowingNode(object a, object b)
@@ -1012,7 +1012,7 @@ namespace Wmhelp.XPath2
             XPathNavigator nav1 = (XPathNavigator)a;
             XPathNavigator nav2 = (XPathNavigator)b;
             XPathComparer comp = new XPathComparer();
-            return comp.Compare(nav1, nav2) == 1 ? CoreFuncs.True : CoreFuncs.False;
+            return comp.Compare(nav1, nav2) == 1 ? True : False;
         }
 
         private static void MagnitudeRelationship(XPath2Context context, XPathItem item1, XPathItem item2,
@@ -1054,7 +1054,7 @@ namespace Wmhelp.XPath2
                     object x;
                     object y;
                     MagnitudeRelationship(context, iter1.Current, iter.Current, out x, out y);
-                    if (OperatorEq(x, y) == CoreFuncs.True)
+                    if (OperatorEq(x, y) == True)
                         return True;
                 }
             }
@@ -1073,7 +1073,7 @@ namespace Wmhelp.XPath2
                     object x;
                     object y;
                     MagnitudeRelationship(context, iter1.Current, iter.Current, out x, out y);
-                    if (OperatorGt(x, y) == CoreFuncs.True)
+                    if (OperatorGt(x, y) == True)
                         return True;
                 }
             }
@@ -1092,7 +1092,7 @@ namespace Wmhelp.XPath2
                     object x;
                     object y;
                     MagnitudeRelationship(context, iter1.Current, iter.Current, out x, out y);
-                    if (OperatorEq(x, y) == CoreFuncs.False)
+                    if (OperatorEq(x, y) == False)
                         return True;
                 }
             }
@@ -1111,7 +1111,7 @@ namespace Wmhelp.XPath2
                     object x;
                     object y;
                     MagnitudeRelationship(context, iter1.Current, iter.Current, out x, out y);
-                    if (OperatorEq(x, y) == CoreFuncs.True || OperatorGt(x, y) == CoreFuncs.True)
+                    if (OperatorEq(x, y) == True || OperatorGt(x, y) == True)
                         return True;
                 }
             }
@@ -1130,7 +1130,7 @@ namespace Wmhelp.XPath2
                     object x;
                     object y;
                     MagnitudeRelationship(context, iter1.Current, iter.Current, out x, out y);
-                    if (OperatorGt(y, x) == CoreFuncs.True)
+                    if (OperatorGt(y, x) == True)
                         return True;
                 }
             }
@@ -1149,7 +1149,7 @@ namespace Wmhelp.XPath2
                     object x;
                     object y;
                     MagnitudeRelationship(context, iter1.Current, iter.Current, out x, out y);
-                    if (OperatorEq(x, y) == CoreFuncs.True || OperatorGt(y, x) == CoreFuncs.True)
+                    if (OperatorEq(x, y) == True || OperatorGt(y, x) == True)
                         return True;
                 }
             }

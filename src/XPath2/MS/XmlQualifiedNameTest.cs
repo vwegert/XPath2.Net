@@ -9,12 +9,7 @@
 //      You must not remove this notice, or any other, from this software.
 //     
 
-using System;
 using System.Xml;
-using System.Xml.Schema;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace Wmhelp.XPath2.MS
 {
@@ -33,7 +28,7 @@ namespace Wmhelp.XPath2.MS
     {
         bool exclude;
         const string wildcard = "*";
-        static XmlQualifiedNameTest wc = XmlQualifiedNameTest.New(wildcard, wildcard);
+        static XmlQualifiedNameTest wc = New(wildcard, wildcard);
 
         /// <summary>
         /// Full wildcard
@@ -72,7 +67,7 @@ namespace Wmhelp.XPath2.MS
             if (qn.IsEmpty)
                 return Wildcard;
             else
-                return new XmlQualifiedNameTest(qn.Name == null ? wildcard : qn.Name, 
+                return new XmlQualifiedNameTest(qn.Name == null ? wildcard : qn.Name,
                     qn.Namespace == null ? wildcard : qn.Namespace, false);
         }
 
@@ -89,7 +84,7 @@ namespace Wmhelp.XPath2.MS
         /// </summary>
         public bool IsNameWildcard
         {
-            get { return (object)this.Name == (object)wildcard; }
+            get { return (object)Name == (object)wildcard; }
         }
 
         /// <summary>
@@ -97,19 +92,19 @@ namespace Wmhelp.XPath2.MS
         /// </summary>
         public bool IsNamespaceWildcard
         {
-            get { return (object)this.Namespace == (object)wildcard; }
+            get { return (object)Namespace == (object)wildcard; }
         }
 
         private bool IsNameSubsetOf(XmlQualifiedNameTest other)
         {
-            return other.IsNameWildcard || this.Name == other.Name;
+            return other.IsNameWildcard || Name == other.Name;
         }
 
         private bool IsNamespaceSubsetOf(XmlQualifiedNameTest other)
         {
             return other.IsNamespaceWildcard
-                || (this.exclude == other.exclude && this.Namespace == other.Namespace)
-                || (other.exclude && !this.exclude && this.Namespace != other.Namespace);
+                || (exclude == other.exclude && Namespace == other.Namespace)
+                || (other.exclude && !exclude && Namespace != other.Namespace);
         }
 
         /// <summary>
@@ -139,21 +134,21 @@ namespace Wmhelp.XPath2.MS
             }
             else
             {
-                if (this.Namespace.Length == 0)
+                if (Namespace.Length == 0)
                 {
-                    return this.Name;
+                    return Name;
                 }
-                else if ((object)this.Namespace == (object)wildcard)
+                else if ((object)Namespace == (object)wildcard)
                 {
-                    return "*:" + this.Name;
+                    return "*:" + Name;
                 }
-                else if (this.exclude)
+                else if (exclude)
                 {
-                    return "{~" + this.Namespace + "}:" + this.Name;
+                    return "{~" + Namespace + "}:" + Name;
                 }
                 else
                 {
-                    return "{" + this.Namespace + "}:" + this.Name;
+                    return "{" + Namespace + "}:" + Name;
                 }
             }
         }

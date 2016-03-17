@@ -199,7 +199,7 @@ namespace Wmhelp.XPath2
             }
             Read();
             EndToken();
-            ConsumeToken(Token.StringLiteral, 
+            ConsumeToken(Token.StringLiteral,
                 CoreFuncs.NormalizeStringValue(sb.ToString(), false, true));
         }
 
@@ -1503,9 +1503,9 @@ namespace Wmhelp.XPath2
                 LocalName = localName;
             }
 
-            public String Prefix { get; private set; }
+            public String Prefix { get; }
 
-            public String LocalName { get; private set; }
+            public String LocalName { get; }
 
             public override string ToString()
             {

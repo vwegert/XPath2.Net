@@ -6,16 +6,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Globalization;
 using System.Reflection;
-
 using System.Xml;
-using System.Xml.XPath;
-using System.Xml.Schema;
 using System.Xml.Linq;
-
+using System.Xml.XPath;
 using Wmhelp.XPath2.AST;
 using Wmhelp.XPath2.Proxy;
 
@@ -82,16 +76,16 @@ namespace Wmhelp.XPath2
         public static object Evaluate(string xpath2, object arg)
         {
             return Evaluate(xpath2, null, arg);
-        }        
+        }
 
         public static object Evaluate(string xpath2, IXmlNamespaceResolver nsResolver, object arg)
         {
-            return XPath2Expression.Compile(xpath2, nsResolver).EvaluateWithProperties(null, arg);
+            return Compile(xpath2, nsResolver).EvaluateWithProperties(null, arg);
         }
 
         public static object Evalute(string xpath2, IXmlNamespaceResolver nsResolver, IDictionary<XmlQualifiedName, object> param)
         {
-            return XPath2Expression.Compile(xpath2, nsResolver).Evaluate(null, param);
+            return Compile(xpath2, nsResolver).Evaluate(null, param);
         }
 
         public static IEnumerable<T> Select<T>(string xpath, object arg)
@@ -161,7 +155,7 @@ namespace Wmhelp.XPath2
 
         private object[] BindExpr(IDictionary<XmlQualifiedName, object> vars)
         {
-            XPath2RunningContext runningContext = new XPath2RunningContext();            
+            XPath2RunningContext runningContext = new XPath2RunningContext();
             NameBinder.ReferenceLink[] variables = null;
             object[] variableValues = null;
             if (vars != null)
@@ -227,6 +221,6 @@ namespace Wmhelp.XPath2
             if (!resultType.HasValue)
                 resultType = exprTree.GetReturnType(BindExpr(vars));
             return resultType.Value;
-        }        
+        }
     }
 }

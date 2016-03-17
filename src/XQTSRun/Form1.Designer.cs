@@ -1,11 +1,14 @@
-﻿namespace XQTSRun
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace XQTSRun
 {
     partial class Form1
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -387,40 +390,40 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Splitter splitter1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewCurrentToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem runCurrentToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem batchRunToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ToolStripMenuItem xMLQueryTestSuiteHomeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem standaloneXQueryToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem toolStripFind;
-        private System.Windows.Forms.ToolStripMenuItem repeatTestToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private MenuStrip menuStrip1;
+        private TreeView treeView1;
+        private Label label1;
+        private StatusStrip statusStrip1;
+        private Label label2;
+        private Label label3;
+        private Panel panel1;
+        private Splitter splitter1;
+        private RichTextBox richTextBox1;
+        private ToolStripMenuItem fileToolStripMenuItem;
+        private ToolStripMenuItem openToolStripMenuItem;
+        private ToolStripMenuItem exitToolStripMenuItem;
+        private ToolStripMenuItem helpToolStripMenuItem;
+        private ToolStripStatusLabel toolStripStatusLabel1;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripMenuItem testToolStripMenuItem;
+        private ToolStripMenuItem viewCurrentToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripMenuItem runCurrentToolStripMenuItem;
+        private ToolStripMenuItem batchRunToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem1;
+        private Panel panel2;
+        private DataGridView dataGridView1;
+        private Timer timer1;
+        private ToolStripMenuItem xMLQueryTestSuiteHomeToolStripMenuItem;
+        private ToolStripMenuItem standaloneXQueryToolStripMenuItem;
+        private ToolStripMenuItem aboutToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator3;
+        private ToolStripMenuItem toolStripMenuItem3;
+        private ToolStripMenuItem toolStripMenuItem7;
+        private ToolStripSeparator toolStripSeparator4;
+        private ToolStripMenuItem toolStripFind;
+        private ToolStripMenuItem repeatTestToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator5;
 
     }
 }

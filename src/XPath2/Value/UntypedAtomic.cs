@@ -9,14 +9,14 @@ using System.Globalization;
 
 namespace Wmhelp.XPath2.Value
 {
-    public class UntypedAtomic: ICloneable, IComparable, IConvertible, IEquatable<UntypedAtomic>, IComparable<UntypedAtomic>
+    public class UntypedAtomic : ICloneable, IComparable, IConvertible, IEquatable<UntypedAtomic>, IComparable<UntypedAtomic>
     {
         public UntypedAtomic(string value)
         {
             Value = value;
         }
 
-        public String Value { get; private set; }
+        public String Value { get; }
 
         private object _doubleValue;
 
@@ -80,12 +80,12 @@ namespace Wmhelp.XPath2.Value
                 }
                 else
                     if (Double.TryParse(Value, NumberStyles.Float, CultureInfo.InvariantCulture, out num))
-                    {
-                        if (num == 0.0 & Value.StartsWith("-"))
-                            num = -num; // -0, -0.0,... etc
-                        _doubleValue = num;
-                        return true;
-                    }
+                {
+                    if (num == 0.0 & Value.StartsWith("-"))
+                        num = -num; // -0, -0.0,... etc
+                    _doubleValue = num;
+                    return true;
+                }
             }
             num = 0.0;
             return false;

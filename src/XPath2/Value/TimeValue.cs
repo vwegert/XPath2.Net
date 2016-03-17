@@ -13,14 +13,14 @@ using Wmhelp.XPath2.Proxy;
 
 namespace Wmhelp.XPath2.Value
 {
-    public class TimeValue: IComparable, IXmlConvertable
+    public class TimeValue : IComparable, IXmlConvertable
     {
         public const int ProxyValueCode = 14;
 
         public TimeValue(DateTimeOffset value)
         {
             DateTime today = DateTime.Today;
-            Value = new DateTimeOffset(new DateTime(today.Year, today.Month, today.Day, value.DateTime.Hour, 
+            Value = new DateTimeOffset(new DateTime(today.Year, today.Month, today.Day, value.DateTime.Hour,
                 value.DateTime.Minute, value.DateTime.Second, value.DateTime.Millisecond), value.Offset);
             IsLocal = false;
         }
@@ -29,13 +29,13 @@ namespace Wmhelp.XPath2.Value
         {
             DateTime today = DateTime.Today;
             Value = new DateTimeOffset(new DateTime(today.Year, today.Month, today.Day, value.Hour,
-                value.Minute, value.Second, value.Millisecond));            
+                value.Minute, value.Second, value.Millisecond));
             IsLocal = true;
-        }        
+        }
 
-        public DateTimeOffset Value { get; private set; }
+        public DateTimeOffset Value { get; }
 
-        public bool IsLocal { get; private set; }
+        public bool IsLocal { get; }
 
         public override bool Equals(object obj)
         {
@@ -69,8 +69,8 @@ namespace Wmhelp.XPath2.Value
             return sb.ToString();
         }
 
-        private static string[] TimeFormats = new string[] {             
-            "HH:mm:ss", 
+        private static string[] TimeFormats = new string[] {
+            "HH:mm:ss",
             "HH:mm:ss.f",
             "HH:mm:ss.ff",
             "HH:mm:ss.fff",
@@ -80,7 +80,7 @@ namespace Wmhelp.XPath2.Value
             "HH:mm:ss.ffffffff"
         };
 
-        private static string[] TimeOffsetFormats = new string[] {             
+        private static string[] TimeOffsetFormats = new string[] {
             "HH:mm:sszzz",
             "HH:mm:ss.fzzz",
             "HH:mm:ss.ffzzz",
@@ -106,17 +106,17 @@ namespace Wmhelp.XPath2.Value
             if (text.EndsWith("Z"))
             {
                 if (!DateTimeOffset.TryParseExact(text.Substring(0, text.Length - 1), TimeFormats,
-                        CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | 
+                        CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal |
                         DateTimeStyles.AllowLeadingWhite | DateTimeStyles.AllowTrailingWhite, out dateTimeOffset))
                     throw new XPath2Exception("", Properties.Resources.InvalidFormat, text, "xs:time");
                 return new TimeValue(dateTimeOffset);
             }
             else
             {
-                if (DateTime.TryParseExact(text, TimeFormats, CultureInfo.InvariantCulture, 
+                if (DateTime.TryParseExact(text, TimeFormats, CultureInfo.InvariantCulture,
                     DateTimeStyles.AllowLeadingWhite | DateTimeStyles.AllowTrailingWhite, out dateTime))
                     return new TimeValue(dateTime);
-                if (!DateTimeOffset.TryParseExact(text, TimeOffsetFormats, CultureInfo.InvariantCulture, 
+                if (!DateTimeOffset.TryParseExact(text, TimeOffsetFormats, CultureInfo.InvariantCulture,
                     DateTimeStyles.AllowLeadingWhite | DateTimeStyles.AllowTrailingWhite, out dateTimeOffset))
                     throw new XPath2Exception("", Properties.Resources.InvalidFormat, text, "xs:time");
                 return new TimeValue(dateTimeOffset);
@@ -201,7 +201,7 @@ namespace Wmhelp.XPath2.Value
 
             public override object Value
             {
-                get 
+                get
                 {
                     return _value;
                 }
@@ -254,7 +254,7 @@ namespace Wmhelp.XPath2.Value
             {
                 switch (value.GetValueCode())
                 {
-                    case TimeValue.ProxyValueCode:
+                    case ProxyValueCode:
                         return new DayTimeDurationValue.Proxy(TimeValue.Sub(_value, (TimeValue)value.Value));
                     case DayTimeDurationValue.ProxyValueCode:
                         return new Proxy(TimeValue.Add(_value, -(DayTimeDurationValue)value.Value));

@@ -24,7 +24,7 @@ namespace Wmhelp.XPath2.Proxy
 
         public override object Value
         {
-            get 
+            get
             {
                 return _value;
             }
@@ -32,7 +32,7 @@ namespace Wmhelp.XPath2.Proxy
 
         public override bool IsNaN()
         {
-            return System.Double.IsNaN(_value);
+            return Double.IsNaN(_value);
         }
 
         public override bool IsNumeric()

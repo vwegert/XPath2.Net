@@ -20,9 +20,9 @@ namespace Wmhelp.XPath2.Value
             NamespaceUri = name.NamespaceUri;
         }
 
-        public String Prefix { get; private set; }
-        public String LocalName { get; private set; }
-        public String NamespaceUri { get; private set; }
+        public String Prefix { get; }
+        public String LocalName { get; }
+        public String NamespaceUri { get; }
 
         public override bool Equals(object obj)
         {
@@ -38,7 +38,7 @@ namespace Wmhelp.XPath2.Value
 
         public override int GetHashCode()
         {
-            return LocalName.GetHashCode() ^ NamespaceUri.GetHashCode() << 8; 
+            return LocalName.GetHashCode() ^ NamespaceUri.GetHashCode() << 8;
         }
 
         public override string ToString()

@@ -4,7 +4,6 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
 using System.Collections.Generic;
 using System.Xml;
 
@@ -70,10 +69,10 @@ namespace Wmhelp.XPath2
 
         private class NameSlot
         {
-            public readonly NameBinder.ReferenceLink id;
+            public readonly ReferenceLink id;
             public readonly XmlQualifiedName name;
 
-            public NameSlot(NameBinder.ReferenceLink id, XmlQualifiedName name)
+            public NameSlot(ReferenceLink id, XmlQualifiedName name)
             {
                 this.id = id;
                 this.name = name;

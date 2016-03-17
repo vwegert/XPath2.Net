@@ -12,7 +12,7 @@ using Wmhelp.XPath2.Proxy;
 
 namespace Wmhelp.XPath2.Value
 {
-    public class DurationValue: IXmlConvertable
+    public class DurationValue : IXmlConvertable
     {
         public const int ProxyValueCode = 15;
 
@@ -22,8 +22,8 @@ namespace Wmhelp.XPath2.Value
             LowPartValue = low;
         }
 
-        public TimeSpan LowPartValue { get; private set; }
-        public TimeSpan HighPartValue { get; private set; }
+        public TimeSpan LowPartValue { get; }
+        public TimeSpan HighPartValue { get; }
 
         public override bool Equals(object obj)
         {
@@ -193,7 +193,7 @@ namespace Wmhelp.XPath2.Value
             tok.NextToken();
             bool s = false;
             if (tok.Token == '-')
-            {                
+            {
                 s = true;
                 tok.NextToken();
             }
@@ -238,7 +238,7 @@ namespace Wmhelp.XPath2.Value
                 if (tok.Token == 0)
                     goto Complete;
             }
-        ParseDayTimeFraction:
+            ParseDayTimeFraction:
             if (tok.Token != 'T' || tok.NextToken() != StringTokenizer.TokenInt)
                 throw new XPath2Exception("", Properties.Resources.InvalidFormat, text, "xs:duration");
             for (int i = 1; i <= 3; i++)
@@ -249,14 +249,14 @@ namespace Wmhelp.XPath2.Value
                     throw new XPath2Exception("", Properties.Resources.InvalidFormat, text, "xs:duration");
                 value = Int32.Parse(tok.Value);
                 switch (tok.NextToken())
-                {                    
+                {
                     case 'H':
                         if (h != -1)
                             throw new XPath2Exception("", Properties.Resources.InvalidFormat, text, "xs:duration");
                         h = value;
                         tok.NextToken();
                         break;
-                    
+
                     case 'M':
                         if (m != -1)
                             throw new XPath2Exception("", Properties.Resources.InvalidFormat, text, "xs:duration");
@@ -278,7 +278,7 @@ namespace Wmhelp.XPath2.Value
                         goto Complete;
                 }
             }
-        Complete:
+            Complete:
             if (tok.NextToken() != 0)
                 throw new XPath2Exception("", Properties.Resources.InvalidFormat, text, "xs:duration");
             if (year == -1)
@@ -373,7 +373,7 @@ namespace Wmhelp.XPath2.Value
 
             public override object Value
             {
-                get 
+                get
                 {
                     return _value;
                 }

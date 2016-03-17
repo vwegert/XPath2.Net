@@ -7,11 +7,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Diagnostics;
-
-using System.Xml;
-using System.Xml.Schema;
+using System.Text;
 using System.Xml.XPath;
 
 namespace Wmhelp.XPath2
@@ -19,11 +16,10 @@ namespace Wmhelp.XPath2
     public interface IContextProvider
     {
         XPathItem Context { get; }
-       
+
         int CurrentPosition { get; }
-        
-        int LastPosition { get; }        
-                
+
+        int LastPosition { get; }
     }
 
     internal sealed class ContextProvider : IContextProvider
@@ -85,7 +81,7 @@ namespace Wmhelp.XPath2
 
     [DebuggerDisplay("{curr}")]
     [DebuggerTypeProxy(typeof(XPath2NodeIteratorDebugView))]
-    public abstract class XPath2NodeIterator: ICloneable, IEnumerable, IEnumerable<XPathItem>
+    public abstract class XPath2NodeIterator : ICloneable, IEnumerable, IEnumerable<XPathItem>
     {
         internal int count = -1;
         private XPathItem curr;
@@ -103,7 +99,7 @@ namespace Wmhelp.XPath2
         {
             get
             {
-                if (this.count == -1)
+                if (count == -1)
                 {
                     count = 0;
                     XPath2NodeIterator iter = Clone();
@@ -144,7 +140,7 @@ namespace Wmhelp.XPath2
             }
         }
 
-        public XPathItem Current 
+        public XPathItem Current
         {
             get
             {
@@ -154,7 +150,7 @@ namespace Wmhelp.XPath2
             }
         }
 
-        public int CurrentPosition 
+        public int CurrentPosition
         {
             get
             {
@@ -211,7 +207,7 @@ namespace Wmhelp.XPath2
             iteratorFinished = true;
             return false;
         }
-       
+
         public virtual List<XPathItem> ToList()
         {
             XPath2NodeIterator iter = Clone();
@@ -231,7 +227,7 @@ namespace Wmhelp.XPath2
                 sb.Append(node.ToString());
                 sb.Append(", ");
             }
-            String s =  sb.ToString();
+            String s = sb.ToString();
             if (String.IsNullOrEmpty(s))
                 return "<empty>";
             return s;
@@ -241,7 +237,7 @@ namespace Wmhelp.XPath2
         {
         }
 
-        protected abstract XPathItem NextItem();        
+        protected abstract XPathItem NextItem();
 
         public static XPath2NodeIterator Create(object value)
         {
@@ -255,13 +251,13 @@ namespace Wmhelp.XPath2
                 item = new XPath2Item(value);
             return new SingleIterator(item);
         }
-        
+
 
         #region ICloneable Members
 
         object ICloneable.Clone()
         {
-            return this.Clone();
+            return Clone();
         }
 
         #endregion
@@ -297,7 +293,7 @@ namespace Wmhelp.XPath2
 
             public object Current
             {
-                get 
+                get
                 {
                     if (!iterationStarted || current == null)
                         throw new InvalidOperationException();
@@ -328,7 +324,7 @@ namespace Wmhelp.XPath2
 
             XPathItem IEnumerator<XPathItem>.Current
             {
-                get 
+                get
                 {
                     if (!iterationStarted || current == null)
                         throw new InvalidOperationException();
@@ -350,7 +346,7 @@ namespace Wmhelp.XPath2
 
         public class SingleIterator : XPath2NodeIterator
         {
-            private XPathItem _item;            
+            private XPathItem _item;
 
             public SingleIterator(XPathItem item)
             {
@@ -382,7 +378,7 @@ namespace Wmhelp.XPath2
                 return Clone();
             }
         }
-                       
+
         internal class XQueryNodeIteratorDebugView
         {
             private XPath2NodeIterator iter;

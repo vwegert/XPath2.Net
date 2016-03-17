@@ -24,7 +24,7 @@ namespace Wmhelp.XPath2.Proxy
 
         public override Type GetValueType()
         {
-            return typeof(System.Double);
+            return typeof(Double);
         }
 
         public override bool IsNumeric
@@ -49,7 +49,7 @@ namespace Wmhelp.XPath2.Proxy
                 case FloatFactory.Code:
                     return 1;
 
-                case DoubleProxyFactory.Code:
+                case Code:
                     return 0;
 
                 default:

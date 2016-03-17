@@ -11,7 +11,7 @@ using System.Xml.Schema;
 
 namespace Wmhelp.XPath2.Value
 {
-    public class QNameValue: IXmlConvertable
+    public class QNameValue : IXmlConvertable
     {
         public QNameValue()
         {
@@ -23,7 +23,7 @@ namespace Wmhelp.XPath2.Value
             if (prefix == null)
                 throw new NullReferenceException("prefix");
             if (localName == null)
-                throw new NullReferenceException("localName");                
+                throw new NullReferenceException("localName");
             if (ns == null)
                 throw new NullReferenceException("ns");
             if (nameTable == null)
@@ -35,7 +35,7 @@ namespace Wmhelp.XPath2.Value
             {
                 localName = XmlConvert.VerifyNCName(localName);
             }
-            catch(XmlException)
+            catch (XmlException)
             {
                 throw new XPath2Exception("FORG0001", Properties.Resources.FORG0001, localName, "xs:QName");
             }
@@ -51,9 +51,9 @@ namespace Wmhelp.XPath2.Value
             NamespaceUri = qname.Namespace;
         }
 
-        public String Prefix { get; private set; }
-        public String LocalName { get; private set; }
-        public String NamespaceUri { get; private set; }
+        public String Prefix { get; }
+        public String LocalName { get; }
+        public String NamespaceUri { get; }
 
         public bool IsEmpty
         {
@@ -65,7 +65,7 @@ namespace Wmhelp.XPath2.Value
 
         public XmlQualifiedName ToQualifiedName()
         {
-            return new XmlQualifiedName(LocalName, NamespaceUri); 
+            return new XmlQualifiedName(LocalName, NamespaceUri);
         }
 
         public override string ToString()
@@ -94,7 +94,7 @@ namespace Wmhelp.XPath2.Value
 
         public override int GetHashCode()
         {
-            return LocalName.GetHashCode() ^ NamespaceUri.GetHashCode() << 8; 
+            return LocalName.GetHashCode() ^ NamespaceUri.GetHashCode() << 8;
         }
 
         #region IXmlConvertable Members
@@ -150,6 +150,6 @@ namespace Wmhelp.XPath2.Value
             }
             else
                 return new QNameValue("", localName, defaultNs, resolver.NameTable);
-        }        
+        }
     }
 }

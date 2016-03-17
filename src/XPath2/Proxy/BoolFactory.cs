@@ -24,7 +24,7 @@ namespace Wmhelp.XPath2.Proxy
 
         public override Type GetValueType()
         {
-            return typeof(System.Boolean);
+            return typeof(Boolean);
         }
 
         public override bool IsNumeric

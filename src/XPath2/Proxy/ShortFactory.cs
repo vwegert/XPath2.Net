@@ -24,12 +24,12 @@ namespace Wmhelp.XPath2.Proxy
 
         public override Type GetValueType()
         {
-            return typeof(System.Int16);
+            return typeof(Int16);
         }
 
         public override Type GetResultType()
         {
-            return typeof(System.Int32);
+            return typeof(Int32);
         }
 
         public override bool IsNumeric
@@ -45,7 +45,7 @@ namespace Wmhelp.XPath2.Proxy
                 case ByteProxyFactory.Code:
                     return 1;
 
-                case ShortFactory.Code:
+                case Code:
                     return 0;
 
                 case UShortFactory.Code:

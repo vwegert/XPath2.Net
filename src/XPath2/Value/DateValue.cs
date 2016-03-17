@@ -13,7 +13,7 @@ using Wmhelp.XPath2.Proxy;
 
 namespace Wmhelp.XPath2.Value
 {
-    public class DateValue: DateTimeValueBase, IXmlConvertable
+    public class DateValue : DateTimeValueBase, IXmlConvertable
     {
         public const int ProxyValueCode = 13;
 
@@ -42,13 +42,13 @@ namespace Wmhelp.XPath2.Value
         }
 
         private static string[] DateTimeFormats = new string[] {
-            "yyyy-MM-dd", 
-            "'-'yyyy-MM-dd" 
+            "yyyy-MM-dd",
+            "'-'yyyy-MM-dd"
         };
 
         private static string[] DateTimeOffsetFormats = new string[] {
-            "yyyy-MM-ddzzz", 
-            "'-'yyyy-MM-ddzzz" 
+            "yyyy-MM-ddzzz",
+            "'-'yyyy-MM-ddzzz"
         };
 
         public static DateValue Parse(string text)
@@ -59,17 +59,17 @@ namespace Wmhelp.XPath2.Value
             if (text.EndsWith("Z"))
             {
                 if (!DateTimeOffset.TryParseExact(text.Substring(0, text.Length - 1), DateTimeFormats,
-                        CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | 
+                        CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal |
                         DateTimeStyles.AllowLeadingWhite | DateTimeStyles.AllowTrailingWhite, out dateTimeOffset))
                     throw new XPath2Exception("", Properties.Resources.InvalidFormat, text, "xs:date");
                 return new DateValue(s, dateTimeOffset);
             }
             else
             {
-                if (DateTime.TryParseExact(text, DateTimeFormats, CultureInfo.InvariantCulture, 
+                if (DateTime.TryParseExact(text, DateTimeFormats, CultureInfo.InvariantCulture,
                     DateTimeStyles.AllowLeadingWhite | DateTimeStyles.AllowTrailingWhite, out dateTime))
                     return new DateValue(s, dateTime);
-                if (!DateTimeOffset.TryParseExact(text, DateTimeOffsetFormats, CultureInfo.InvariantCulture, 
+                if (!DateTimeOffset.TryParseExact(text, DateTimeOffsetFormats, CultureInfo.InvariantCulture,
                     DateTimeStyles.AllowLeadingWhite | DateTimeStyles.AllowTrailingWhite, out dateTimeOffset))
                     throw new XPath2Exception("", Properties.Resources.InvalidFormat, text, "xs:date");
                 return new DateValue(s, dateTimeOffset);
@@ -213,7 +213,7 @@ namespace Wmhelp.XPath2.Value
 
             public override object Value
             {
-                get 
+                get
                 {
                     return _value;
                 }
@@ -268,7 +268,7 @@ namespace Wmhelp.XPath2.Value
             {
                 switch (value.GetValueCode())
                 {
-                    case DateValue.ProxyValueCode:
+                    case ProxyValueCode:
                         return new DayTimeDurationValue.Proxy(DateValue.Sub(_value, (DateValue)value.Value));
                     case YearMonthDurationValue.ProxyValueCode:
                         return new Proxy(DateValue.Add(_value, -(YearMonthDurationValue)value.Value));
@@ -310,7 +310,7 @@ namespace Wmhelp.XPath2.Value
                     new SequenceType(value.Value.GetType(), XmlTypeCardinality.One));
             }
         }
-        
+
         #region IXmlConvertable Members
 
         object IXmlConvertable.ValueAs(SequenceType type, XmlNamespaceManager nsmgr)
