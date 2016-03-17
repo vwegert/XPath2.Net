@@ -74,7 +74,7 @@ namespace Wmhelp.XPath2.Extensions
         #region private helper methods
         private static Encoding ParseEncodingFromArgs(XPath2Context context, object[] args)
         {
-            string name = args.Length == 2 ? (string) CoreFuncs.CastToStringOptional(context, args[1]) : "UTF-8";
+            string name = args.Length == 2 ? CoreFuncs.CastToStringOptional(context, args[1]) : "UTF-8";
 
             try
             {

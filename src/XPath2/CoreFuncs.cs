@@ -1352,14 +1352,18 @@ namespace Wmhelp.XPath2
             return False;
         }
 
-        public static object CastToStringOptional(XPath2Context context, object value)
+        public static string CastToStringOptional(XPath2Context context, object value)
         {
-            return CastArg(context, Atomize(value), SequenceType.StringOptional);
+            var result = CastArg(context, Atomize(value), SequenceType.StringOptional);
+
+            return result != Undefined.Value ? (string)result : string.Empty;
         }
 
         public static string CastToStringExactOne(XPath2Context context, object value, bool atomize = true)
         {
-            return (string)CastArg(context, atomize ? Atomize(value) : value, SequenceType.String);
+            var result = CastArg(context, atomize ? Atomize(value) : value, SequenceType.String);
+
+            return result != Undefined.Value ? (string)result : string.Empty;
         }
 
         public static int CastToInt(XPath2Context context, object value)

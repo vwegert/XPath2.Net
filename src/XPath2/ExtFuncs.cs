@@ -5,7 +5,6 @@
 // All rights reserved.
 
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
@@ -173,7 +172,7 @@ namespace Wmhelp.XPath2
                 yield return new XPath2Item(item.GetTypedValue());
             }
         }
-        
+
         public static XPath2NodeIterator GetData(XPath2NodeIterator iter)
         {
             return new NodeIterator(AtomizeIterator(iter));
@@ -459,112 +458,62 @@ namespace Wmhelp.XPath2
             return builder.ToString();
         }
 
-        public static bool Contains(object arg1, object arg2)
+        public static bool Contains(string arg1, string arg2)
         {
-            string str;
-            if (arg1 == Undefined.Value)
-                str = String.Empty;
-            else
-                str = (string)arg1;
-            string substr;
-            if (arg2 == Undefined.Value)
-                substr = String.Empty;
-            else
-                substr = (string)arg2;
-            return str.Contains(substr);
+            return arg1.Contains(arg2);
         }
 
-        public static bool Contains(XPath2Context context, object arg1, object arg2, string collation)
+        public static bool Contains(XPath2Context context, string arg1, string arg2, string collation)
         {
             CultureInfo culture = context.RunningContext.GetCulture(collation);
             return Contains(arg1, arg2);
         }
 
-        public static bool StartsWith(object arg1, object arg2)
+        public static bool StartsWith(string arg1, string arg2)
         {
-            string str;
-            if (arg1 == Undefined.Value)
-                str = String.Empty;
-            else
-                str = (string)arg1;
-            string substr;
-            if (arg2 == Undefined.Value)
-                substr = String.Empty;
-            else
-                substr = (string)arg2;
-            return str.StartsWith(substr);
+            return arg1.StartsWith(arg2);
         }
 
-        public static bool StartsWith(XPath2Context context, object arg1, object arg2, string collation)
+        public static bool StartsWith(XPath2Context context, string arg1, string arg2, string collation)
         {
             CultureInfo culture = context.RunningContext.GetCulture(collation);
             return StartsWith(arg1, arg2);
         }
 
-        public static bool EndsWith(object arg1, object arg2)
+        public static bool EndsWith(string arg1, string arg2)
         {
-            string str;
-            if (arg1 == Undefined.Value)
-                str = String.Empty;
-            else
-                str = (string)arg1;
-            string substr;
-            if (arg2 == Undefined.Value)
-                substr = String.Empty;
-            else
-                substr = (string)arg2;
-            return str.EndsWith(substr);
+            return arg1.EndsWith(arg2);
         }
 
-        public static bool EndsWith(XPath2Context context, object arg1, object arg2, string collation)
+        public static bool EndsWith(XPath2Context context, string arg1, string arg2, string collation)
         {
             CultureInfo culture = context.RunningContext.GetCulture(collation);
             return EndsWith(arg1, arg2);
         }
 
-        public static string SubstringBefore(object arg1, object arg2)
+        public static string SubstringBefore(string arg1, string arg2)
         {
-            string str;
-            if (arg1 == Undefined.Value)
-                str = String.Empty;
-            else
-                str = (string)arg1;
-            string substr;
-            if (arg2 == Undefined.Value)
-                substr = String.Empty;
-            else
-                substr = (string)arg2;
-            int index = str.IndexOf(substr);
+            int index = arg1.IndexOf(arg2);
             if (index >= 0)
-                return str.Substring(0, index);
+                return arg1.Substring(0, index);
             return String.Empty;
         }
 
-        public static string SubstringBefore(XPath2Context context, object arg1, object arg2, string collation)
+        public static string SubstringBefore(XPath2Context context, string arg1, string arg2, string collation)
         {
             CultureInfo culture = context.RunningContext.GetCulture(collation);
             return SubstringBefore(arg1, arg2);
         }
 
-        public static string SubstringAfter(object arg1, object arg2)
+        public static string SubstringAfter(string arg1, string arg2)
         {
-            string str;
-            if (arg1 == Undefined.Value)
-                str = String.Empty;
-            else
-                str = (string)arg1;
-            string substr;
-            if (arg2 == Undefined.Value)
-                substr = String.Empty;
-            else
-                substr = (string)arg2;
-            int index = str.IndexOf(substr);
+            int index = arg1.IndexOf(arg2);
             if (index >= 0)
-                return str.Substring(index + substr.Length);
+                return arg1.Substring(index + arg2.Length);
             return String.Empty;
         }
 
-        public static string SubstringAfter(XPath2Context context, object arg1, object arg2, string collation)
+        public static string SubstringAfter(XPath2Context context, string arg1, string arg2, string collation)
         {
             CultureInfo culture = context.RunningContext.GetCulture(collation);
             return SubstringAfter(arg1, arg2);
@@ -982,7 +931,7 @@ namespace Wmhelp.XPath2
             return new DayTimeDurationValue(time.Value.Offset);
         }
 
-        public static object AdjustDateTimeToTimezone(object arg)            
+        public static object AdjustDateTimeToTimezone(object arg)
         {
             if (arg == Undefined.Value)
                 return Undefined.Value;
@@ -1074,7 +1023,7 @@ namespace Wmhelp.XPath2
                 throw new XPath2Exception("FODT0003", Properties.Resources.FODT0003, _tz.ToString());
             }
         }
-        
+
         public static object GetAbs(object value)
         {
             if (value == Undefined.Value)
@@ -1284,7 +1233,7 @@ namespace Wmhelp.XPath2
             Integer pos = 1;
             if (value is UntypedAtomic || value is AnyUriValue)
                 value = value.ToString();
-            foreach(XPathItem item in iter)
+            foreach (XPathItem item in iter)
             {
                 bool res;
                 object curr = item.GetTypedValue();
@@ -1302,7 +1251,7 @@ namespace Wmhelp.XPath2
         }
 
         public static XPath2NodeIterator IndexOfSequence(XPath2Context context, XPath2NodeIterator iter, object value, string collation)
-        {            
+        {
             return new NodeIterator(IndexOfIterator(iter, value, context.RunningContext.GetCulture(collation)));
         }
 
@@ -1647,7 +1596,7 @@ namespace Wmhelp.XPath2
 
         public static object CreateDateTime(object dateArg, object timeArg)
         {
-            if (dateArg == Undefined.Value || 
+            if (dateArg == Undefined.Value ||
                 timeArg == Undefined.Value)
                 return Undefined.Value;
             DateValue date = (DateValue)dateArg;
@@ -1663,9 +1612,9 @@ namespace Wmhelp.XPath2
                 }
                 else
                     if (time.IsLocal)
-                        offset = date.Value.Offset;
-                    else
-                        offset = time.Value.Offset;
+                    offset = date.Value.Offset;
+                else
+                    offset = time.Value.Offset;
                 return new DateTimeValue(date.S, new DateTimeOffset(date.Value.Year, date.Value.Month,
                     date.Value.Day, time.Value.Hour, time.Value.Minute, time.Value.Second, offset));
             }
@@ -1696,11 +1645,11 @@ namespace Wmhelp.XPath2
                 node.MoveToChild(XPathNodeType.Element);
             else
                 if (recursive)
-                {
-                    XPathNavigator parent = node.Clone();
-                    if (parent.MoveToParent())
-                        ScanLocalNamespaces(nsmgr, parent, recursive);
-                }
+            {
+                XPathNavigator parent = node.Clone();
+                if (parent.MoveToParent())
+                    ScanLocalNamespaces(nsmgr, parent, recursive);
+            }
             bool defaultNS = false;
             string prefix = node.Prefix;
             string ns = node.NamespaceURI;
