@@ -4,13 +4,9 @@
 // Copyright (c) 2014, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Xml;
-
 namespace Wmhelp.XPath2.AST
 {
-    sealed class RangeNode: AbstractNode
+    internal sealed class RangeNode : AbstractNode
     {
         public RangeNode(XPath2Context context, object node1, object node2)
             : base(context)
@@ -21,7 +17,7 @@ namespace Wmhelp.XPath2.AST
 
         public override object Execute(IContextProvider provider, object[] dataPool)
         {
-            return CoreFuncs.GetRange(this[0].Execute(provider, dataPool), 
+            return CoreFuncs.GetRange(this[0].Execute(provider, dataPool),
                 this[1].Execute(provider, dataPool));
         }
 

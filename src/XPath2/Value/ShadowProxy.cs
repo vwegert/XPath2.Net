@@ -5,6 +5,7 @@
 // All rights reserved.
 
 using System;
+using Wmhelp.XPath2.Properties;
 using Wmhelp.XPath2.Proxy;
 
 namespace Wmhelp.XPath2.Value
@@ -44,14 +45,14 @@ namespace Wmhelp.XPath2.Value
 
         protected override bool Eq(ValueProxy val)
         {
-            throw new XPath2Exception("", Properties.Resources.BinaryOperatorNotDefined, "op:eq",
+            throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:eq",
                 new SequenceType(Value.GetType(), XmlTypeCardinality.One),
                 new SequenceType(val.Value.GetType(), XmlTypeCardinality.One));
         }
 
         protected override bool Gt(ValueProxy val)
         {
-            throw new XPath2Exception("", Properties.Resources.BinaryOperatorNotDefined, "op:gt",
+            throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:gt",
                 new SequenceType(Value.GetType(), XmlTypeCardinality.One),
                 new SequenceType(val.Value.GetType(), XmlTypeCardinality.One));
         }
@@ -63,20 +64,20 @@ namespace Wmhelp.XPath2.Value
 
         protected override ValueProxy Neg()
         {
-            throw new XPath2Exception("", Properties.Resources.UnaryOperatorNotDefined, "fn:unary-minus",
+            throw new XPath2Exception("", Resources.UnaryOperatorNotDefined, "fn:unary-minus",
                 new SequenceType(Value.GetType(), XmlTypeCardinality.One));
         }
 
         protected override ValueProxy Add(ValueProxy val)
         {
-            throw new XPath2Exception("", Properties.Resources.BinaryOperatorNotDefined, "op:add",
+            throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:add",
                 new SequenceType(Value.GetType(), XmlTypeCardinality.One),
                 new SequenceType(val.Value.GetType(), XmlTypeCardinality.One));
         }
 
         protected override ValueProxy Sub(ValueProxy val)
         {
-            throw new XPath2Exception("", Properties.Resources.BinaryOperatorNotDefined, "op:sub",
+            throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:sub",
                 new SequenceType(Value.GetType(), XmlTypeCardinality.One),
                 new SequenceType(val.Value.GetType(), XmlTypeCardinality.One));
         }
@@ -92,7 +93,7 @@ namespace Wmhelp.XPath2.Value
                     return new DayTimeDurationValue.Proxy(
                         DayTimeDurationValue.Multiply((DayTimeDurationValue)val.Value, Convert.ToDouble(_value)));
                 default:
-                    throw new XPath2Exception("", Properties.Resources.BinaryOperatorNotDefined, "op:mul",
+                    throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:mul",
                         new SequenceType(Value.GetType(), XmlTypeCardinality.One),
                         new SequenceType(val.Value.GetType(), XmlTypeCardinality.One));
             }
@@ -100,21 +101,21 @@ namespace Wmhelp.XPath2.Value
 
         protected override ValueProxy Div(ValueProxy val)
         {
-            throw new XPath2Exception("", Properties.Resources.BinaryOperatorNotDefined, "op:div",
+            throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:div",
                 new SequenceType(Value.GetType(), XmlTypeCardinality.One),
                 new SequenceType(val.Value.GetType(), XmlTypeCardinality.One));
         }
 
         protected override Integer IDiv(ValueProxy val)
         {
-            throw new XPath2Exception("", Properties.Resources.BinaryOperatorNotDefined, "op:idiv",
+            throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:idiv",
                 new SequenceType(Value.GetType(), XmlTypeCardinality.One),
                 new SequenceType(val.Value.GetType(), XmlTypeCardinality.One));
         }
 
         protected override ValueProxy Mod(ValueProxy val)
         {
-            throw new XPath2Exception("", Properties.Resources.BinaryOperatorNotDefined, "op:mod",
+            throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:mod",
                 new SequenceType(Value.GetType(), XmlTypeCardinality.One),
                 new SequenceType(val.Value.GetType(), XmlTypeCardinality.One));
         }

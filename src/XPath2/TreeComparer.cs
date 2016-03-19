@@ -6,13 +6,9 @@
 
 using System;
 using System.Globalization;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
 using System.Xml.XPath;
-
-using Wmhelp.XPath2.Proxy;
 using Wmhelp.XPath2.MS;
+using Wmhelp.XPath2.Proxy;
 using Wmhelp.XPath2.Value;
 
 namespace Wmhelp.XPath2

@@ -4,25 +4,18 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Xml;
 using System.Xml.XPath;
-
-using Wmhelp.XPath2.MS;
 
 namespace Wmhelp.XPath2.Iterator
 {
-    abstract class SequentialAxisNodeIterator : AxisNodeIterator
+    internal abstract class SequentialAxisNodeIterator : AxisNodeIterator
     {
         protected SequentialAxisNodeIterator()
         {
         }
 
-        public SequentialAxisNodeIterator(XPath2Context context, object nodeTest, bool matchSelf, XPath2NodeIterator iter)
+        public SequentialAxisNodeIterator(XPath2Context context, object nodeTest, bool matchSelf,
+            XPath2NodeIterator iter)
             : base(context, nodeTest, matchSelf, iter)
         {
         }

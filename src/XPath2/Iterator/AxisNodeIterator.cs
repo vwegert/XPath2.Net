@@ -4,19 +4,13 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Xml;
 using System.Xml.XPath;
-
 using Wmhelp.XPath2.MS;
+using Wmhelp.XPath2.Properties;
 
 namespace Wmhelp.XPath2.Iterator
-{    
-    abstract class AxisNodeIterator: XPath2NodeIterator
+{
+    internal abstract class AxisNodeIterator : XPath2NodeIterator
     {
         protected XPath2Context context;
         protected XmlQualifiedNameTest nameTest;
@@ -24,7 +18,7 @@ namespace Wmhelp.XPath2.Iterator
         protected bool matchSelf;
         protected XPath2NodeIterator iter;
         protected XPathNavigator curr;
-        
+
         protected int sequentialPosition;
         protected bool accept;
 
@@ -36,9 +30,9 @@ namespace Wmhelp.XPath2.Iterator
         {
             this.context = context;
             if (nodeTest is XmlQualifiedNameTest)
-                nameTest = (XmlQualifiedNameTest)nodeTest;
+                nameTest = (XmlQualifiedNameTest) nodeTest;
             else if (nodeTest is SequenceType && nodeTest != SequenceType.Node)
-                typeTest = (SequenceType)nodeTest;
+                typeTest = (SequenceType) nodeTest;
             this.matchSelf = matchSelf;
             this.iter = iter;
         }
@@ -62,12 +56,11 @@ namespace Wmhelp.XPath2.Iterator
             if (nameTest != null)
             {
                 return (curr.NodeType == XPathNodeType.Element || curr.NodeType == XPathNodeType.Attribute) &&
-                    (nameTest.IsNamespaceWildcard || nameTest.Namespace == curr.NamespaceURI) &&
-                    (nameTest.IsNameWildcard || nameTest.Name == curr.LocalName);
+                       (nameTest.IsNamespaceWildcard || nameTest.Namespace == curr.NamespaceURI) &&
+                       (nameTest.IsNameWildcard || nameTest.Name == curr.LocalName);
             }
-            else
-                if (typeTest != null)
-                    return typeTest.Match(curr, context);
+            else if (typeTest != null)
+                return typeTest.Match(curr, context);
             return true;
         }
 
@@ -77,7 +70,7 @@ namespace Wmhelp.XPath2.Iterator
                 return false;
             XPathNavigator nav = iter.Current as XPathNavigator;
             if (nav == null)
-                throw new XPath2Exception("XPTY0019", Properties.Resources.XPTY0019, iter.Current.Value);
+                throw new XPath2Exception("XPTY0019", Resources.XPTY0019, iter.Current.Value);
             if (curr == null || !curr.MoveTo(nav))
                 curr = nav.Clone();
             sequentialPosition = 0;
@@ -87,10 +80,7 @@ namespace Wmhelp.XPath2.Iterator
 
         public override int SequentialPosition
         {
-            get
-            {                
-                return sequentialPosition;
-            }
+            get { return sequentialPosition; }
         }
 
         public override void ResetSequentialPosition()

@@ -4,14 +4,11 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-
 namespace Wmhelp.XPath2.AST
 {
     internal delegate object UnaryOperator(IContextProvider provider, object arg);
 
-    class UnaryOperatorNode: AbstractNode
+    internal class UnaryOperatorNode : AbstractNode
     {
         protected UnaryOperator _unaryOper;
         private XPath2ResultType _resultType;

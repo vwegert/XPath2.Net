@@ -6,8 +6,8 @@
 
 using System;
 using System.Xml;
-
 using Wmhelp.XPath2.MS;
+using Wmhelp.XPath2.Properties;
 
 namespace Wmhelp.XPath2
 {
@@ -34,7 +34,7 @@ namespace Wmhelp.XPath2
             {
                 string ns = resolver.LookupNamespace(prefix);
                 if (ns == null)
-                    throw new XPath2Exception("XPST0081", Properties.Resources.XPST0081, prefix);
+                    throw new XPath2Exception("XPST0081", Resources.XPST0081, prefix);
                 return new XmlQualifiedName(localName, ns);
             }
             else

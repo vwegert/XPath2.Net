@@ -4,14 +4,12 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-
 namespace Wmhelp.XPath2.AST
 {
-    class AtomizedUnaryOperatorNode : UnaryOperatorNode
+    internal class AtomizedUnaryOperatorNode : UnaryOperatorNode
     {
-        public AtomizedUnaryOperatorNode(XPath2Context context, UnaryOperator action, object node, XPath2ResultType resultType)
+        public AtomizedUnaryOperatorNode(XPath2Context context, UnaryOperator action, object node,
+            XPath2ResultType resultType)
             : base(context, action, node, resultType)
         {
         }

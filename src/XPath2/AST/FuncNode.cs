@@ -6,25 +6,24 @@
 
 using System;
 using System.Collections.Generic;
-using System.Xml;
-
 using Wmhelp.XPath2.MS;
+using Wmhelp.XPath2.Properties;
 using Wmhelp.XPath2.Proxy;
 
 namespace Wmhelp.XPath2.AST
 {
-    sealed class FuncNode: AbstractNode
+    internal sealed class FuncNode : AbstractNode
     {
         private String _name;
         private String _ns;
-        private XPathFunctionDef _func;        
+        private XPathFunctionDef _func;
 
         public FuncNode(XPath2Context context, string name, string ns)
             : base(context)
         {
             _func = FunctionTable.Inst.Bind(name, ns, 0);
             if (_func == null)
-                throw new XPath2Exception("XPST0017", Properties.Resources.XPST0017, name, 0, ns);
+                throw new XPath2Exception("XPST0017", Resources.XPST0017, name, 0, ns);
             _name = name;
             _ns = ns;
         }
@@ -34,7 +33,7 @@ namespace Wmhelp.XPath2.AST
         {
             _func = FunctionTable.Inst.Bind(name, ns, nodes.Count);
             if (_func == null)
-                throw new XPath2Exception("XPST0017", Properties.Resources.XPST0017, name, nodes.Count, ns);
+                throw new XPath2Exception("XPST0017", Resources.XPST0017, name, nodes.Count, ns);
             _name = name;
             _ns = ns;
             AddRange(nodes);
@@ -54,8 +53,8 @@ namespace Wmhelp.XPath2.AST
 
         public override bool IsContextSensitive()
         {
-            return (Count == 0 && s_contextDs.Contains(_name) && 
-                _ns == XmlReservedNs.NsXQueryFunc) || base.IsContextSensitive();
+            return (Count == 0 && s_contextDs.Contains(_name) &&
+                    _ns == XmlReservedNs.NsXQueryFunc) || base.IsContextSensitive();
         }
 
         public override object Execute(IContextProvider provider, object[] dataPool)
@@ -63,11 +62,11 @@ namespace Wmhelp.XPath2.AST
             object[] args = new object[Count];
             for (int k = 0; k < Count; k++)
                 args[k] = ValueProxy.Unwrap(this[k].Execute(provider, dataPool));
-            return _func.Invoke(Context, provider, args); 
+            return _func.Invoke(Context, provider, args);
         }
 
         public override XPath2ResultType GetReturnType(object[] dataPool)
-        {            
+        {
             if (_func.ResultType == XPath2ResultType.Any && Count > 0)
             {
                 XPath2ResultType resType = this[0].GetItemType(dataPool);
@@ -86,11 +85,18 @@ namespace Wmhelp.XPath2.AST
         }
 
         private static HashSet<String> s_aggregates;
-        private static String[] s_names = new String[] { "sum", "count", "avg", "min", "max", 
-            "distinct-values", "empty", "exits" };
+
+        private static String[] s_names = new String[]
+        {
+            "sum", "count", "avg", "min", "max",
+            "distinct-values", "empty", "exits"
+        };
 
         private static HashSet<String> s_contextDs;
-        private static String[] s_names2 = new String[] { "name", "local-name", "namespace-uri", 
+
+        private static String[] s_names2 = new String[]
+        {
+            "name", "local-name", "namespace-uri",
             "base-uri", "position", "last", "string-length", "normalize-space", "number"
         };
 
@@ -103,6 +109,5 @@ namespace Wmhelp.XPath2.AST
             foreach (string name in s_names2)
                 s_contextDs.Add(name);
         }
-
     }
 }

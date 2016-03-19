@@ -4,12 +4,9 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-
 namespace Wmhelp.XPath2.AST
 {
-    sealed class AndExprNode: AbstractNode
+    internal sealed class AndExprNode : AbstractNode
     {
         public AndExprNode(XPath2Context context, object node1, object node2)
             : base(context)

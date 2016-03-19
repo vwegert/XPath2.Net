@@ -6,12 +6,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
-using System.Globalization;
-
-using Wmhelp.XPath2.yyParser;
 using Wmhelp.XPath2.MS;
+using Wmhelp.XPath2.Properties;
+using Wmhelp.XPath2.yyParser;
 
 namespace Wmhelp.XPath2
 {
@@ -81,7 +81,7 @@ namespace Wmhelp.XPath2
         protected char Peek(int lookahead)
         {
             while (lookahead >= m_buffer.Length && m_reader.Peek() != -1)
-                m_buffer.Append((char)m_reader.Read());
+                m_buffer.Append((char) m_reader.Read());
             if (lookahead < m_buffer.Length)
                 return m_buffer[lookahead];
             else
@@ -102,7 +102,7 @@ namespace Wmhelp.XPath2
                 if (c == -1)
                     return '\0';
                 else
-                    ch = (char)c;
+                    ch = (char) c;
             }
             if (ch != '\r')
             {
@@ -170,7 +170,7 @@ namespace Wmhelp.XPath2
             switch (tok)
             {
                 case Token.IntegerLiteral:
-                    ConsumeToken(tok, (Integer)Decimal.Parse(s, NumberFormatInfo.InvariantInfo));
+                    ConsumeToken(tok, (Integer) Decimal.Parse(s, NumberFormatInfo.InvariantInfo));
                     break;
 
                 case Token.DecimalLiteral:
@@ -377,8 +377,7 @@ namespace Wmhelp.XPath2
                     continue;
                 }
                 break;
-            }
-            while (true);
+            } while (true);
         }
 
         private void DefaultState()
@@ -421,7 +420,7 @@ namespace Wmhelp.XPath2
                     if (c != 0 && XmlCharType.Instance.IsStartNCNameChar(c))
                         ConsumeNCName();
                     else
-                        throw new XPath2Exception("XPST0003", Properties.Resources.ExpectedNCName);
+                        throw new XPath2Exception("XPST0003", Resources.ExpectedNCName);
                 }
                 m_state = LexerState.Operator;
             }
@@ -455,7 +454,7 @@ namespace Wmhelp.XPath2
                 if (Peek(0) == '$')
                     ConsumeChar(Read());
                 else
-                    throw new XPath2Exception("XPST0003", Properties.Resources.ExpectedVariablePrefix, "for");
+                    throw new XPath2Exception("XPST0003", Resources.ExpectedVariablePrefix, "for");
                 m_state = LexerState.VarName;
             }
             else if (MatchIdentifer("some"))
@@ -467,7 +466,7 @@ namespace Wmhelp.XPath2
                 if (Peek(0) == '$')
                     ConsumeChar(Read());
                 else
-                    throw new XPath2Exception("XPST0003", Properties.Resources.ExpectedVariablePrefix, "some");
+                    throw new XPath2Exception("XPST0003", Resources.ExpectedVariablePrefix, "some");
                 m_state = LexerState.VarName;
             }
             else if (MatchIdentifer("every"))
@@ -479,7 +478,7 @@ namespace Wmhelp.XPath2
                 if (Peek(0) == '$')
                     ConsumeChar(Read());
                 else
-                    throw new XPath2Exception("XPST0003", Properties.Resources.ExpectedVariablePrefix, "every");
+                    throw new XPath2Exception("XPST0003", Resources.ExpectedVariablePrefix, "every");
                 m_state = LexerState.VarName;
             }
             else if (c == '$')
@@ -756,7 +755,6 @@ namespace Wmhelp.XPath2
                     ConsumeChar(Read());
                 }
                 m_state = LexerState.Default;
-
             }
             else if (c == '<')
             {
@@ -767,7 +765,6 @@ namespace Wmhelp.XPath2
                     ConsumeChar(Read());
                 }
                 m_state = LexerState.Default;
-
             }
             else if (c == '/')
             {
@@ -923,7 +920,7 @@ namespace Wmhelp.XPath2
                 if (Peek(0) == '$')
                     ConsumeChar(Read());
                 else
-                    throw new XPath2Exception("", Properties.Resources.ExpectedVariablePrefix, "for");
+                    throw new XPath2Exception("", Resources.ExpectedVariablePrefix, "for");
                 m_state = LexerState.VarName;
             }
             else if (MatchIdentifer("eq"))
@@ -1137,7 +1134,6 @@ namespace Wmhelp.XPath2
                     ConsumeChar(Read());
                 }
                 m_state = LexerState.Default;
-
             }
             else if (c == '<')
             {
@@ -1148,7 +1144,6 @@ namespace Wmhelp.XPath2
                     ConsumeChar(Read());
                 }
                 m_state = LexerState.Default;
-
             }
             else if (c == ')')
             {

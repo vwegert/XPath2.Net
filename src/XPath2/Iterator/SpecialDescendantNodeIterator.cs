@@ -4,26 +4,21 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Xml;
 using System.Xml.XPath;
 
 namespace Wmhelp.XPath2.Iterator
 {
-    sealed class SpecialDescendantNodeIterator: AxisNodeIterator
+    internal sealed class SpecialDescendantNodeIterator : AxisNodeIterator
     {
         private XPathNodeType kind;
 
-        public SpecialDescendantNodeIterator(XPath2Context context, object nodeTest, bool matchSelf, XPath2NodeIterator iter)
+        public SpecialDescendantNodeIterator(XPath2Context context, object nodeTest, bool matchSelf,
+            XPath2NodeIterator iter)
             : base(context, nodeTest, matchSelf, iter)
         {
             kind = XPathNodeType.All;
             if (nameTest != null ||
-                 (typeTest != null && typeTest.GetNodeKind() == XPathNodeType.Element))
+                (typeTest != null && typeTest.GetNodeKind() == XPathNodeType.Element))
                 kind = XPathNodeType.Element;
         }
 
@@ -42,7 +37,7 @@ namespace Wmhelp.XPath2.Iterator
 
         protected override XPathItem NextItem()
         {
-        MoveNextIter:
+            MoveNextIter:
             if (!accept)
             {
                 if (!MoveNextIter())
@@ -54,14 +49,14 @@ namespace Wmhelp.XPath2.Iterator
                 }
             }
 
-        MoveToFirstChild:
+            MoveToFirstChild:
             if (curr.MoveToChild(kind))
             {
                 depth++;
                 goto TestItem;
             }
 
-        MoveToNext:
+            MoveToNext:
             if (depth == 0)
             {
                 accept = false;
@@ -74,7 +69,7 @@ namespace Wmhelp.XPath2.Iterator
                 goto MoveToNext;
             }
 
-        TestItem:
+            TestItem:
             if (!TestItem())
                 goto MoveToFirstChild;
             sequentialPosition++;

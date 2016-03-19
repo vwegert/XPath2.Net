@@ -5,26 +5,23 @@
 // All rights reserved.
 
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 
 namespace Wmhelp.XPath2.AST
 {
-    sealed class VarRefNode: AbstractNode
+    internal sealed class VarRefNode : AbstractNode
     {
         private Tokenizer.VarName _varName;
         private NameBinder.ReferenceLink _varRef;
 
-        public NameBinder.ReferenceLink VarRef { get { return _varRef; } }
+        public NameBinder.ReferenceLink VarRef
+        {
+            get { return _varRef; }
+        }
 
         public XmlQualifiedName QNVarName
         {
-            get
-            {
-                return QNameParser.Parse(_varName.ToString(), Context.NamespaceManager, Context.NameTable);
-            }
+            get { return QNameParser.Parse(_varName.ToString(), Context.NamespaceManager, Context.NameTable); }
         }
 
         public VarRefNode(XPath2Context context, Tokenizer.VarName varRef)
@@ -37,7 +34,7 @@ namespace Wmhelp.XPath2.AST
         {
             XmlQualifiedName qname = QNameParser.Parse(_varName.ToString(),
                 Context.NamespaceManager, Context.NameTable);
-            _varRef = Context.RunningContext.NameBinder.VarIndexByName(qname);            
+            _varRef = Context.RunningContext.NameBinder.VarIndexByName(qname);
         }
 
         public override object Execute(IContextProvider provider, object[] dataPool)

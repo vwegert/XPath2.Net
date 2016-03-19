@@ -4,17 +4,11 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Xml;
 using System.Xml.XPath;
 
 namespace Wmhelp.XPath2.Iterator
 {
-    sealed class SpecialChildNodeIterator: SequentialAxisNodeIterator
+    internal sealed class SpecialChildNodeIterator : SequentialAxisNodeIterator
     {
         private XPathNodeType kind;
 
@@ -40,7 +34,7 @@ namespace Wmhelp.XPath2.Iterator
 
         public override XPath2NodeIterator Clone()
         {
-            return new SpecialChildNodeIterator(this);            
+            return new SpecialChildNodeIterator(this);
         }
 
         protected override bool MoveToFirst(XPathNavigator nav)

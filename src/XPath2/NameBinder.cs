@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.Xml;
+using Wmhelp.XPath2.Properties;
 
 namespace Wmhelp.XPath2
 {
@@ -59,7 +60,7 @@ namespace Wmhelp.XPath2
             for (int k = _slots.Count - 1; k >= 0; k--)
                 if (_slots[k].name.Equals(name))
                     return _slots[k].id;
-            throw new XPath2Exception("XPST0008", Properties.Resources.XPST0008, name.ToString());
+            throw new XPath2Exception("XPST0008", Resources.XPST0008, name.ToString());
         }
 
         public ReferenceLink NewReference()

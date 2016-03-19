@@ -4,7 +4,6 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System.Xml;
 using System.Xml.XPath;
 
 namespace Wmhelp.XPath2

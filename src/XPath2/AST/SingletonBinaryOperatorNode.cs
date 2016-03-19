@@ -4,15 +4,14 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
 using System.Xml.XPath;
 
 namespace Wmhelp.XPath2.AST
 {
-    sealed class SingletonBinaryOperatorNode: BinaryOperatorNode
+    internal sealed class SingletonBinaryOperatorNode : BinaryOperatorNode
     {
-        public SingletonBinaryOperatorNode(XPath2Context context, BinaryOperator action, object node1, object node2, XPath2ResultType resultType)
+        public SingletonBinaryOperatorNode(XPath2Context context, BinaryOperator action, object node1, object node2,
+            XPath2ResultType resultType)
             : base(context, action, node1, node2, resultType)
         {
         }

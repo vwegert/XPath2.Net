@@ -7,6 +7,7 @@
 using System;
 using System.Globalization;
 using System.Text;
+using Wmhelp.XPath2.Properties;
 
 namespace Wmhelp.XPath2.Value
 {
@@ -57,7 +58,7 @@ namespace Wmhelp.XPath2.Value
             {
                 if (!DateTimeOffset.TryParseExact(text.Substring(0, text.Length - 1), GYearFormats,
                         CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out dateTimeOffset))
-                    throw new XPath2Exception("", Properties.Resources.InvalidFormat, text, "xs:gYear");
+                    throw new XPath2Exception("", Resources.InvalidFormat, text, "xs:gYear");
                 return new GYearValue(s, dateTimeOffset);
             }
             else
@@ -65,7 +66,7 @@ namespace Wmhelp.XPath2.Value
                 if (DateTime.TryParseExact(text, GYearFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
                     return new GYearValue(s, dateTime);
                 if (!DateTimeOffset.TryParseExact(text, GYearOffsetFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTimeOffset))
-                    throw new XPath2Exception("", Properties.Resources.InvalidFormat, text, "xs:gYear");
+                    throw new XPath2Exception("", Resources.InvalidFormat, text, "xs:gYear");
                 return new GYearValue(s, dateTimeOffset);
             }
         }    

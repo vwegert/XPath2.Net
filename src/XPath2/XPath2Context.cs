@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Xml;
 using System.Xml.Schema;
-using System.Globalization;
 using Wmhelp.XPath2.MS;
+using Wmhelp.XPath2.Properties;
 
 namespace Wmhelp.XPath2
 {
@@ -76,7 +77,7 @@ namespace Wmhelp.XPath2
             }
             catch (ArgumentException)
             {
-                throw new XPath2Exception("XQST0076", Properties.Resources.XQST0076, collationName);
+                throw new XPath2Exception("XQST0076", Resources.XQST0076, collationName);
             }
         }
 

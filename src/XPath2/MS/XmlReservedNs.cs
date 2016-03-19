@@ -8,11 +8,6 @@
 //     
 //      You must not remove this notice, or any other, from this software.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace Wmhelp.XPath2.MS
 {
     /// <summary>
@@ -27,7 +22,7 @@ namespace Wmhelp.XPath2.MS
         public const string NsXsd = "http://www.w3.org/2001/XMLSchema-datatypes";
         public const string NsXsi = "http://www.w3.org/2001/XMLSchema-instance";
         public const string NsXQueryFunc = "http://www.w3.org/2003/11/xpath-functions";
-        public const string NsXPathFunc = "http://www.w3.org/2005/xpath-functions"; 
+        public const string NsXPathFunc = "http://www.w3.org/2005/xpath-functions";
         public const string NsXqtErrors = "http://www.w3.org/2005/xqt-errors";
         public const string NsXQueryDataType = "http://www.w3.org/2003/11/xpath-datatypes";
         public const string NsXQueryLocalFunc = "http://www.w3.org/2005/xquery-local-functions";

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Xml;
-
-namespace Wmhelp.XPath2
+﻿namespace Wmhelp.XPath2
 {
     public enum XPath2ResultType
     {

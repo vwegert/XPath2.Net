@@ -5,19 +5,17 @@
 // All rights reserved.
 
 using System;
-using System.Collections.Generic;
 
 namespace Wmhelp.XPath2.AST
 {
-
     internal delegate XPath2ResultType GetReturnTypeDelegate(XPath2ResultType resType1, XPath2ResultType resType2);
 
-    class ArithmeticBinaryOperatorNode : AtomizedBinaryOperatorNode
+    internal class ArithmeticBinaryOperatorNode : AtomizedBinaryOperatorNode
     {
         private GetReturnTypeDelegate _returnTypeDelegate;
 
-        public ArithmeticBinaryOperatorNode(XPath2Context context, BinaryOperator action, 
-                object node1, object node2, GetReturnTypeDelegate returnTypeDelegate)
+        public ArithmeticBinaryOperatorNode(XPath2Context context, BinaryOperator action,
+            object node1, object node2, GetReturnTypeDelegate returnTypeDelegate)
             : base(context, action, node1, node2, XPath2ResultType.Number)
         {
             _returnTypeDelegate = returnTypeDelegate;
@@ -113,6 +111,5 @@ namespace Wmhelp.XPath2.AST
                 return XPath2ResultType.Number;
             return XPath2ResultType.Any;
         }
-
     }
 }

@@ -5,18 +5,15 @@
 // All rights reserved.
 
 using System;
-using System.Text;
 using System.Collections.Generic;
-
-using System.Xml;
-using System.Xml.XPath;
 using System.Xml.Schema;
-
+using System.Xml.XPath;
+using Wmhelp.XPath2.Properties;
 using Wmhelp.XPath2.Proxy;
 
 namespace Wmhelp.XPath2.AST
 {
-    sealed class FilterExprNode: AbstractNode
+    internal sealed class FilterExprNode : AbstractNode
     {
         private bool m_contextSensitive;
 
@@ -27,13 +24,14 @@ namespace Wmhelp.XPath2.AST
             AddRange(nodes);
         }
 
-        private IEnumerable<XPathItem> CreateEnumerator(object[] dataPool, AbstractNode expr, XPath2NodeIterator baseIter)
+        private IEnumerable<XPathItem> CreateEnumerator(object[] dataPool, AbstractNode expr,
+            XPath2NodeIterator baseIter)
         {
             XPath2NodeIterator iter = baseIter.Clone();
             ValueNode numexpr = expr as ValueNode;
             if (numexpr != null && numexpr.Content is Integer)
             {
-                Integer pos = (Integer)numexpr.Content;
+                Integer pos = (Integer) numexpr.Content;
                 foreach (XPathItem item in iter)
                 {
                     if (pos == 1)
@@ -68,7 +66,7 @@ namespace Wmhelp.XPath2.AST
                             continue;
                         item = iter2.Current.Clone();
                         if (!item.IsNode && iter2.MoveNext())
-                            throw new XPath2Exception("FORG0006", Properties.Resources.FORG0006, "fn:boolean()",
+                            throw new XPath2Exception("FORG0006", Resources.FORG0006, "fn:boolean()",
                                 new SequenceType(XmlTypeCode.AnyAtomicType, XmlTypeCardinality.OneOrMore));
                     }
                     else
@@ -90,9 +88,8 @@ namespace Wmhelp.XPath2.AST
                                     break;
                             }
                         }
-                        else
-                            if (CoreFuncs.GetBooleanValue(item))
-                                yield return iter.Current;
+                        else if (CoreFuncs.GetBooleanValue(item))
+                            yield return iter.Current;
                     }
                 }
             }
@@ -108,7 +105,7 @@ namespace Wmhelp.XPath2.AST
             base.Bind();
             m_contextSensitive = this[1].IsContextSensitive();
         }
-        
+
         public override object Execute(IContextProvider provider, object[] dataPool)
         {
             XPath2NodeIterator iter = XPath2NodeIterator.Create(this[0].Execute(provider, dataPool));

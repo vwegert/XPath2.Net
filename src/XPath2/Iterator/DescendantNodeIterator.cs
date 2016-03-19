@@ -4,17 +4,11 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Xml;
 using System.Xml.XPath;
 
 namespace Wmhelp.XPath2.Iterator
 {
-    sealed class DescendantNodeIterator : AxisNodeIterator
+    internal sealed class DescendantNodeIterator : AxisNodeIterator
     {
         public DescendantNodeIterator(XPath2Context context, object nodeTest, bool matchSelf, XPath2NodeIterator iter)
             : base(context, nodeTest, matchSelf, iter)
@@ -35,7 +29,7 @@ namespace Wmhelp.XPath2.Iterator
 
         protected override XPathItem NextItem()
         {
-        MoveNextIter:
+            MoveNextIter:
             if (!accept)
             {
                 if (!MoveNextIter())
@@ -47,14 +41,14 @@ namespace Wmhelp.XPath2.Iterator
                 }
             }
 
-        MoveToFirstChild:
+            MoveToFirstChild:
             if (curr.MoveToFirstChild())
             {
                 depth++;
                 goto TestItem;
             }
 
-        MoveToNext:
+            MoveToNext:
             if (depth == 0)
             {
                 accept = false;
@@ -67,7 +61,7 @@ namespace Wmhelp.XPath2.Iterator
                 goto MoveToNext;
             }
 
-        TestItem:
+            TestItem:
             if (!TestItem())
                 goto MoveToFirstChild;
             sequentialPosition++;

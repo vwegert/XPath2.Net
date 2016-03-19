@@ -5,13 +5,10 @@
 // All rights reserved.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Globalization;
 
 namespace Wmhelp.XPath2
 {
-    public struct Integer: IFormattable, IComparable, IConvertible, IComparable<Integer>, IEquatable<Integer>
+    public struct Integer : IFormattable, IComparable, IConvertible, IComparable<Integer>, IEquatable<Integer>
     {
         private decimal _value;
 
@@ -87,57 +84,57 @@ namespace Wmhelp.XPath2
 
         public static explicit operator SByte(Integer i1)
         {
-            return (SByte)i1._value;
+            return (SByte) i1._value;
         }
 
         public static explicit operator Byte(Integer i1)
         {
-            return (Byte)i1._value;
+            return (Byte) i1._value;
         }
 
         public static explicit operator Char(Integer i1)
         {
-            return (Char)i1._value;
+            return (Char) i1._value;
         }
 
         public static explicit operator Int16(Integer i1)
         {
-            return (Int16)i1._value;
+            return (Int16) i1._value;
         }
 
         public static explicit operator UInt16(Integer i1)
         {
-            return (UInt16)i1._value;
+            return (UInt16) i1._value;
         }
 
         public static explicit operator Int32(Integer i1)
         {
-            return (Int32)i1._value;
+            return (Int32) i1._value;
         }
 
         public static explicit operator UInt32(Integer i1)
         {
-            return (UInt32)i1._value;
+            return (UInt32) i1._value;
         }
 
         public static explicit operator Int64(Integer i1)
         {
-            return (Int64)i1._value;
+            return (Int64) i1._value;
         }
 
         public static explicit operator UInt64(Integer i1)
         {
-            return (UInt64)i1._value;
+            return (UInt64) i1._value;
         }
 
         public static explicit operator Single(Integer i1)
         {
-            return (Single)i1._value;
+            return (Single) i1._value;
         }
 
         public static explicit operator Double(Integer i1)
         {
-            return (Double)i1._value;
+            return (Double) i1._value;
         }
 
         public static explicit operator Decimal(Integer i1)
@@ -163,7 +160,7 @@ namespace Wmhelp.XPath2
         public override bool Equals(object obj)
         {
             if (obj is Integer)
-                return _value.Equals(((Integer)obj)._value);
+                return _value.Equals(((Integer) obj)._value);
             else
                 return false;
         }
@@ -195,7 +192,7 @@ namespace Wmhelp.XPath2
 
         public static Integer operator -(Integer i1)
         {
-            return new Integer(0 -i1._value);
+            return new Integer(0 - i1._value);
         }
 
         public static Integer operator -(Integer i1, Integer i2)
@@ -210,17 +207,17 @@ namespace Wmhelp.XPath2
 
         public static Integer operator *(Integer i1, Integer i2)
         {
-            return new Integer(i1._value * i2._value);
+            return new Integer(i1._value*i2._value);
         }
 
         public static Integer operator /(Integer i1, Integer i2)
         {
-            return new Integer(Decimal.Truncate(i1._value / i2._value));
+            return new Integer(Decimal.Truncate(i1._value/i2._value));
         }
 
         public static Integer operator %(Integer i1, Integer i2)
         {
-            return new Integer(i1._value % i2._value);
+            return new Integer(i1._value%i2._value);
         }
 
         public static bool operator ==(Integer i1, Integer i2)
@@ -277,7 +274,7 @@ namespace Wmhelp.XPath2
 
         public static Integer ToInteger(object value)
         {
-             return (Integer)Convert.ToDecimal(value);
+            return (Integer) Convert.ToDecimal(value);
         }
 
         #region IFormattable Members
@@ -295,7 +292,7 @@ namespace Wmhelp.XPath2
         {
             if (!(obj is Integer))
                 throw new ArgumentException("Object type must be a DataEngine.CoreServices.Integer");
-            return _value.CompareTo(((Integer)obj)._value);
+            return _value.CompareTo(((Integer) obj)._value);
         }
 
         #endregion

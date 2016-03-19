@@ -5,12 +5,12 @@
 // All rights reserved.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Xml.XPath;
 
 namespace Wmhelp.XPath2.AST
-{    
-    abstract class AbstractNode: IEnumerable<AbstractNode>
+{
+    internal abstract class AbstractNode : IEnumerable<AbstractNode>
     {
         private AbstractNode _parent = null;
         private List<AbstractNode> _childs = null;
@@ -31,17 +31,20 @@ namespace Wmhelp.XPath2.AST
             }
         }
 
-        public AbstractNode Parent { get { return _parent; } }
+        public AbstractNode Parent
+        {
+            get { return _parent; }
+        }
 
         public XPath2Context Context
         {
-            get
-            {
-                return _context;
-            }
+            get { return _context; }
         }
 
-        public bool IsLeaf { get { return _childs == null; } }
+        public bool IsLeaf
+        {
+            get { return _childs == null; }
+        }
 
         public AbstractNode this[int index]
         {
@@ -151,7 +154,7 @@ namespace Wmhelp.XPath2.AST
 
         #region IEnumerable Members
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             if (_childs == null)
                 throw new InvalidOperationException();

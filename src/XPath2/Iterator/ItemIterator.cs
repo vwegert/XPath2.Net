@@ -4,17 +4,12 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Xml;
 using System.Xml.XPath;
+using Wmhelp.XPath2.Properties;
 
 namespace Wmhelp.XPath2.Iterator
 {
-    class ItemIterator: XPath2NodeIterator
+    internal class ItemIterator : XPath2NodeIterator
     {
         private XPath2NodeIterator iter;
 
@@ -40,10 +35,10 @@ namespace Wmhelp.XPath2.Iterator
             if (iter.MoveNext())
             {
                 if (iter.Current.IsNode)
-                    throw new XPath2Exception(Properties.Resources.XPTY0018, "");
+                    throw new XPath2Exception(Resources.XPTY0018, "");
                 return iter.Current;
             }
-            return null;                
+            return null;
         }
     }
 }

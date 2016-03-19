@@ -4,17 +4,11 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-
-using System.Xml;
 using System.Xml.XPath;
-using System.Xml.Schema;
 
 namespace Wmhelp.XPath2.Iterator
 {
-    sealed class NamespaceNodeIterator : SequentialAxisNodeIterator
+    internal sealed class NamespaceNodeIterator : SequentialAxisNodeIterator
     {
         public NamespaceNodeIterator(XPath2Context context, object nodeTest, XPath2NodeIterator iter)
             : base(context, nodeTest, false, iter)

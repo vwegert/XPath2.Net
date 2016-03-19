@@ -7,13 +7,10 @@
 //     
 //      You must not remove this notice, or any other, from this software.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
-using System.Threading;
 using System.IO;
 using System.Reflection;
+using System.Threading;
+using System.Xml;
 
 namespace Wmhelp.XPath2.MS
 {
@@ -25,7 +22,7 @@ namespace Wmhelp.XPath2.MS
         // NCName characters -- Section 2.3 [4] (Name characters without ':')
         // Character data characters -- Section 2.2 [2]
         // PubidChar ::= #x20 | #xD | #xA | [a-zA-Z0-9] | [-'()+,./:=?;!*#@$_%] Section 2.3 of spec
-        
+
         internal const int fWhitespace = 1;
         internal const int fLetter = 2;
         internal const int fNCStartName = 4;
@@ -35,7 +32,7 @@ namespace Wmhelp.XPath2.MS
         internal const int fText = 64;
         internal const int fAttrValue = 128;
 
-        private const uint CharPropertiesSize = (uint)char.MaxValue + 1;
+        private const uint CharPropertiesSize = (uint) char.MaxValue + 1;
 
         private static object s_Lock;
 
@@ -55,16 +52,16 @@ namespace Wmhelp.XPath2.MS
         private static byte[] s_CharProperties;
         internal byte[] charProperties;
 
-        static void InitInstance()
+        private static void InitInstance()
         {
             lock (StaticLock)
             {
                 if (s_CharProperties != null)
                     return;
 
-                Stream memStream = Assembly.GetAssembly(typeof(XmlNode)).GetManifestResourceStream("XmlCharType.bin");
+                Stream memStream = Assembly.GetAssembly(typeof (XmlNode)).GetManifestResourceStream("XmlCharType.bin");
                 s_CharProperties = new byte[CharPropertiesSize];
-                memStream.Read(s_CharProperties, 0, (int)CharPropertiesSize);
+                memStream.Read(s_CharProperties, 0, (int) CharPropertiesSize);
             }
         }
 
@@ -73,7 +70,7 @@ namespace Wmhelp.XPath2.MS
             this.charProperties = charProperties;
         }
 
-        static public XmlCharType Instance
+        public static XmlCharType Instance
         {
             get
             {

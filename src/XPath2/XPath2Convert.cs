@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Globalization;
-
-#if !NET35
-using System.Numerics;
-#endif
-
+using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.XPath;
+using Wmhelp.XPath2.Properties;
 using Wmhelp.XPath2.Value;
+#if !NET35
+using System.Numerics;
+#endif
 
 namespace Wmhelp.XPath2
 {
@@ -432,7 +430,7 @@ namespace Wmhelp.XPath2
                                 return DurationValue.Parse(value.ToString());
                             case XmlTypeCode.QName:
                                 if (xmlType.TypeCode == XmlTypeCode.UntypedAtomic)
-                                    throw new XPath2Exception("XPTY0004", Properties.Resources.XPTY0004,
+                                    throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
                                         new SequenceType(xmlType, XmlTypeCardinality.One, null), type);
                                 return QNameValue.Parse(value.ToString(), nsmgr);
                             case XmlTypeCode.Notation:
@@ -460,7 +458,7 @@ namespace Wmhelp.XPath2
                                             return new HexBinaryValue((byte[])res);
                                         case XmlTypeCode.Base64Binary:
                                             if (text.EndsWith("==") && (text.Length < 3 || "AQgw".IndexOf(text[text.Length - 3]) == -1))
-                                                throw new XPath2Exception("FORG0001", Properties.Resources.FORG0001, value);
+                                                throw new XPath2Exception("FORG0001", Resources.FORG0001, value);
                                             return new Base64BinaryValue((byte[])res);
                                         case XmlTypeCode.Idref:
                                             if (type.SchemaType == SequenceType.XmlSchema.IDREFS)
@@ -533,7 +531,7 @@ namespace Wmhelp.XPath2
                             case XmlTypeCode.Boolean:
                                 return CoreFuncs.BooleanValue(value);
                             case XmlTypeCode.AnyUri:
-                                throw new XPath2Exception("XPTY0004", Properties.Resources.XPTY0004,
+                                throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
                                     new SequenceType(xmlType, XmlTypeCardinality.One, null), type);
                             default:
                                 return ChangeType(value, type.ItemType);
@@ -558,15 +556,15 @@ namespace Wmhelp.XPath2
             }
             catch (InvalidCastException)
             {
-                throw new XPath2Exception("XPTY0004", Properties.Resources.XPTY0004,
+                throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
                     new SequenceType(xmlType, XmlTypeCardinality.One, null), type);
             }
             catch (FormatException)
             {
-                throw new XPath2Exception("XPTY0004", Properties.Resources.XPTY0004,
+                throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
                     new SequenceType(xmlType, XmlTypeCardinality.One, null), type);
             }
-            throw new XPath2Exception("XPTY0004", Properties.Resources.XPTY0004,
+            throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
                 new SequenceType(xmlType, XmlTypeCardinality.One, null), type);
         }
 
@@ -582,12 +580,12 @@ namespace Wmhelp.XPath2
             }
             catch (FormatException)
             {
-                throw new XPath2Exception("FORG0001", Properties.Resources.FORG0001, value,
+                throw new XPath2Exception("FORG0001", Resources.FORG0001, value,
                     new SequenceType(returnType, XmlTypeCardinality.One));
             }
             catch (OverflowException)
             {
-                throw new XPath2Exception("FOAR0002", Properties.Resources.FOAR0002, value,
+                throw new XPath2Exception("FOAR0002", Resources.FOAR0002, value,
                     new SequenceType(returnType, XmlTypeCardinality.One));
             }
         }
@@ -600,7 +598,7 @@ namespace Wmhelp.XPath2
             if (value == null)
                 value = CoreFuncs.False;
             if (type.TypeCode == XmlTypeCode.None)
-                throw new XPath2Exception("XPTY0004", Properties.Resources.XPTY0004,
+                throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
                    new SequenceType(value.GetType(), XmlTypeCardinality.One), "empty-sequence()");
             if (value.GetType() != type.ItemType)
             {
@@ -686,7 +684,7 @@ namespace Wmhelp.XPath2
                 if (type.TypeCode == XmlTypeCode.Duration &&
                     (value is YearMonthDurationValue || value is DayTimeDurationValue))
                     return value;
-                throw new XPath2Exception("XPTY0004", Properties.Resources.XPTY0004,
+                throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
                     new SequenceType(value.GetType(), XmlTypeCardinality.One), type);
             }
             return value;
@@ -699,7 +697,7 @@ namespace Wmhelp.XPath2
             if (value == null)
                 value = CoreFuncs.False;
             if (type.TypeCode == XmlTypeCode.None)
-                throw new XPath2Exception("XPTY0004", Properties.Resources.XPTY0004,
+                throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
                    new SequenceType(value.GetType(), XmlTypeCardinality.One), "empty-sequence()");
             if (value.GetType() != type.ItemType &&
                 type.ItemType != typeof(Object))
@@ -740,7 +738,7 @@ namespace Wmhelp.XPath2
                     else if (value is SByte)
                         return (Decimal)(sbyte)value;
                 }
-                throw new XPath2Exception("XPTY0004", Properties.Resources.XPTY0004,
+                throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
                     new SequenceType(value.GetType(), XmlTypeCardinality.One), type);
             }
             return value;

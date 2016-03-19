@@ -4,17 +4,12 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Xml;
 using System.Xml.XPath;
+using Wmhelp.XPath2.Properties;
 
 namespace Wmhelp.XPath2.Iterator
 {
-    sealed class DocumentOrderNodeIterator : XPath2NodeIterator
+    internal sealed class DocumentOrderNodeIterator : XPath2NodeIterator
     {
         private ItemSet itemSet;
         private XPathNavigator lastNode;
@@ -33,9 +28,8 @@ namespace Wmhelp.XPath2.Iterator
             {
                 if (!isNode.HasValue)
                     isNode = baseIter.Current.IsNode;
-                else
-                    if (baseIter.Current.IsNode != isNode)
-                        throw new XPath2Exception("XPTY0018", Properties.Resources.XPTY0018, baseIter.Current.Value);
+                else if (baseIter.Current.IsNode != isNode)
+                    throw new XPath2Exception("XPTY0018", Resources.XPTY0018, baseIter.Current.Value);
                 itemSet.Add(baseIter.Current.Clone());
             }
             if (isNode.HasValue && isNode.Value)

@@ -5,11 +5,11 @@
 // All rights reserved.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Xml.XPath;
 using TimSort;
-using System.Runtime.InteropServices;
-using System.Collections;
 
 namespace Wmhelp.XPath2
 {

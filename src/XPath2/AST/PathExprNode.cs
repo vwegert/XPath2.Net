@@ -4,28 +4,22 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Text;
 using System.Collections.Generic;
-using System.Diagnostics;
-
-using System.Xml;
-using System.Xml.XPath;
-using System.Xml.Schema;
-
 using Wmhelp.XPath2.Iterator;
 
 namespace Wmhelp.XPath2.AST
 {
-
-    sealed class PathExprNode: AbstractNode
+    internal sealed class PathExprNode : AbstractNode
     {
         private bool _isOrderedSet;
         private PathStep[] _path;
 
         public bool Unordered { get; set; }
 
-        public PathStep FirstStep { get { return _path[0]; } }
+        public PathStep FirstStep
+        {
+            get { return _path[0]; }
+        }
 
         public PathExprNode(XPath2Context context, PathStep pathStep)
             : base(context)
@@ -41,7 +35,7 @@ namespace Wmhelp.XPath2.AST
                 path[0].type == XPath2ExprType.DescendantOrSelf &&
                 path[0].nodeTest == SequenceType.Node &&
                 path[1].type == XPath2ExprType.Child)
-                _path = new PathStep[] { new PathStep(path[1].nodeTest, XPath2ExprType.Descendant) };
+                _path = new PathStep[] {new PathStep(path[1].nodeTest, XPath2ExprType.Descendant)};
             else
             {
                 bool transform;
@@ -52,13 +46,14 @@ namespace Wmhelp.XPath2.AST
                         if (path[k].type == XPath2ExprType.DescendantOrSelf)
                         {
                             int s = k + 1;
-                            List<ChildOverDescendantsNodeIterator.NodeTest> nodeTest = new List<ChildOverDescendantsNodeIterator.NodeTest>();
+                            List<ChildOverDescendantsNodeIterator.NodeTest> nodeTest =
+                                new List<ChildOverDescendantsNodeIterator.NodeTest>();
                             for (; s < path.Count; s++)
                             {
                                 if (path[s].type != XPath2ExprType.Child)
                                     break;
                                 nodeTest.Add(new ChildOverDescendantsNodeIterator.NodeTest(path[s].nodeTest));
-                            }                            
+                            }
                             if (nodeTest.Count > 1)
                             {
                                 int n = nodeTest.Count + 1;
@@ -137,7 +132,7 @@ namespace Wmhelp.XPath2.AST
         {
             bool orderedSet = _isOrderedSet;
             bool special = provider != null &&
-                provider.Context.GetType().Name == "XPathDocumentNavigator";
+                           provider.Context.GetType().Name == "XPathDocumentNavigator";
             XPath2NodeIterator tail;
             if (_path[0].type == XPath2ExprType.Expr)
             {
@@ -146,7 +141,7 @@ namespace Wmhelp.XPath2.AST
                     orderedSet = orderedSet & tail.IsSingleIterator;
             }
             else
-                tail = _path[0].Create(Context, dataPool, 
+                tail = _path[0].Create(Context, dataPool,
                     XPath2NodeIterator.Create(CoreFuncs.ContextNode(provider)), special);
             for (int k = 1; k < _path.Length; k++)
                 tail = _path[k].Create(Context, dataPool, tail, special);

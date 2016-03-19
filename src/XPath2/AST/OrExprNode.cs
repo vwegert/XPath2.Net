@@ -4,12 +4,9 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-
 namespace Wmhelp.XPath2.AST
 {
-    sealed class OrExprNode: AbstractNode
+    internal sealed class OrExprNode : AbstractNode
     {
         public OrExprNode(XPath2Context context, object node1, object node2)
             : base(context)

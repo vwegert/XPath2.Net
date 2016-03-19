@@ -4,14 +4,12 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
 using System.Xml;
 using System.Xml.XPath;
 
 namespace Wmhelp.XPath2.AST
 {
-    sealed class ForNode: AbstractNode
+    internal sealed class ForNode : AbstractNode
     {
         private Tokenizer.VarName _varName;
         private NameBinder.ReferenceLink _varRef;
@@ -21,7 +19,6 @@ namespace Wmhelp.XPath2.AST
         {
             _varName = varName;
             Add(expr);
-
         }
 
         public void AddTail(object expr)
@@ -29,7 +26,7 @@ namespace Wmhelp.XPath2.AST
             if (Count == 1)
                 Add(expr);
             else
-                ((ForNode)this[1]).AddTail(expr);
+                ((ForNode) this[1]).AddTail(expr);
         }
 
         public override void Bind()
@@ -74,7 +71,7 @@ namespace Wmhelp.XPath2.AST
             private XPath2NodeIterator iter;
             private XPath2NodeIterator childIter;
 
-            public ForIterator(ForNode owner, IContextProvider provider,  object[] dataPool, XPath2NodeIterator baseIter)
+            public ForIterator(ForNode owner, IContextProvider provider, object[] dataPool, XPath2NodeIterator baseIter)
             {
                 this.owner = owner;
                 this.provider = provider;
@@ -125,7 +122,5 @@ namespace Wmhelp.XPath2.AST
                 }
             }
         }
-
-
     }
 }

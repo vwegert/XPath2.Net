@@ -7,6 +7,7 @@
 using System;
 using System.Globalization;
 using System.Text;
+using Wmhelp.XPath2.Properties;
 
 namespace Wmhelp.XPath2.Value
 {
@@ -44,7 +45,7 @@ namespace Wmhelp.XPath2.Value
             {
                 if (!DateTimeOffset.TryParseExact(text.Substring(0, text.Length - 1), "yyyy--MM-dd",
                         CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out dateTimeOffset))
-                    throw new XPath2Exception("", Properties.Resources.InvalidFormat, text, "xs:gMonthDay");
+                    throw new XPath2Exception("", Resources.InvalidFormat, text, "xs:gMonthDay");
                 return new GMonthDayValue(dateTimeOffset);
             }
             else
@@ -52,7 +53,7 @@ namespace Wmhelp.XPath2.Value
                 if (DateTime.TryParseExact(text, "yyyy--MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
                     return new GMonthDayValue(dateTime);
                 if (!DateTimeOffset.TryParseExact(text, "yyyy--MM-ddzzz", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTimeOffset))
-                    throw new XPath2Exception("", Properties.Resources.InvalidFormat, text, "xs:gMonthDay");
+                    throw new XPath2Exception("", Resources.InvalidFormat, text, "xs:gMonthDay");
                 return new GMonthDayValue(dateTimeOffset);
             }
         }    

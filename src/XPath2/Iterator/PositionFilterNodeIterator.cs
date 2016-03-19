@@ -4,20 +4,14 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Xml;
 using System.Xml.XPath;
 
 namespace Wmhelp.XPath2.Iterator
 {
-    sealed class PositionFilterNodeIterator: XPath2NodeIterator
+    internal sealed class PositionFilterNodeIterator : XPath2NodeIterator
     {
         private XPath2NodeIterator iter;
-        private int position;        
+        private int position;
 
         public PositionFilterNodeIterator(int pos, XPath2NodeIterator baseIter)
         {

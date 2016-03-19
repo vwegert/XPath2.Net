@@ -5,12 +5,7 @@
 // All rights reserved.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-
-using System.Xml;
 using System.Xml.XPath;
-using System.Xml.Schema;
 
 namespace Wmhelp.XPath2
 {
