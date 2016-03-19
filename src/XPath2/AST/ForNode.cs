@@ -11,7 +11,7 @@ namespace Wmhelp.XPath2.AST
 {
     internal sealed class ForNode : AbstractNode
     {
-        private Tokenizer.VarName _varName;
+        private readonly Tokenizer.VarName _varName;
         private NameBinder.ReferenceLink _varRef;
 
         public ForNode(XPath2Context context, Tokenizer.VarName varName, object expr)
@@ -64,10 +64,10 @@ namespace Wmhelp.XPath2.AST
 
         private sealed class ForIterator : XPath2NodeIterator
         {
-            private ForNode owner;
-            private IContextProvider provider;
-            private object[] dataPool;
-            private XPath2NodeIterator baseIter;
+            private readonly ForNode owner;
+            private readonly IContextProvider provider;
+            private readonly object[] dataPool;
+            private readonly XPath2NodeIterator baseIter;
             private XPath2NodeIterator iter;
             private XPath2NodeIterator childIter;
 

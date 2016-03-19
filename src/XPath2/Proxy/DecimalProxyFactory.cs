@@ -14,7 +14,7 @@ namespace Wmhelp.XPath2.Proxy
 
         public override ValueProxy Create(object value)
         {
-            return new DecimalProxy((decimal)value);
+            return new DecimalProxy((decimal) value);
         }
 
         public override int GetValueCode()
@@ -24,13 +24,10 @@ namespace Wmhelp.XPath2.Proxy
 
         public override Type GetValueType()
         {
-            return typeof(Decimal);
+            return typeof (Decimal);
         }
 
-        public override bool IsNumeric
-        {
-            get { return true; }
-        }
+        public override bool IsNumeric => true;
 
         public override int Compare(ValueProxyFactory other)
         {

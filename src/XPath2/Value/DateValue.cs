@@ -42,12 +42,14 @@ namespace Wmhelp.XPath2.Value
             return sb.ToString();
         }
 
-        private static string[] DateTimeFormats = new string[] {
+        private static readonly string[] DateTimeFormats = new string[]
+        {
             "yyyy-MM-dd",
             "'-'yyyy-MM-dd"
         };
 
-        private static string[] DateTimeOffsetFormats = new string[] {
+        private static readonly string[] DateTimeOffsetFormats = new string[]
+        {
             "yyyy-MM-ddzzz",
             "'-'yyyy-MM-ddzzz"
         };
@@ -60,8 +62,9 @@ namespace Wmhelp.XPath2.Value
             if (text.EndsWith("Z"))
             {
                 if (!DateTimeOffset.TryParseExact(text.Substring(0, text.Length - 1), DateTimeFormats,
-                        CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal |
-                        DateTimeStyles.AllowLeadingWhite | DateTimeStyles.AllowTrailingWhite, out dateTimeOffset))
+                    CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal |
+                                                  DateTimeStyles.AllowLeadingWhite | DateTimeStyles.AllowTrailingWhite,
+                    out dateTimeOffset))
                     throw new XPath2Exception("", Resources.InvalidFormat, text, "xs:date");
                 return new DateValue(s, dateTimeOffset);
             }
@@ -81,24 +84,23 @@ namespace Wmhelp.XPath2.Value
         {
             int sign = S ? -1 : 1;
             DateTime dt = Value.Date;
-            int julianDay = DateTimeValue.GetJulianDayNumber(sign * dt.Year, dt.Month, dt.Day);
-            long julianSecond = julianDay * (24L * 60L * 60L);
-            return (decimal)julianSecond;
+            int julianDay = DateTimeValue.GetJulianDayNumber(sign*dt.Year, dt.Month, dt.Day);
+            long julianSecond = julianDay*(24L*60L*60L);
+            return (decimal) julianSecond;
         }
 
         public static DateValue Add(DateValue dat, YearMonthDurationValue duration)
         {
             try
             {
-
                 Calendar calender = CultureInfo.InvariantCulture.Calendar;
                 DateTime dt = dat.Value.DateTime;
                 int year = dat.S ? -dt.Year : dt.Year - 1;
                 int m = (dt.Month - 1) + duration.Months;
-                year = year + duration.Years + m / 12;
+                year = year + duration.Years + m/12;
                 if (year >= 0)
                     year = year + 1;
-                m = m % 12;
+                m = m%12;
                 if (m < 0)
                 {
                     m += 12;
@@ -125,8 +127,7 @@ namespace Wmhelp.XPath2.Value
         {
             try
             {
-
-                decimal seconds = (decimal)duration.LowPartValue.Ticks / TimeSpan.TicksPerSecond;
+                decimal seconds = (decimal) duration.LowPartValue.Ticks/TimeSpan.TicksPerSecond;
                 decimal julian = dat.ToJulianInstant();
                 julian += seconds;
                 DateTimeValue dt = DateTimeValue.CreateFromJulianInstant(julian);
@@ -173,7 +174,7 @@ namespace Wmhelp.XPath2.Value
         {
             public override ValueProxy Create(object value)
             {
-                return new Proxy((DateValue)value);
+                return new Proxy((DateValue) value);
             }
 
             public override int GetValueCode()
@@ -183,13 +184,10 @@ namespace Wmhelp.XPath2.Value
 
             public override Type GetValueType()
             {
-                return typeof(DateValue);
+                return typeof (DateValue);
             }
 
-            public override bool IsNumeric
-            {
-                get { return false; }
-            }
+            public override bool IsNumeric => false;
 
             public override int Compare(ValueProxyFactory other)
             {
@@ -200,7 +198,7 @@ namespace Wmhelp.XPath2.Value
 
         internal class Proxy : ValueProxy
         {
-            private DateValue _value;
+            private readonly DateValue _value;
 
             public Proxy(DateValue value)
             {
@@ -212,13 +210,7 @@ namespace Wmhelp.XPath2.Value
                 return ProxyValueCode;
             }
 
-            public override object Value
-            {
-                get
-                {
-                    return _value;
-                }
-            }
+            public override object Value => _value;
 
             protected override bool Eq(ValueProxy val)
             {
@@ -226,7 +218,7 @@ namespace Wmhelp.XPath2.Value
                     throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:eq",
                         new SequenceType(_value.GetType(), XmlTypeCardinality.One),
                         new SequenceType(val.Value.GetType(), XmlTypeCardinality.One));
-                return _value.Equals(((Proxy)val)._value);
+                return _value.Equals(((Proxy) val)._value);
             }
 
             protected override bool Gt(ValueProxy val)
@@ -235,7 +227,7 @@ namespace Wmhelp.XPath2.Value
                     throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:gt",
                         new SequenceType(_value.GetType(), XmlTypeCardinality.One),
                         new SequenceType(val.Value.GetType(), XmlTypeCardinality.One));
-                return ((IComparable)_value).CompareTo(((Proxy)val)._value) > 0;
+                return ((IComparable) _value).CompareTo(((Proxy) val)._value) > 0;
             }
 
             protected override ValueProxy Promote(ValueProxy value)
@@ -254,9 +246,9 @@ namespace Wmhelp.XPath2.Value
                 switch (value.GetValueCode())
                 {
                     case YearMonthDurationValue.ProxyValueCode:
-                        return new Proxy(DateValue.Add(_value, (YearMonthDurationValue)value.Value));
+                        return new Proxy(DateValue.Add(_value, (YearMonthDurationValue) value.Value));
                     case DayTimeDurationValue.ProxyValueCode:
-                        return new Proxy(DateValue.Add(_value, (DayTimeDurationValue)value.Value));
+                        return new Proxy(DateValue.Add(_value, (DayTimeDurationValue) value.Value));
 
                     default:
                         throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:add",
@@ -270,11 +262,11 @@ namespace Wmhelp.XPath2.Value
                 switch (value.GetValueCode())
                 {
                     case ProxyValueCode:
-                        return new DayTimeDurationValue.Proxy(DateValue.Sub(_value, (DateValue)value.Value));
+                        return new DayTimeDurationValue.Proxy(DateValue.Sub(_value, (DateValue) value.Value));
                     case YearMonthDurationValue.ProxyValueCode:
-                        return new Proxy(DateValue.Add(_value, -(YearMonthDurationValue)value.Value));
+                        return new Proxy(DateValue.Add(_value, -(YearMonthDurationValue) value.Value));
                     case DayTimeDurationValue.ProxyValueCode:
-                        return new Proxy(DateValue.Add(_value, -(DayTimeDurationValue)value.Value));
+                        return new Proxy(DateValue.Add(_value, -(DayTimeDurationValue) value.Value));
 
                     default:
                         throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:sub",

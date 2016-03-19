@@ -81,7 +81,8 @@ namespace Wmhelp.XPath2
         {
         }
 
-        public SequenceType(XmlTypeCode typeCode, XmlQualifiedNameTest nameTest, XmlSchemaType schemaType, bool isOptional)
+        public SequenceType(XmlTypeCode typeCode, XmlQualifiedNameTest nameTest, XmlSchemaType schemaType,
+            bool isOptional)
         {
             TypeCode = typeCode;
             Cardinality = XmlTypeCardinality.One;
@@ -163,12 +164,12 @@ namespace Wmhelp.XPath2
             {
                 if (Cardinality == XmlTypeCardinality.ZeroOrMore ||
                     Cardinality == XmlTypeCardinality.OneOrMore)
-                    return typeof(XPath2NodeIterator);
+                    return typeof (XPath2NodeIterator);
                 if (IsNode)
-                    return typeof(XPathNavigator);
+                    return typeof (XPathNavigator);
                 if (Cardinality == XmlTypeCardinality.One)
                     return ItemType;
-                return typeof(Object);
+                return typeof (Object);
             }
         }
 
@@ -184,7 +185,7 @@ namespace Wmhelp.XPath2
                         case XmlTypeCode.ProcessingInstruction:
                         case XmlTypeCode.Comment:
                         case XmlTypeCode.UntypedAtomic:
-                            return typeof(UntypedAtomic);
+                            return typeof (UntypedAtomic);
 
                         default:
                             if (SchemaType != null)
@@ -201,7 +202,7 @@ namespace Wmhelp.XPath2
                                     SchemaAttribute.AttributeSchemaType.Datatype != null)
                                     return SchemaAttribute.AttributeSchemaType.Datatype.ValueType;
                             }
-                            return typeof(UntypedAtomic);
+                            return typeof (UntypedAtomic);
                     }
                 }
                 else
@@ -237,18 +238,12 @@ namespace Wmhelp.XPath2
             }
         }
 
-        public bool IsUntypedAtomic
-        {
-            get
-            {
-                return TypeCode == XmlTypeCode.UntypedAtomic;
-            }
-        }
+        public bool IsUntypedAtomic => TypeCode == XmlTypeCode.UntypedAtomic;
 
         private bool MatchName(XPathNavigator nav, XPath2Context context)
         {
             return (NameTest.IsNamespaceWildcard || NameTest.Namespace == nav.NamespaceURI) &&
-               (NameTest.IsNameWildcard || NameTest.Name == nav.LocalName);
+                   (NameTest.IsNameWildcard || NameTest.Name == nav.LocalName);
         }
 
         public XPathNodeType GetNodeKind()
@@ -296,125 +291,131 @@ namespace Wmhelp.XPath2
                     return !item.IsNode && item.GetSchemaType() == XmlSchema.UntypedAtomic;
 
                 case XmlTypeCode.Document:
+                {
+                    XPathNavigator nav = item as XPathNavigator;
+                    if (nav != null)
                     {
-                        XPathNavigator nav = item as XPathNavigator;
-                        if (nav != null)
+                        if (nav.NodeType == XPathNodeType.Root)
                         {
-                            if (nav.NodeType == XPathNodeType.Root)
-                            {
-                                XPathNavigator cur = nav.Clone();
-                                if (SchemaElement == null)
-                                {
-                                    if (cur.MoveToChild(XPathNodeType.Element) && MatchName(cur, context))
-                                    {
-                                        if (SchemaType == null || SchemaType == XmlSchema.UntypedAtomic)
-                                            return true;
-                                        IXmlSchemaInfo schemaInfo = cur.SchemaInfo;
-                                        if (schemaInfo != null)
-                                        {
-                                            if (XmlSchemaType.IsDerivedFrom(schemaInfo.SchemaType, SchemaType, XmlSchemaDerivationMethod.Empty))
-                                                return !schemaInfo.IsNil || Nillable;
-                                        }
-                                        else
-                                            return XmlSchemaType.IsDerivedFrom(XmlSchema.UntypedAtomic, SchemaType, XmlSchemaDerivationMethod.Empty);
-                                    }
-                                }
-                                else
-                                {
-                                    if (!cur.MoveToChild(XPathNodeType.Element))
-                                        return false;
-                                    IXmlSchemaInfo schemaInfo = cur.SchemaInfo;
-                                    if (schemaInfo != null)
-                                        return schemaInfo.SchemaElement.QualifiedName == SchemaElement.QualifiedName;
-                                }
-                            }
-                        }
-                    }
-                    break;
-
-                case XmlTypeCode.Element:
-                    {
-                        XPathNavigator nav = item as XPathNavigator;
-                        if (nav != null && nav.NodeType == XPathNodeType.Element)
-                        {
+                            XPathNavigator cur = nav.Clone();
                             if (SchemaElement == null)
                             {
-                                if (MatchName(nav, context))
+                                if (cur.MoveToChild(XPathNodeType.Element) && MatchName(cur, context))
                                 {
                                     if (SchemaType == null || SchemaType == XmlSchema.UntypedAtomic)
                                         return true;
-                                    IXmlSchemaInfo schemaInfo = nav.SchemaInfo;
+                                    IXmlSchemaInfo schemaInfo = cur.SchemaInfo;
                                     if (schemaInfo != null)
                                     {
-                                        if (XmlSchemaType.IsDerivedFrom(schemaInfo.SchemaType, SchemaType, XmlSchemaDerivationMethod.Empty))
+                                        if (XmlSchemaType.IsDerivedFrom(schemaInfo.SchemaType, SchemaType,
+                                            XmlSchemaDerivationMethod.Empty))
                                             return !schemaInfo.IsNil || Nillable;
                                     }
                                     else
-                                        return XmlSchemaType.IsDerivedFrom(XmlSchema.UntypedAtomic, SchemaType, XmlSchemaDerivationMethod.Empty);
+                                        return XmlSchemaType.IsDerivedFrom(XmlSchema.UntypedAtomic, SchemaType,
+                                            XmlSchemaDerivationMethod.Empty);
                                 }
                             }
                             else
                             {
-                                IXmlSchemaInfo schemaInfo = nav.SchemaInfo;
+                                if (!cur.MoveToChild(XPathNodeType.Element))
+                                    return false;
+                                IXmlSchemaInfo schemaInfo = cur.SchemaInfo;
                                 if (schemaInfo != null)
                                     return schemaInfo.SchemaElement.QualifiedName == SchemaElement.QualifiedName;
                             }
                         }
                     }
+                }
+                    break;
+
+                case XmlTypeCode.Element:
+                {
+                    XPathNavigator nav = item as XPathNavigator;
+                    if (nav != null && nav.NodeType == XPathNodeType.Element)
+                    {
+                        if (SchemaElement == null)
+                        {
+                            if (MatchName(nav, context))
+                            {
+                                if (SchemaType == null || SchemaType == XmlSchema.UntypedAtomic)
+                                    return true;
+                                IXmlSchemaInfo schemaInfo = nav.SchemaInfo;
+                                if (schemaInfo != null)
+                                {
+                                    if (XmlSchemaType.IsDerivedFrom(schemaInfo.SchemaType, SchemaType,
+                                        XmlSchemaDerivationMethod.Empty))
+                                        return !schemaInfo.IsNil || Nillable;
+                                }
+                                else
+                                    return XmlSchemaType.IsDerivedFrom(XmlSchema.UntypedAtomic, SchemaType,
+                                        XmlSchemaDerivationMethod.Empty);
+                            }
+                        }
+                        else
+                        {
+                            IXmlSchemaInfo schemaInfo = nav.SchemaInfo;
+                            if (schemaInfo != null)
+                                return schemaInfo.SchemaElement.QualifiedName == SchemaElement.QualifiedName;
+                        }
+                    }
+                }
                     break;
 
                 case XmlTypeCode.Attribute:
+                {
+                    XPathNavigator nav = item as XPathNavigator;
+                    if (nav != null && nav.NodeType == XPathNodeType.Attribute)
                     {
-                        XPathNavigator nav = item as XPathNavigator;
-                        if (nav != null && nav.NodeType == XPathNodeType.Attribute)
+                        if (SchemaAttribute == null)
                         {
-                            if (SchemaAttribute == null)
+                            if (MatchName(nav, context))
                             {
-                                if (MatchName(nav, context))
-                                {
-                                    if (SchemaType == null || SchemaType == XmlSchema.UntypedAtomic)
-                                        return true;
-                                    IXmlSchemaInfo schemaInfo = nav.SchemaInfo;
-                                    if (schemaInfo == null)
-                                        return XmlSchemaType.IsDerivedFrom(XmlSchema.UntypedAtomic, SchemaType, XmlSchemaDerivationMethod.Empty);
-                                    else
-                                        return XmlSchemaType.IsDerivedFrom(schemaInfo.SchemaType, SchemaType, XmlSchemaDerivationMethod.Empty);
-                                }
-                            }
-                            else
-                            {
+                                if (SchemaType == null || SchemaType == XmlSchema.UntypedAtomic)
+                                    return true;
                                 IXmlSchemaInfo schemaInfo = nav.SchemaInfo;
-                                if (schemaInfo != null)
-                                    return schemaInfo.SchemaAttribute.QualifiedName == SchemaAttribute.QualifiedName;
+                                if (schemaInfo == null)
+                                    return XmlSchemaType.IsDerivedFrom(XmlSchema.UntypedAtomic, SchemaType,
+                                        XmlSchemaDerivationMethod.Empty);
+                                else
+                                    return XmlSchemaType.IsDerivedFrom(schemaInfo.SchemaType, SchemaType,
+                                        XmlSchemaDerivationMethod.Empty);
                             }
                         }
+                        else
+                        {
+                            IXmlSchemaInfo schemaInfo = nav.SchemaInfo;
+                            if (schemaInfo != null)
+                                return schemaInfo.SchemaAttribute.QualifiedName == SchemaAttribute.QualifiedName;
+                        }
                     }
+                }
                     break;
 
                 case XmlTypeCode.ProcessingInstruction:
-                    {
-                        XPathNavigator nav = item as XPathNavigator;
-                        if (nav != null)
-                            return (nav.NodeType == XPathNodeType.ProcessingInstruction &&
+                {
+                    XPathNavigator nav = item as XPathNavigator;
+                    if (nav != null)
+                        return (nav.NodeType == XPathNodeType.ProcessingInstruction &&
                                 (NameTest.IsNameWildcard || NameTest.Name == nav.Name));
-                    }
+                }
                     break;
 
                 case XmlTypeCode.Comment:
-                    {
-                        XPathNavigator nav = item as XPathNavigator;
-                        if (nav != null)
-                            return nav.NodeType == XPathNodeType.Comment;
-                    }
+                {
+                    XPathNavigator nav = item as XPathNavigator;
+                    if (nav != null)
+                        return nav.NodeType == XPathNodeType.Comment;
+                }
                     break;
 
                 case XmlTypeCode.Text:
-                    {
-                        XPathNavigator nav = item as XPathNavigator;
-                        if (nav != null)
-                            return nav.NodeType == XPathNodeType.Text ||
-                                nav.NodeType == XPathNodeType.SignificantWhitespace;
-                    }
+                {
+                    XPathNavigator nav = item as XPathNavigator;
+                    if (nav != null)
+                        return nav.NodeType == XPathNodeType.Text ||
+                               nav.NodeType == XPathNodeType.SignificantWhitespace;
+                }
                     break;
 
                 case XmlTypeCode.PositiveInteger:
@@ -425,7 +426,7 @@ namespace Wmhelp.XPath2
                         case XmlTypeCode.Int:
                         case XmlTypeCode.Long:
                         case XmlTypeCode.Integer:
-                            return (decimal)item.ValueAs(typeof(Decimal)) > 0;
+                            return (decimal) item.ValueAs(typeof (Decimal)) > 0;
                     }
                     break;
 
@@ -437,7 +438,7 @@ namespace Wmhelp.XPath2
                         case XmlTypeCode.Int:
                         case XmlTypeCode.Long:
                         case XmlTypeCode.Integer:
-                            return (decimal)item.ValueAs(typeof(Decimal)) < 0;
+                            return (decimal) item.ValueAs(typeof (Decimal)) < 0;
                     }
                     break;
 
@@ -449,7 +450,7 @@ namespace Wmhelp.XPath2
                         case XmlTypeCode.Int:
                         case XmlTypeCode.Long:
                         case XmlTypeCode.Integer:
-                            return (decimal)item.ValueAs(typeof(Decimal)) <= 0;
+                            return (decimal) item.ValueAs(typeof (Decimal)) <= 0;
                     }
                     break;
 
@@ -461,7 +462,7 @@ namespace Wmhelp.XPath2
                         case XmlTypeCode.Int:
                         case XmlTypeCode.Long:
                         case XmlTypeCode.Integer:
-                            return (decimal)item.ValueAs(typeof(Decimal)) >= 0;
+                            return (decimal) item.ValueAs(typeof (Decimal)) >= 0;
 
                         case XmlTypeCode.UnsignedByte:
                         case XmlTypeCode.UnsignedShort:
@@ -486,7 +487,7 @@ namespace Wmhelp.XPath2
                             return true;
 
                         case XmlTypeCode.Decimal:
-                            decimal value = (decimal)item.ValueAs(typeof(Decimal));
+                            decimal value = (decimal) item.ValueAs(typeof (Decimal));
                             return value == Math.Truncate(value);
                     }
                     break;
@@ -496,10 +497,10 @@ namespace Wmhelp.XPath2
                            (item.GetSchemaType().TypeCode == XmlTypeCode.Entity);
 
                 default:
-                    {
-                        if (item.XmlType != null)
-                            return XmlSchemaType.IsDerivedFrom(item.XmlType, SchemaType, XmlSchemaDerivationMethod.Empty);
-                    }
+                {
+                    if (item.XmlType != null)
+                        return XmlSchemaType.IsDerivedFrom(item.XmlType, SchemaType, XmlSchemaDerivationMethod.Empty);
+                }
                     break;
             }
             return false;
@@ -815,11 +816,11 @@ namespace Wmhelp.XPath2
             return sb.ToString();
         }
 
-        static public XmlTypeCode GetXmlTypeCode(object value)
+        public static XmlTypeCode GetXmlTypeCode(object value)
         {
             if (value is XPathNavigator)
             {
-                XPathNavigator nav = (XPathNavigator)value;
+                XPathNavigator nav = (XPathNavigator) value;
                 switch (nav.NodeType)
                 {
                     case XPathNodeType.Attribute:
@@ -844,7 +845,7 @@ namespace Wmhelp.XPath2
             }
             if (value is XPathItem)
             {
-                XPathItem item = (XPathItem)value;
+                XPathItem item = (XPathItem) value;
                 if (item.XmlType == null)
                     return XmlTypeCode.UntypedAtomic;
                 return item.XmlType.TypeCode;
@@ -873,43 +874,43 @@ namespace Wmhelp.XPath2
             switch (typeCode)
             {
                 case XmlTypeCode.Boolean:
-                    return typeof(Boolean);
+                    return typeof (Boolean);
                 case XmlTypeCode.Short:
-                    return typeof(Int16);
+                    return typeof (Int16);
                 case XmlTypeCode.Int:
-                    return typeof(Int32);
+                    return typeof (Int32);
                 case XmlTypeCode.Long:
-                    return typeof(Int64);
+                    return typeof (Int64);
                 case XmlTypeCode.UnsignedShort:
-                    return typeof(UInt16);
+                    return typeof (UInt16);
                 case XmlTypeCode.UnsignedInt:
-                    return typeof(UInt32);
+                    return typeof (UInt32);
                 case XmlTypeCode.UnsignedLong:
-                    return typeof(UInt64);
+                    return typeof (UInt64);
                 case XmlTypeCode.Byte:
-                    return typeof(SByte);
+                    return typeof (SByte);
                 case XmlTypeCode.UnsignedByte:
-                    return typeof(Byte);
+                    return typeof (Byte);
                 case XmlTypeCode.Float:
-                    return typeof(Single);
+                    return typeof (Single);
                 case XmlTypeCode.Decimal:
-                    return typeof(Decimal);
+                    return typeof (Decimal);
                 case XmlTypeCode.Integer:
                 case XmlTypeCode.PositiveInteger:
                 case XmlTypeCode.NegativeInteger:
                 case XmlTypeCode.NonPositiveInteger:
                 case XmlTypeCode.NonNegativeInteger:
-                    return typeof(Integer);
+                    return typeof (Integer);
                 case XmlTypeCode.Double:
-                    return typeof(Double);
+                    return typeof (Double);
                 case XmlTypeCode.DateTime:
-                    return typeof(DateTimeValue);
+                    return typeof (DateTimeValue);
                 case XmlTypeCode.Date:
-                    return typeof(DateValue);
+                    return typeof (DateValue);
                 case XmlTypeCode.Time:
-                    return typeof(TimeValue);
+                    return typeof (TimeValue);
                 case XmlTypeCode.AnyUri:
-                    return typeof(AnyUriValue);
+                    return typeof (AnyUriValue);
                 case XmlTypeCode.String:
                 case XmlTypeCode.NormalizedString:
                 case XmlTypeCode.Token:
@@ -919,45 +920,45 @@ namespace Wmhelp.XPath2
                 case XmlTypeCode.Id:
                 case XmlTypeCode.Idref:
                     if (schemaType == XmlSchema.IDREFS)
-                        return typeof(IDREFSValue);
+                        return typeof (IDREFSValue);
                     else
-                        return typeof(String);
+                        return typeof (String);
                 case XmlTypeCode.NmToken:
                     if (schemaType == XmlSchema.NMTOKENS)
-                        return typeof(NMTOKENSValue);
+                        return typeof (NMTOKENSValue);
                     else
-                        return typeof(String);
+                        return typeof (String);
                 case XmlTypeCode.Entity:
                     if (schemaType == XmlSchema.ENTITIES)
-                        return typeof(ENTITIESValue);
+                        return typeof (ENTITIESValue);
                     else
-                        return typeof(String);
+                        return typeof (String);
                 case XmlTypeCode.UntypedAtomic:
-                    return typeof(UntypedAtomic);
+                    return typeof (UntypedAtomic);
                 case XmlTypeCode.Duration:
-                    return typeof(DurationValue);
+                    return typeof (DurationValue);
                 case XmlTypeCode.DayTimeDuration:
-                    return typeof(DayTimeDurationValue);
+                    return typeof (DayTimeDurationValue);
                 case XmlTypeCode.YearMonthDuration:
-                    return typeof(YearMonthDurationValue);
+                    return typeof (YearMonthDurationValue);
                 case XmlTypeCode.GYearMonth:
-                    return typeof(GYearMonthValue);
+                    return typeof (GYearMonthValue);
                 case XmlTypeCode.GYear:
-                    return typeof(GYearValue);
+                    return typeof (GYearValue);
                 case XmlTypeCode.GMonth:
-                    return typeof(GMonthValue);
+                    return typeof (GMonthValue);
                 case XmlTypeCode.GMonthDay:
-                    return typeof(GMonthDayValue);
+                    return typeof (GMonthDayValue);
                 case XmlTypeCode.GDay:
-                    return typeof(GDayValue);
+                    return typeof (GDayValue);
                 case XmlTypeCode.QName:
-                    return typeof(QNameValue);
+                    return typeof (QNameValue);
                 case XmlTypeCode.HexBinary:
-                    return typeof(HexBinaryValue);
+                    return typeof (HexBinaryValue);
                 case XmlTypeCode.Base64Binary:
-                    return typeof(Base64BinaryValue);
+                    return typeof (Base64BinaryValue);
                 default:
-                    return typeof(Object);
+                    return typeof (Object);
             }
         }
 
@@ -994,47 +995,47 @@ namespace Wmhelp.XPath2
                 case System.TypeCode.String:
                     return XmlTypeCode.String;
                 default:
-                    if (type == typeof(XPathNavigator))
+                    if (type == typeof (XPathNavigator))
                         return XmlTypeCode.Node;
-                    if (type == typeof(UntypedAtomic))
+                    if (type == typeof (UntypedAtomic))
                         return XmlTypeCode.UntypedAtomic;
-                    if (type == typeof(Integer))
+                    if (type == typeof (Integer))
                         return XmlTypeCode.Integer;
-                    if (type == typeof(DateTimeValue))
+                    if (type == typeof (DateTimeValue))
                         return XmlTypeCode.DateTime;
-                    if (type == typeof(DateValue))
+                    if (type == typeof (DateValue))
                         return XmlTypeCode.Date;
-                    if (type == typeof(TimeValue))
+                    if (type == typeof (TimeValue))
                         return XmlTypeCode.Time;
-                    if (type == typeof(DurationValue))
+                    if (type == typeof (DurationValue))
                         return XmlTypeCode.Duration;
-                    if (type == typeof(YearMonthDurationValue))
+                    if (type == typeof (YearMonthDurationValue))
                         return XmlTypeCode.YearMonthDuration;
-                    if (type == typeof(DayTimeDurationValue))
+                    if (type == typeof (DayTimeDurationValue))
                         return XmlTypeCode.DayTimeDuration;
-                    if (type == typeof(GYearMonthValue))
+                    if (type == typeof (GYearMonthValue))
                         return XmlTypeCode.GYearMonth;
-                    if (type == typeof(GYearValue))
+                    if (type == typeof (GYearValue))
                         return XmlTypeCode.GYear;
-                    if (type == typeof(GDayValue))
+                    if (type == typeof (GDayValue))
                         return XmlTypeCode.GDay;
-                    if (type == typeof(GMonthValue))
+                    if (type == typeof (GMonthValue))
                         return XmlTypeCode.GMonth;
-                    if (type == typeof(GMonthDayValue))
+                    if (type == typeof (GMonthDayValue))
                         return XmlTypeCode.GMonthDay;
-                    if (type == typeof(QNameValue))
+                    if (type == typeof (QNameValue))
                         return XmlTypeCode.QName;
-                    if (type == typeof(AnyUriValue))
+                    if (type == typeof (AnyUriValue))
                         return XmlTypeCode.AnyUri;
-                    if (type == typeof(HexBinaryValue))
+                    if (type == typeof (HexBinaryValue))
                         return XmlTypeCode.HexBinary;
-                    if (type == typeof(Base64BinaryValue))
+                    if (type == typeof (Base64BinaryValue))
                         return XmlTypeCode.Base64Binary;
-                    if (type == typeof(IDREFSValue))
+                    if (type == typeof (IDREFSValue))
                         return XmlTypeCode.Idref;
-                    if (type == typeof(ENTITIESValue))
+                    if (type == typeof (ENTITIESValue))
                         return XmlTypeCode.Entity;
-                    if (type == typeof(NMTOKENSValue))
+                    if (type == typeof (NMTOKENSValue))
                         return XmlTypeCode.NmToken;
                     return XmlTypeCode.Item;
             }
@@ -1103,8 +1104,8 @@ namespace Wmhelp.XPath2
             {
                 if ((Cardinality == XmlTypeCardinality.ZeroOrOne ||
                      Cardinality == XmlTypeCardinality.ZeroOrMore) &&
-                     (src.Cardinality == XmlTypeCardinality.One ||
-                      src.Cardinality == XmlTypeCardinality.OneOrMore))
+                    (src.Cardinality == XmlTypeCardinality.One ||
+                     src.Cardinality == XmlTypeCardinality.OneOrMore))
                     return false;
                 if (Cardinality == XmlTypeCardinality.One &&
                     src.Cardinality == XmlTypeCardinality.OneOrMore)
@@ -1118,10 +1119,10 @@ namespace Wmhelp.XPath2
             SequenceType dest = obj as SequenceType;
             if (!ReferenceEquals(obj, null))
                 return TypeCode == dest.TypeCode &&
-                    SchemaElement == dest.SchemaElement &&
-                    SchemaAttribute == dest.SchemaAttribute &&
-                    SchemaType == dest.SchemaType &&
-                    Cardinality == dest.Cardinality;
+                       SchemaElement == dest.SchemaElement &&
+                       SchemaAttribute == dest.SchemaAttribute &&
+                       SchemaType == dest.SchemaType &&
+                       Cardinality == dest.Cardinality;
             return false;
         }
 
@@ -1167,7 +1168,8 @@ namespace Wmhelp.XPath2
             if (prefix != "xs")
                 throw new ArgumentException("name");
 
-            XmlSchemaType schemaType = XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName(localName, XmlReservedNs.NsXs));
+            XmlSchemaType schemaType =
+                XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName(localName, XmlReservedNs.NsXs));
             if (schemaType == null)
                 throw new ArgumentException("name");
 
@@ -1176,8 +1178,12 @@ namespace Wmhelp.XPath2
 
         public static class XmlSchema
         {
-            public static XmlSchemaType AnySimpleType = XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName("anySimpleType", XmlReservedNs.NsXs));
-            public static XmlSchemaType AnyType = XmlSchemaType.GetBuiltInComplexType(new XmlQualifiedName("anyType", XmlReservedNs.NsXs));
+            public static XmlSchemaType AnySimpleType =
+                XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName("anySimpleType", XmlReservedNs.NsXs));
+
+            public static XmlSchemaType AnyType =
+                XmlSchemaType.GetBuiltInComplexType(new XmlQualifiedName("anyType", XmlReservedNs.NsXs));
+
             public static XmlSchemaType AnyAtomicType = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.AnyAtomicType);
             public static XmlSchemaType UntypedAtomic = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.UntypedAtomic);
             public static XmlSchemaType Integer = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.Integer);
@@ -1185,7 +1191,10 @@ namespace Wmhelp.XPath2
             public static XmlSchemaType Date = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.Date);
             public static XmlSchemaType Time = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.Time);
             public static XmlSchemaType Duration = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.Duration);
-            public static XmlSchemaType YearMonthDuration = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.YearMonthDuration);
+
+            public static XmlSchemaType YearMonthDuration =
+                XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.YearMonthDuration);
+
             public static XmlSchemaType DayTimeDuration = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.DayTimeDuration);
             public static XmlSchemaType GYearMonth = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.GYearMonth);
             public static XmlSchemaType GYear = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.GYear);
@@ -1195,9 +1204,15 @@ namespace Wmhelp.XPath2
             public static XmlSchemaType QName = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.QName);
             public static XmlSchemaType HexBinary = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.HexBinary);
             public static XmlSchemaType Base64Binary = XmlSchemaType.GetBuiltInSimpleType(XmlTypeCode.Base64Binary);
-            public static XmlSchemaType IDREFS = XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName("IDREFS", XmlReservedNs.NsXs));
-            public static XmlSchemaType NMTOKENS = XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName("NMTOKENS", XmlReservedNs.NsXs));
-            public static XmlSchemaType ENTITIES = XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName("ENTITIES", XmlReservedNs.NsXs));
+
+            public static XmlSchemaType IDREFS =
+                XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName("IDREFS", XmlReservedNs.NsXs));
+
+            public static XmlSchemaType NMTOKENS =
+                XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName("NMTOKENS", XmlReservedNs.NsXs));
+
+            public static XmlSchemaType ENTITIES =
+                XmlSchemaType.GetBuiltInSimpleType(new XmlQualifiedName("ENTITIES", XmlReservedNs.NsXs));
         }
 
         #region build-in
@@ -1215,7 +1230,10 @@ namespace Wmhelp.XPath2
 
         internal static SequenceType Boolean = new SequenceType(XmlTypeCode.Boolean);
         internal static SequenceType AnyAtomicType = new SequenceType(XmlTypeCode.AnyAtomicType);
-        internal static SequenceType AnyAtomicTypeOptional = new SequenceType(XmlTypeCode.AnyAtomicType, XmlTypeCardinality.ZeroOrOne);
+
+        internal static SequenceType AnyAtomicTypeOptional = new SequenceType(XmlTypeCode.AnyAtomicType,
+            XmlTypeCardinality.ZeroOrOne);
+
         internal static SequenceType Double = new SequenceType(XmlTypeCode.Double);
 
         internal static SequenceType Date = new SequenceType(XmlTypeCode.Date);
@@ -1228,6 +1246,5 @@ namespace Wmhelp.XPath2
         internal static SequenceType Int = new SequenceType(XmlTypeCode.Int);
 
         #endregion
-
     }
 }

@@ -17,9 +17,9 @@ namespace Wmhelp.XPath2
 {
     public class XPath2Expression
     {
-        private string expr;
-        private AbstractNode exprTree;
-        private XPath2Context context;
+        private readonly string expr;
+        private readonly AbstractNode exprTree;
+        private readonly XPath2Context context;
         private XPath2ResultType? resultType;
 
         private XPath2Expression(string expr, AbstractNode exprTree, XPath2Context context)
@@ -214,7 +214,7 @@ namespace Wmhelp.XPath2
             return Evaluate(provider, vars);
         }
 
-        public String Expression { get { return expr; } }
+        public String Expression => expr;
 
         public XPath2ResultType GetResultType(IDictionary<XmlQualifiedName, object> vars)
         {

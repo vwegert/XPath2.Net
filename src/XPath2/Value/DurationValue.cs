@@ -34,7 +34,7 @@ namespace Wmhelp.XPath2.Value
                 if (other.IsZero && IsZero)
                     return true;
                 return HighPartValue == other.HighPartValue &&
-                    LowPartValue == other.LowPartValue;
+                       LowPartValue == other.LowPartValue;
             }
             return false;
         }
@@ -44,86 +44,26 @@ namespace Wmhelp.XPath2.Value
             return LowPartValue.GetHashCode() ^ HighPartValue.GetHashCode();
         }
 
-        public bool IsZero
-        {
-            get
-            {
-                return LowPartValue == TimeSpan.Zero &&
-                    HighPartValue == TimeSpan.Zero;
-            }
-        }
+        public bool IsZero => LowPartValue == TimeSpan.Zero &&
+                              HighPartValue == TimeSpan.Zero;
 
-        public int Years
-        {
-            get
-            {
-                return HighPartValue.Days / 365;
-            }
-        }
+        public int Years => HighPartValue.Days/365;
 
-        public int Months
-        {
-            get
-            {
-                return (int)Math.Round((double)(HighPartValue.Days - Years * 365) / 30);
-            }
-        }
+        public int Months => (int) Math.Round((double) (HighPartValue.Days - Years*365)/30);
 
-        public int Days
-        {
-            get
-            {
-                return LowPartValue.Days;
-            }
-        }
+        public int Days => LowPartValue.Days;
 
-        public int Hours
-        {
-            get
-            {
-                return LowPartValue.Hours;
-            }
-        }
+        public int Hours => LowPartValue.Hours;
 
-        public int Minutes
-        {
-            get
-            {
-                return LowPartValue.Minutes;
-            }
-        }
+        public int Minutes => LowPartValue.Minutes;
 
-        public int Seconds
-        {
-            get
-            {
-                return LowPartValue.Seconds;
-            }
-        }
+        public int Seconds => LowPartValue.Seconds;
 
-        public int Milliseconds
-        {
-            get
-            {
-                return LowPartValue.Milliseconds;
-            }
-        }
+        public int Milliseconds => LowPartValue.Milliseconds;
 
-        public int TotalDays
-        {
-            get
-            {
-                return HighPartValue.Days + LowPartValue.Days;
-            }
-        }
+        public int TotalDays => HighPartValue.Days + LowPartValue.Days;
 
-        public int TotalMonths
-        {
-            get
-            {
-                return Years * 12 + Months;
-            }
-        }
+        public int TotalMonths => Years*12 + Months;
 
         public override string ToString()
         {
@@ -292,7 +232,7 @@ namespace Wmhelp.XPath2.Value
                 h = 0;
             if (m == -1)
                 m = 0;
-            TimeSpan high = new TimeSpan(year * 365 + month / 12 * 365 + month % 12 * 30, 0, 0, 0);
+            TimeSpan high = new TimeSpan(year*365 + month/12*365 + month%12*30, 0, 0, 0);
             TimeSpan low = new TimeSpan(day, h, m, sec, ms);
             if (s)
                 return new DurationValue(-high, -low);
@@ -331,10 +271,9 @@ namespace Wmhelp.XPath2.Value
 
         internal class ProxyFactory : ValueProxyFactory
         {
-
             public override ValueProxy Create(object value)
             {
-                return new Proxy((DurationValue)value);
+                return new Proxy((DurationValue) value);
             }
 
             public override int GetValueCode()
@@ -344,13 +283,10 @@ namespace Wmhelp.XPath2.Value
 
             public override Type GetValueType()
             {
-                return typeof(DurationValue);
+                return typeof (DurationValue);
             }
 
-            public override bool IsNumeric
-            {
-                get { return false; }
-            }
+            public override bool IsNumeric => false;
 
             public override int Compare(ValueProxyFactory other)
             {
@@ -360,7 +296,7 @@ namespace Wmhelp.XPath2.Value
 
         internal class Proxy : ValueProxy
         {
-            private DurationValue _value;
+            private readonly DurationValue _value;
 
             public Proxy(DurationValue value)
             {
@@ -372,13 +308,7 @@ namespace Wmhelp.XPath2.Value
                 return ProxyValueCode;
             }
 
-            public override object Value
-            {
-                get
-                {
-                    return _value;
-                }
-            }
+            public override object Value => _value;
 
             protected override bool Eq(ValueProxy val)
             {
@@ -445,6 +375,5 @@ namespace Wmhelp.XPath2.Value
                     new SequenceType(val.Value.GetType(), XmlTypeCardinality.One));
             }
         }
-
     }
 }

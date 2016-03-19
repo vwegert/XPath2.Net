@@ -12,7 +12,7 @@ namespace Wmhelp.XPath2.AST
 
     internal class ArithmeticBinaryOperatorNode : AtomizedBinaryOperatorNode
     {
-        private GetReturnTypeDelegate _returnTypeDelegate;
+        private readonly GetReturnTypeDelegate _returnTypeDelegate;
 
         public ArithmeticBinaryOperatorNode(XPath2Context context, BinaryOperator action,
             object node1, object node2, GetReturnTypeDelegate returnTypeDelegate)

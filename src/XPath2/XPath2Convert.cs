@@ -60,20 +60,20 @@ namespace Wmhelp.XPath2
         // Contributor(s): the fppfppExponential routine, and some of the constant declarations 
         // are from the class FloatingPointConverter by Michael H. Kay
 
-        private static char[] charForDigit =
+        private static readonly char[] charForDigit =
         {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
         };
 
-        private static int floatExpMask = 0x7f800000;
-        private static int floatExpShift = 23;
-        private static int floatExpBias = 127;
-        private static int floatFractMask = 0x7fffff;
+        private static readonly int floatExpMask = 0x7f800000;
+        private static readonly int floatExpShift = 23;
+        private static readonly int floatExpBias = 127;
+        private static readonly int floatFractMask = 0x7fffff;
 
-        private static long doubleFractMask = 0xfffffffffffffL;
-        private static long doubleExpMask = 0x7ff0000000000000L;
-        private static int doubleExpShift = 52;
-        private static int doubleExpBias = 1023;
+        private static readonly long doubleFractMask = 0xfffffffffffffL;
+        private static readonly long doubleExpMask = 0x7ff0000000000000L;
+        private static readonly int doubleExpShift = 52;
+        private static readonly int doubleExpBias = 1023;
 
         public static string ToString(double value)
         {

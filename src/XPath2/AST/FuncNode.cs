@@ -14,9 +14,9 @@ namespace Wmhelp.XPath2.AST
 {
     internal sealed class FuncNode : AbstractNode
     {
-        private String _name;
-        private String _ns;
-        private XPathFunctionDef _func;
+        private readonly String _name;
+        private readonly String _ns;
+        private readonly XPathFunctionDef _func;
 
         public FuncNode(XPath2Context context, string name, string ns)
             : base(context)
@@ -84,17 +84,17 @@ namespace Wmhelp.XPath2.AST
             return base.GetItemType(dataPool);
         }
 
-        private static HashSet<String> s_aggregates;
+        private static readonly HashSet<String> s_aggregates;
 
-        private static String[] s_names = new String[]
+        private static readonly String[] s_names = new String[]
         {
             "sum", "count", "avg", "min", "max",
             "distinct-values", "empty", "exits"
         };
 
-        private static HashSet<String> s_contextDs;
+        private static readonly HashSet<String> s_contextDs;
 
-        private static String[] s_names2 = new String[]
+        private static readonly String[] s_names2 = new String[]
         {
             "name", "local-name", "namespace-uri",
             "base-uri", "position", "last", "string-length", "normalize-space", "number"

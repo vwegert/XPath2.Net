@@ -12,7 +12,7 @@ namespace Wmhelp.XPath2.Value
 {
     public class YearMonthDurationValue : DurationValue, IComparable
     {
-        new public const int ProxyValueCode = 11;
+        public new const int ProxyValueCode = 11;
 
         public YearMonthDurationValue(TimeSpan value)
             : base(value, TimeSpan.Zero)
@@ -38,19 +38,19 @@ namespace Wmhelp.XPath2.Value
 
         private static int DaysToMonth(int days)
         {
-            return days / 365 * 12 + days % 365 / 30;
+            return days/365*12 + days%365/30;
         }
 
         private static int MonthToDays(int month)
         {
-            return month / 12 * 365 + month % 12 * 30;
+            return month/12*365 + month%12*30;
         }
 
         public static YearMonthDurationValue Multiply(YearMonthDurationValue a, double b)
         {
             if (Double.IsNaN(b) || Double.IsNegativeInfinity(b) || Double.IsPositiveInfinity(b))
                 throw new XPath2Exception("FOCA0005", Resources.FOCA0005);
-            int month = (int)Math.Floor(0.5 + DaysToMonth(a.HighPartValue.Days) * b);
+            int month = (int) Math.Floor(0.5 + DaysToMonth(a.HighPartValue.Days)*b);
             return new YearMonthDurationValue(new TimeSpan(MonthToDays(month), 0, 0, 0));
         }
 
@@ -60,7 +60,7 @@ namespace Wmhelp.XPath2.Value
                 throw new XPath2Exception("FOAR0001", Resources.FOAR0001);
             if (Double.IsNaN(b))
                 throw new XPath2Exception("FOCA0005", Resources.FOCA0005);
-            int month = (int)Math.Floor(0.5 + DaysToMonth(a.HighPartValue.Days) / b);
+            int month = (int) Math.Floor(0.5 + DaysToMonth(a.HighPartValue.Days)/b);
             return new YearMonthDurationValue(new TimeSpan(MonthToDays(month), 0, 0, 0));
         }
 
@@ -70,7 +70,7 @@ namespace Wmhelp.XPath2.Value
             int month2 = DaysToMonth(b.HighPartValue.Days);
             if (month2 == 0)
                 throw new XPath2Exception("FOAR0001", Resources.FOAR0001);
-            return (decimal)month1 / (decimal)month2;
+            return (decimal) month1/(decimal) month2;
         }
 
         public static YearMonthDurationValue operator -(YearMonthDurationValue d)
@@ -78,11 +78,11 @@ namespace Wmhelp.XPath2.Value
             return new YearMonthDurationValue(-d.HighPartValue);
         }
 
-        new internal class ProxyFactory : ValueProxyFactory
+        internal new class ProxyFactory : ValueProxyFactory
         {
             public override ValueProxy Create(object value)
             {
-                return new Proxy((YearMonthDurationValue)value);
+                return new Proxy((YearMonthDurationValue) value);
             }
 
             public override int GetValueCode()
@@ -92,13 +92,10 @@ namespace Wmhelp.XPath2.Value
 
             public override Type GetValueType()
             {
-                return typeof(YearMonthDurationValue);
+                return typeof (YearMonthDurationValue);
             }
 
-            public override bool IsNumeric
-            {
-                get { return false; }
-            }
+            public override bool IsNumeric => false;
 
             public override int Compare(ValueProxyFactory other)
             {
@@ -108,9 +105,9 @@ namespace Wmhelp.XPath2.Value
             }
         }
 
-        new internal class Proxy : ValueProxy
+        internal new class Proxy : ValueProxy
         {
-            private YearMonthDurationValue _value;
+            private readonly YearMonthDurationValue _value;
 
             public Proxy(YearMonthDurationValue value)
             {
@@ -122,13 +119,7 @@ namespace Wmhelp.XPath2.Value
                 return ProxyValueCode;
             }
 
-            public override object Value
-            {
-                get
-                {
-                    return _value;
-                }
-            }
+            public override object Value => _value;
 
             protected override bool Eq(ValueProxy val)
             {
@@ -137,7 +128,7 @@ namespace Wmhelp.XPath2.Value
 
             protected override bool Gt(ValueProxy val)
             {
-                return ((IComparable)_value).CompareTo(val.Value) > 0;
+                return ((IComparable) _value).CompareTo(val.Value) > 0;
             }
 
             protected override bool TryGt(ValueProxy val, out bool res)
@@ -145,7 +136,7 @@ namespace Wmhelp.XPath2.Value
                 res = false;
                 if (val.GetValueCode() != ProxyValueCode)
                     return false;
-                res = ((IComparable)_value).CompareTo(val.Value) > 0;
+                res = ((IComparable) _value).CompareTo(val.Value) > 0;
                 return true;
             }
 
@@ -155,7 +146,7 @@ namespace Wmhelp.XPath2.Value
                     return new ShadowProxy(val);
                 if (val.GetValueCode() == DurationValue.ProxyValueCode)
                 {
-                    DurationValue duration = (DurationValue)val.Value;
+                    DurationValue duration = (DurationValue) val.Value;
                     return new Proxy(new YearMonthDurationValue(duration.HighPartValue));
                 }
                 throw new InvalidCastException();
@@ -172,11 +163,14 @@ namespace Wmhelp.XPath2.Value
                 switch (value.GetValueCode())
                 {
                     case ProxyValueCode:
-                        return new Proxy(new YearMonthDurationValue(_value.HighPartValue + ((YearMonthDurationValue)value.Value).HighPartValue));
+                        return
+                            new Proxy(
+                                new YearMonthDurationValue(_value.HighPartValue +
+                                                           ((YearMonthDurationValue) value.Value).HighPartValue));
                     case DateTimeValue.ProxyValueCode:
-                        return new DateTimeValue.Proxy(DateTimeValue.Add((DateTimeValue)value.Value, _value));
+                        return new DateTimeValue.Proxy(DateTimeValue.Add((DateTimeValue) value.Value, _value));
                     case DateValue.ProxyValueCode:
-                        return new DateValue.Proxy(DateValue.Add((DateValue)value.Value, _value));
+                        return new DateValue.Proxy(DateValue.Add((DateValue) value.Value, _value));
                     default:
                         throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:add",
                             new SequenceType(_value.GetType(), XmlTypeCardinality.One),
@@ -189,7 +183,10 @@ namespace Wmhelp.XPath2.Value
                 switch (value.GetValueCode())
                 {
                     case ProxyValueCode:
-                        return new Proxy(new YearMonthDurationValue(_value.HighPartValue - ((YearMonthDurationValue)value.Value).HighPartValue));
+                        return
+                            new Proxy(
+                                new YearMonthDurationValue(_value.HighPartValue -
+                                                           ((YearMonthDurationValue) value.Value).HighPartValue));
                     default:
                         throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:sub",
                             new SequenceType(_value.GetType(), XmlTypeCardinality.One),
@@ -211,7 +208,7 @@ namespace Wmhelp.XPath2.Value
                 if (value.IsNumeric())
                     return new Proxy(Divide(_value, Convert.ToDouble(value)));
                 else if (value.GetValueCode() == ProxyValueCode)
-                    return new DecimalProxy(Divide(_value, (YearMonthDurationValue)value.Value));
+                    return new DecimalProxy(Divide(_value, (YearMonthDurationValue) value.Value));
                 else
                     throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:div",
                         new SequenceType(_value.GetType(), XmlTypeCardinality.One),
@@ -233,5 +230,4 @@ namespace Wmhelp.XPath2.Value
             }
         }
     }
-
 }

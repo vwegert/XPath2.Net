@@ -59,7 +59,8 @@ namespace Wmhelp.XPath2.Value
             return sb.ToString();
         }
 
-        private static string[] DateTimeFormats = new string[] {
+        private static readonly string[] DateTimeFormats = new string[]
+        {
             "yyyy-MM-dd'T'HH:mm:ss",
             "yyyy-MM-dd'T'HH:mm:ss.f",
             "yyyy-MM-dd'T'HH:mm:ss.ff",
@@ -78,7 +79,8 @@ namespace Wmhelp.XPath2.Value
             "'-'yyyy-MM-dd'T'HH:mm:ss.ffffffff"
         };
 
-        private static string[] DateTimeOffsetFormats = new string[] {
+        private static readonly string[] DateTimeOffsetFormats = new string[]
+        {
             "yyyy-MM-dd'T'HH:mm:sszzz",
             "yyyy-MM-dd'T'HH:mm:ss.fzzz",
             "yyyy-MM-dd'T'HH:mm:ss.ffzzz",
@@ -116,7 +118,7 @@ namespace Wmhelp.XPath2.Value
             if (text.EndsWith("Z"))
             {
                 if (!DateTimeOffset.TryParseExact(text.Substring(0, text.Length - 1), DateTimeFormats,
-                        CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out dateTimeOffset))
+                    CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out dateTimeOffset))
                     throw new XPath2Exception("", Resources.InvalidFormat, text, "xs:dateTime");
                 dat = new DateTimeValue(s, dateTimeOffset);
             }
@@ -138,7 +140,7 @@ namespace Wmhelp.XPath2.Value
             return dat;
         }
 
-        private static short[] monthData = { 306, 337, 0, 31, 61, 92, 122, 153, 184, 214, 245, 275 };
+        private static readonly short[] monthData = {306, 337, 0, 31, 61, 92, 122, 153, 184, 214, 245, 275};
 
         // http://vsg.cape.com/~pbaum/date/jdalg.htm 
         // http://vsg.cape.com/~pbaum/date/jdalg2.htm
@@ -147,13 +149,13 @@ namespace Wmhelp.XPath2.Value
             int z = year - (month < 3 ? 1 : 0);
             short f = monthData[month - 1];
             if (z >= 0)
-                return day + f + 365 * z + z / 4 - z / 100 + z / 400 + 1721118;
+                return day + f + 365*z + z/4 - z/100 + z/400 + 1721118;
             else
             {
                 // for negative years, add 12000 years and then subtract the days!
                 z += 12000;
-                int j = day + f + 365 * z + z / 4 - z / 100 + z / 400 + 1721118;
-                return j - (365 * 12000 + 12000 / 4 - 12000 / 100 + 12000 / 400);  // number of leap years in 12000 years
+                int j = day + f + 365*z + z/4 - z/100 + z/400 + 1721118;
+                return j - (365*12000 + 12000/4 - 12000/100 + 12000/400); // number of leap years in 12000 years
             }
         }
 
@@ -162,16 +164,16 @@ namespace Wmhelp.XPath2.Value
         {
             if (julianDayNumber >= 0)
             {
-                int L = julianDayNumber + 68569 + 1;    // +1 adjustment for days starting at noon
-                int n = (4 * L) / 146097;
-                L = L - (146097 * n + 3) / 4;
-                int i = (4000 * (L + 1)) / 1461001;
-                L = L - (1461 * i) / 4 + 31;
-                int j = (80 * L) / 2447;
-                int d = L - (2447 * j) / 80;
-                L = j / 11;
-                int m = j + 2 - (12 * L);
-                int y = 100 * (n - 49) + i + L;
+                int L = julianDayNumber + 68569 + 1; // +1 adjustment for days starting at noon
+                int n = (4*L)/146097;
+                L = L - (146097*n + 3)/4;
+                int i = (4000*(L + 1))/1461001;
+                L = L - (1461*i)/4 + 31;
+                int j = (80*L)/2447;
+                int d = L - (2447*j)/80;
+                L = j/11;
+                int m = j + 2 - (12*L);
+                int y = 100*(n - 49) + i + L;
                 if (y > 0)
                     return new DateTimeValue(false, new DateTime(y, m, d));
                 else
@@ -181,7 +183,7 @@ namespace Wmhelp.XPath2.Value
             {
                 // add 12000 years and subtract them again...
                 DateTime dt = GetDateFromJulianDayNumber(julianDayNumber +
-                        (365 * 12000 + 12000 / 4 - 12000 / 100 + 12000 / 400)).Value.DateTime;
+                                                         (365*12000 + 12000/4 - 12000/100 + 12000/400)).Value.DateTime;
                 return new DateTimeValue(true, new DateTime(Math.Abs(dt.Year - 12000), dt.Month, dt.Day));
             }
         }
@@ -190,43 +192,42 @@ namespace Wmhelp.XPath2.Value
         {
             int sign = S ? -1 : 1;
             DateTime dt = Value.DateTime;
-            int julianDay = GetJulianDayNumber(sign * dt.Year, dt.Month, dt.Day);
-            long julianSecond = julianDay * (24L * 60L * 60L);
-            julianSecond += (((dt.Hour * 60L + dt.Minute) * 60L) + dt.Second);
+            int julianDay = GetJulianDayNumber(sign*dt.Year, dt.Month, dt.Day);
+            long julianSecond = julianDay*(24L*60L*60L);
+            julianSecond += (((dt.Hour*60L + dt.Minute)*60L) + dt.Second);
             decimal j = julianSecond;
             if (dt.Millisecond != 0)
-                j += Math.Round((decimal)dt.Millisecond / 1000000, 6, MidpointRounding.ToEven);
+                j += Math.Round((decimal) dt.Millisecond/1000000, 6, MidpointRounding.ToEven);
             return j;
         }
 
         public static DateTimeValue CreateFromJulianInstant(decimal instant)
         {
-            long js = (long)Decimal.Truncate(instant);
-            decimal microseconds = (instant - js) * 1000000;
-            long jd = js / (24L * 60L * 60L);
-            DateTimeValue dt = GetDateFromJulianDayNumber((int)jd);
-            js = js % (24L * 60L * 60L);
-            int hour = (int)(js / (60L * 60L));
-            js = js % (60L * 60L);
-            int minute = (int)(js / 60L);
-            js = js % (60L);
+            long js = (long) Decimal.Truncate(instant);
+            decimal microseconds = (instant - js)*1000000;
+            long jd = js/(24L*60L*60L);
+            DateTimeValue dt = GetDateFromJulianDayNumber((int) jd);
+            js = js%(24L*60L*60L);
+            int hour = (int) (js/(60L*60L));
+            js = js%(60L*60L);
+            int minute = (int) (js/60L);
+            js = js%(60L);
             return new DateTimeValue(dt.S, dt.Value.Date,
-                new DateTime(1, 1, 1, hour, minute, (int)js, (int)microseconds));
+                new DateTime(1, 1, 1, hour, minute, (int) js, (int) microseconds));
         }
 
         public static DateTimeValue Add(DateTimeValue dat, YearMonthDurationValue duration)
         {
             try
             {
-
                 Calendar calender = CultureInfo.InvariantCulture.Calendar;
                 DateTime dt = dat.Value.DateTime;
                 int year = dat.S ? -dt.Year : dt.Year - 1;
                 int m = (dt.Month - 1) + duration.Months;
-                year = year + duration.Years + m / 12;
+                year = year + duration.Years + m/12;
                 if (year >= 0)
                     year = year + 1;
-                m = m % 12;
+                m = m%12;
                 if (m < 0)
                 {
                     m += 12;
@@ -253,7 +254,7 @@ namespace Wmhelp.XPath2.Value
         {
             try
             {
-                decimal seconds = (decimal)duration.LowPartValue.Ticks / TimeSpan.TicksPerSecond;
+                decimal seconds = (decimal) duration.LowPartValue.Ticks/TimeSpan.TicksPerSecond;
                 decimal julian = dat.ToJulianInstant();
                 julian += seconds;
                 DateTimeValue dt = CreateFromJulianInstant(julian);
@@ -300,7 +301,7 @@ namespace Wmhelp.XPath2.Value
         {
             public override ValueProxy Create(object value)
             {
-                return new Proxy((DateTimeValue)value);
+                return new Proxy((DateTimeValue) value);
             }
 
             public override int GetValueCode()
@@ -310,13 +311,10 @@ namespace Wmhelp.XPath2.Value
 
             public override Type GetValueType()
             {
-                return typeof(DateTimeValue);
+                return typeof (DateTimeValue);
             }
 
-            public override bool IsNumeric
-            {
-                get { return false; }
-            }
+            public override bool IsNumeric => false;
 
             public override int Compare(ValueProxyFactory other)
             {
@@ -327,20 +325,14 @@ namespace Wmhelp.XPath2.Value
 
         internal class Proxy : ValueProxy
         {
-            private DateTimeValue _value;
+            private readonly DateTimeValue _value;
 
             public Proxy(DateTimeValue value)
             {
                 _value = value;
             }
 
-            public override object Value
-            {
-                get
-                {
-                    return _value;
-                }
-            }
+            public override object Value => _value;
 
             public override int GetValueCode()
             {
@@ -353,7 +345,7 @@ namespace Wmhelp.XPath2.Value
                     throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:eq",
                         new SequenceType(_value.GetType(), XmlTypeCardinality.One),
                         new SequenceType(val.Value.GetType(), XmlTypeCardinality.One));
-                return _value.Equals(((Proxy)val)._value);
+                return _value.Equals(((Proxy) val)._value);
             }
 
             protected override bool Gt(ValueProxy val)
@@ -362,7 +354,7 @@ namespace Wmhelp.XPath2.Value
                     throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:gt",
                         new SequenceType(_value.GetType(), XmlTypeCardinality.One),
                         new SequenceType(val.Value.GetType(), XmlTypeCardinality.One));
-                return ((IComparable)_value).CompareTo(((Proxy)val)._value) > 0;
+                return ((IComparable) _value).CompareTo(((Proxy) val)._value) > 0;
             }
 
             protected override ValueProxy Promote(ValueProxy val)
@@ -381,9 +373,9 @@ namespace Wmhelp.XPath2.Value
                 switch (value.GetValueCode())
                 {
                     case YearMonthDurationValue.ProxyValueCode:
-                        return new Proxy(DateTimeValue.Add(_value, (YearMonthDurationValue)value.Value));
+                        return new Proxy(DateTimeValue.Add(_value, (YearMonthDurationValue) value.Value));
                     case DayTimeDurationValue.ProxyValueCode:
-                        return new Proxy(DateTimeValue.Add(_value, (DayTimeDurationValue)value.Value));
+                        return new Proxy(DateTimeValue.Add(_value, (DayTimeDurationValue) value.Value));
 
                     default:
                         throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:add",
@@ -397,11 +389,11 @@ namespace Wmhelp.XPath2.Value
                 switch (value.GetValueCode())
                 {
                     case ProxyValueCode:
-                        return new DayTimeDurationValue.Proxy(DateTimeValue.Sub(_value, (DateTimeValue)value.Value));
+                        return new DayTimeDurationValue.Proxy(DateTimeValue.Sub(_value, (DateTimeValue) value.Value));
                     case YearMonthDurationValue.ProxyValueCode:
-                        return new Proxy(DateTimeValue.Add(_value, -(YearMonthDurationValue)value.Value));
+                        return new Proxy(DateTimeValue.Add(_value, -(YearMonthDurationValue) value.Value));
                     case DayTimeDurationValue.ProxyValueCode:
-                        return new Proxy(DateTimeValue.Add(_value, -(DayTimeDurationValue)value.Value));
+                        return new Proxy(DateTimeValue.Add(_value, -(DayTimeDurationValue) value.Value));
 
                     default:
                         throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:sub",

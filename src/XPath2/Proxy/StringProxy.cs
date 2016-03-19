@@ -23,10 +23,7 @@ namespace Wmhelp.XPath2.Proxy
             return StringProxyFactory.Code;
         }
 
-        public override object Value
-        {
-            get { return _value; }
-        }
+        public override object Value => _value;
 
         protected override bool Eq(ValueProxy val)
         {

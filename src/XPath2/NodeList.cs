@@ -14,8 +14,8 @@ namespace Wmhelp.XPath2
 {
     class NodeList : XmlNodeList
     {
-        private List<XmlNode> _list;
-        private XPath2NodeIterator _iter;
+        private readonly List<XmlNode> _list;
+        private readonly XPath2NodeIterator _iter;
         private bool _done;
 
         public NodeList(XPath2NodeIterator iter, XmlDocument doc)
@@ -85,7 +85,7 @@ namespace Wmhelp.XPath2
 
         private class Enumerator : IEnumerator, IEnumerator<XmlNode>
         {
-            private NodeList _owner;
+            private readonly NodeList _owner;
             private XmlNode _curr;
             private int _pos = -1;
 

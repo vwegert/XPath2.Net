@@ -11,7 +11,7 @@ namespace Wmhelp.XPath2.Value
 {
     class StringTokenizer
     {
-        private string _text;
+        private readonly string _text;
         private int _offset;
 
         public StringTokenizer(string text)
@@ -25,13 +25,7 @@ namespace Wmhelp.XPath2.Value
 
         public int LineCount { get; private set; }
 
-        public int Offset
-        {
-            get
-            {
-                return _offset;
-            }
-        }
+        public int Offset => _offset;
 
         public static readonly int TokenInt = 1;        
 

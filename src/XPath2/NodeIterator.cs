@@ -12,7 +12,7 @@ namespace Wmhelp.XPath2
 {
     public sealed class NodeIterator : XPath2NodeIterator
     {
-        private IEnumerable<XPathItem> master;
+        private readonly IEnumerable<XPathItem> master;
         private IEnumerator<XPathItem> iterator;
 
         public NodeIterator(IEnumerable<XPathItem> enumerable)

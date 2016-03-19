@@ -10,8 +10,8 @@ namespace Wmhelp.XPath2.Iterator
 {
     internal sealed class PositionFilterNodeIterator : XPath2NodeIterator
     {
-        private XPath2NodeIterator iter;
-        private int position;
+        private readonly XPath2NodeIterator iter;
+        private readonly int position;
 
         public PositionFilterNodeIterator(int pos, XPath2NodeIterator baseIter)
         {

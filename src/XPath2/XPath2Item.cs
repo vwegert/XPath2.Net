@@ -133,82 +133,28 @@ namespace Wmhelp.XPath2
             }
         }
         
-        public override bool IsNode
-        {
-            get 
-            { 
-                return false; 
-            }
-        }
+        public override bool IsNode => false;
 
-        public override object TypedValue
-        {
-            get 
-            {
-                return _value;
-            }
-        }
+        public override object TypedValue => _value;
 
-        public override string Value
-        {
-            get
-            {
-                return XPath2Convert.ToString(_value);
-            }
-        }
+        public override string Value => XPath2Convert.ToString(_value);
 
         public override object ValueAs(Type returnType, IXmlNamespaceResolver nsResolver)
         {
             return XPath2Convert.ChangeType(_value, returnType);
         }
 
-        public override bool ValueAsBoolean
-        {
-            get 
-            {
-                return Convert.ToBoolean(_value);
-            }
-        }
+        public override bool ValueAsBoolean => Convert.ToBoolean(_value);
 
-        public override DateTime ValueAsDateTime
-        {
-            get 
-            {
-                return Convert.ToDateTime(_value);
-            }
-        }
+        public override DateTime ValueAsDateTime => Convert.ToDateTime(_value);
 
-        public override double ValueAsDouble
-        {
-            get 
-            {
-                return Convert.ToDouble(_value);
-            }
-        }
+        public override double ValueAsDouble => Convert.ToDouble(_value);
 
-        public override int ValueAsInt
-        {
-            get 
-            {
-                return Convert.ToInt32(_value);
-            }
-        }
+        public override int ValueAsInt => Convert.ToInt32(_value);
 
-        public override long ValueAsLong
-        {
-            get 
-            {
-                return Convert.ToInt64(_value);
-            }
-        }
+        public override long ValueAsLong => Convert.ToInt64(_value);
 
-        public override Type ValueType
-        {
-            get 
-            {
-                return _value.GetType();
-            }
-        }
+        public override Type ValueType => _value.GetType();
 
         public override XmlSchemaType XmlType
         {

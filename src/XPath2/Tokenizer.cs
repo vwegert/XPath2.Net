@@ -17,13 +17,13 @@ namespace Wmhelp.XPath2
 {
     internal class Tokenizer : yyInput
     {
-        private TextReader m_reader;
+        private readonly TextReader m_reader;
         private int m_position;
 
         private LexerState m_state = LexerState.Default;
-        private StringBuilder m_buffer = new StringBuilder();
-        private Stack<LexerState> m_states = new Stack<LexerState>();
-        private Queue<CurrentToken> m_token = new Queue<CurrentToken>();
+        private readonly StringBuilder m_buffer = new StringBuilder();
+        private readonly Stack<LexerState> m_states = new Stack<LexerState>();
+        private readonly Queue<CurrentToken> m_token = new Queue<CurrentToken>();
 
         public Tokenizer()
         {
@@ -44,7 +44,7 @@ namespace Wmhelp.XPath2
         }
 
         private int m_anchor;
-        private int[] m_bookmark;
+        private readonly int[] m_bookmark;
         private int m_length;
 
         private object m_value;
@@ -52,10 +52,7 @@ namespace Wmhelp.XPath2
         public int LineNo { get; protected set; }
         public int ColNo { get; protected set; }
 
-        public int Position
-        {
-            get { return m_position; }
-        }
+        public int Position => m_position;
 
         private struct CurrentToken
         {

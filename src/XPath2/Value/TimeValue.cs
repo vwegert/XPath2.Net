@@ -70,7 +70,8 @@ namespace Wmhelp.XPath2.Value
             return sb.ToString();
         }
 
-        private static string[] TimeFormats = new string[] {
+        private static readonly string[] TimeFormats = new string[]
+        {
             "HH:mm:ss",
             "HH:mm:ss.f",
             "HH:mm:ss.ff",
@@ -81,7 +82,8 @@ namespace Wmhelp.XPath2.Value
             "HH:mm:ss.ffffffff"
         };
 
-        private static string[] TimeOffsetFormats = new string[] {
+        private static readonly string[] TimeOffsetFormats = new string[]
+        {
             "HH:mm:sszzz",
             "HH:mm:ss.fzzz",
             "HH:mm:ss.ffzzz",
@@ -107,8 +109,9 @@ namespace Wmhelp.XPath2.Value
             if (text.EndsWith("Z"))
             {
                 if (!DateTimeOffset.TryParseExact(text.Substring(0, text.Length - 1), TimeFormats,
-                        CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal |
-                        DateTimeStyles.AllowLeadingWhite | DateTimeStyles.AllowTrailingWhite, out dateTimeOffset))
+                    CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal |
+                                                  DateTimeStyles.AllowLeadingWhite | DateTimeStyles.AllowTrailingWhite,
+                    out dateTimeOffset))
                     throw new XPath2Exception("", Resources.InvalidFormat, text, "xs:time");
                 return new TimeValue(dateTimeOffset);
             }
@@ -161,7 +164,7 @@ namespace Wmhelp.XPath2.Value
         {
             public override ValueProxy Create(object value)
             {
-                return new Proxy((TimeValue)value);
+                return new Proxy((TimeValue) value);
             }
 
             public override int GetValueCode()
@@ -171,13 +174,10 @@ namespace Wmhelp.XPath2.Value
 
             public override Type GetValueType()
             {
-                return typeof(TimeValue);
+                return typeof (TimeValue);
             }
 
-            public override bool IsNumeric
-            {
-                get { return false; }
-            }
+            public override bool IsNumeric => false;
 
             public override int Compare(ValueProxyFactory other)
             {
@@ -188,7 +188,7 @@ namespace Wmhelp.XPath2.Value
 
         internal class Proxy : ValueProxy
         {
-            private TimeValue _value;
+            private readonly TimeValue _value;
 
             public Proxy(TimeValue value)
             {
@@ -200,13 +200,7 @@ namespace Wmhelp.XPath2.Value
                 return ProxyValueCode;
             }
 
-            public override object Value
-            {
-                get
-                {
-                    return _value;
-                }
-            }
+            public override object Value => _value;
 
             protected override bool Eq(ValueProxy val)
             {
@@ -214,7 +208,7 @@ namespace Wmhelp.XPath2.Value
                     throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:eq",
                         new SequenceType(_value.GetType(), XmlTypeCardinality.One),
                         new SequenceType(val.Value.GetType(), XmlTypeCardinality.One));
-                return _value.Equals(((Proxy)val)._value);
+                return _value.Equals(((Proxy) val)._value);
             }
 
             protected override bool Gt(ValueProxy val)
@@ -223,7 +217,7 @@ namespace Wmhelp.XPath2.Value
                     throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:add",
                         new SequenceType(_value.GetType(), XmlTypeCardinality.One),
                         new SequenceType(_value.Value.GetType(), XmlTypeCardinality.One));
-                return ((IComparable)_value).CompareTo(((Proxy)val)._value) > 0;
+                return ((IComparable) _value).CompareTo(((Proxy) val)._value) > 0;
             }
 
             protected override ValueProxy Promote(ValueProxy val)
@@ -242,7 +236,7 @@ namespace Wmhelp.XPath2.Value
                 switch (value.GetValueCode())
                 {
                     case DayTimeDurationValue.ProxyValueCode:
-                        return new Proxy(TimeValue.Add(_value, (DayTimeDurationValue)value.Value));
+                        return new Proxy(TimeValue.Add(_value, (DayTimeDurationValue) value.Value));
 
                     default:
                         throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:add",
@@ -256,9 +250,9 @@ namespace Wmhelp.XPath2.Value
                 switch (value.GetValueCode())
                 {
                     case ProxyValueCode:
-                        return new DayTimeDurationValue.Proxy(TimeValue.Sub(_value, (TimeValue)value.Value));
+                        return new DayTimeDurationValue.Proxy(TimeValue.Sub(_value, (TimeValue) value.Value));
                     case DayTimeDurationValue.ProxyValueCode:
-                        return new Proxy(TimeValue.Add(_value, -(DayTimeDurationValue)value.Value));
+                        return new Proxy(TimeValue.Add(_value, -(DayTimeDurationValue) value.Value));
 
                     default:
                         throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:sub",

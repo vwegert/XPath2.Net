@@ -18,7 +18,7 @@ namespace Wmhelp.XPath2
         private int _size;
         private XPathItem[] _items;
 
-        private static XPathItem[] emptySet = new XPathItem[0];
+        private static readonly XPathItem[] emptySet = new XPathItem[0];
 
         public ItemSet()
         {
@@ -61,7 +61,7 @@ namespace Wmhelp.XPath2
             }
         }
 
-        public int Count { get { return _size; } }
+        public int Count => _size;
 
         public XPathItem this[int index]
         {
@@ -105,7 +105,7 @@ namespace Wmhelp.XPath2
         [Serializable, StructLayout(LayoutKind.Sequential)]
         public struct Enumerator : IEnumerator<XPathItem>, IDisposable, IEnumerator
         {
-            private ItemSet itemSet;
+            private readonly ItemSet itemSet;
             private int index;
             private XPathItem current;
 
@@ -133,21 +133,9 @@ namespace Wmhelp.XPath2
                 return false;
             }
 
-            public XPathItem Current
-            {
-                get
-                {
-                    return current;
-                }
-            }
+            public XPathItem Current => current;
 
-            object IEnumerator.Current
-            {
-                get
-                {
-                    return current;
-                }
-            }
+            object IEnumerator.Current => current;
 
             void IEnumerator.Reset()
             {

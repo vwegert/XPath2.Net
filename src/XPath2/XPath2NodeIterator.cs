@@ -24,7 +24,7 @@ namespace Wmhelp.XPath2
 
     internal sealed class ContextProvider : IContextProvider
     {
-        private XPath2NodeIterator m_iter;
+        private readonly XPath2NodeIterator m_iter;
 
         public ContextProvider(object value)
         {
@@ -36,13 +36,7 @@ namespace Wmhelp.XPath2
             m_iter = iter;
         }
 
-        public XPath2NodeIterator Iterator
-        {
-            get
-            {
-                return m_iter;
-            }
-        }
+        public XPath2NodeIterator Iterator => m_iter;
 
         public bool MoveNext()
         {
@@ -51,36 +45,18 @@ namespace Wmhelp.XPath2
 
         #region IContextProvider Members
 
-        public XPathItem Context
-        {
-            get
-            {
-                return m_iter.Current;
-            }
-        }
+        public XPathItem Context => m_iter.Current;
 
-        public int CurrentPosition
-        {
-            get
-            {
-                return m_iter.CurrentPosition + 1;
-            }
-        }
+        public int CurrentPosition => m_iter.CurrentPosition + 1;
 
-        public int LastPosition
-        {
-            get
-            {
-                return m_iter.Count;
-            }
-        }
+        public int LastPosition => m_iter.Count;
 
         #endregion
     }
 
 
     [DebuggerDisplay("{curr}")]
-    [DebuggerTypeProxy(typeof(XPath2NodeIteratorDebugView))]
+    [DebuggerTypeProxy(typeof (XPath2NodeIteratorDebugView))]
     public abstract class XPath2NodeIterator : ICloneable, IEnumerable, IEnumerable<XPathItem>
     {
         internal int count = -1;
@@ -132,13 +108,7 @@ namespace Wmhelp.XPath2
             }
         }
 
-        public virtual bool IsRange
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public virtual bool IsRange => false;
 
         public XPathItem Current
         {
@@ -160,34 +130,16 @@ namespace Wmhelp.XPath2
             }
         }
 
-        public virtual int SequentialPosition
-        {
-            get
-            {
-                return CurrentPosition + 1;
-            }
-        }
+        public virtual int SequentialPosition => CurrentPosition + 1;
 
         public virtual void ResetSequentialPosition()
         {
             return;
         }
 
-        public bool IsStarted
-        {
-            get
-            {
-                return iteratorStarted;
-            }
-        }
+        public bool IsStarted => iteratorStarted;
 
-        public virtual bool IsFinished
-        {
-            get
-            {
-                return iteratorFinished;
-            }
-        }
+        public virtual bool IsFinished => iteratorFinished;
 
         public bool MoveNext()
         {
@@ -252,7 +204,6 @@ namespace Wmhelp.XPath2
             return new SingleIterator(item);
         }
 
-
         #region ICloneable Members
 
         object ICloneable.Clone()
@@ -269,7 +220,7 @@ namespace Wmhelp.XPath2
             return new Enumerator(this);
         }
 
-        #endregion        
+        #endregion
 
         #region IEnumerable<XPathItem> Members
 
@@ -284,7 +235,7 @@ namespace Wmhelp.XPath2
         {
             private XPath2NodeIterator current;
             private bool iterationStarted;
-            private XPath2NodeIterator original;
+            private readonly XPath2NodeIterator original;
 
             public Enumerator(XPath2NodeIterator iter)
             {
@@ -346,7 +297,7 @@ namespace Wmhelp.XPath2
 
         public class SingleIterator : XPath2NodeIterator
         {
-            private XPathItem _item;
+            private readonly XPathItem _item;
 
             public SingleIterator(XPathItem item)
             {
@@ -358,13 +309,7 @@ namespace Wmhelp.XPath2
                 return new SingleIterator(_item.Clone());
             }
 
-            public override bool IsSingleIterator
-            {
-                get
-                {
-                    return true;
-                }
-            }
+            public override bool IsSingleIterator => true;
 
             protected override XPathItem NextItem()
             {
@@ -381,7 +326,7 @@ namespace Wmhelp.XPath2
 
         internal class XQueryNodeIteratorDebugView
         {
-            private XPath2NodeIterator iter;
+            private readonly XPath2NodeIterator iter;
 
             public XQueryNodeIteratorDebugView(XPath2NodeIterator iter)
             {
@@ -404,28 +349,15 @@ namespace Wmhelp.XPath2
                 }
             }
 
-            public XPathItem Current
-            {
-                get
-                {
-                    return iter.curr;
-                }
-            }
+            public XPathItem Current => iter.curr;
 
-            public int CurrentPosition
-            {
-                get
-                {
-                    return iter.pos;
-                }
-            }
+            public int CurrentPosition => iter.pos;
         }
-
     }
 
     internal class XPath2NodeIteratorDebugView
     {
-        private XPath2NodeIterator iter;
+        private readonly XPath2NodeIterator iter;
 
         public XPath2NodeIteratorDebugView(XPath2NodeIterator iter)
         {
@@ -448,20 +380,8 @@ namespace Wmhelp.XPath2
             }
         }
 
-        public XPathItem Current
-        {
-            get
-            {
-                return iter.Current;
-            }
-        }
+        public XPathItem Current => iter.Current;
 
-        public int CurrentPosition
-        {
-            get
-            {
-                return iter.CurrentPosition;
-            }
-        }
+        public int CurrentPosition => iter.CurrentPosition;
     }
 }

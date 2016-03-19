@@ -420,7 +420,7 @@ namespace Wmhelp.XPath2
                 new XPathFunctionDef(name, action, resultType));
         }
 
-        private static object syncRoot = new object();
+        private static readonly object syncRoot = new object();
         private static volatile FunctionTable _inst = null;
 
         public static FunctionTable Inst

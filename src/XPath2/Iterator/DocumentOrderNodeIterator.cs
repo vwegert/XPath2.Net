@@ -11,7 +11,7 @@ namespace Wmhelp.XPath2.Iterator
 {
     internal sealed class DocumentOrderNodeIterator : XPath2NodeIterator
     {
-        private ItemSet itemSet;
+        private readonly ItemSet itemSet;
         private XPathNavigator lastNode;
         private int index;
 

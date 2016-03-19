@@ -14,7 +14,7 @@ namespace Wmhelp.XPath2.Proxy
 
         public override ValueProxy Create(object value)
         {
-            return new ULong((ulong)value);
+            return new ULong((ulong) value);
         }
 
         public override int GetValueCode()
@@ -24,18 +24,15 @@ namespace Wmhelp.XPath2.Proxy
 
         public override Type GetValueType()
         {
-            return typeof(UInt64);
+            return typeof (UInt64);
         }
 
         public override Type GetResultType()
         {
-            return typeof(Integer);
+            return typeof (Integer);
         }
 
-        public override bool IsNumeric
-        {
-            get { return true; }
-        }
+        public override bool IsNumeric => true;
 
         public override int Compare(ValueProxyFactory other)
         {

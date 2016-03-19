@@ -24,13 +24,7 @@ namespace Wmhelp.XPath2
             return this;
         }
 
-        public override bool IsFinished
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override bool IsFinished => true;
 
         protected override XPathItem NextItem()
         {

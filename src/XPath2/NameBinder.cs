@@ -12,11 +12,11 @@ namespace Wmhelp.XPath2
 {
     internal delegate void ChangeValueAction(NameBinder.ReferenceLink sender, object[] dataPool);
 
-    class NameBinder
+    internal class NameBinder
     {
         public class ReferenceLink
         {
-            private int _index;
+            private readonly int _index;
 
             internal ReferenceLink(int index)
             {
@@ -39,9 +39,9 @@ namespace Wmhelp.XPath2
         }
 
         private int _slotIndex = 0;
-        private List<NameSlot> _slots = new List<NameSlot>();
+        private readonly List<NameSlot> _slots = new List<NameSlot>();
 
-        public int Length { get { return _slotIndex; } }
+        public int Length => _slotIndex;
 
         public ReferenceLink PushVar(XmlQualifiedName name)
         {

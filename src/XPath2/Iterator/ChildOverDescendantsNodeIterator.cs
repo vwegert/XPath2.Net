@@ -26,11 +26,11 @@ namespace Wmhelp.XPath2.Iterator
             }
         }
 
-        private XPathNodeType kind;
-        private XPath2Context context;
-        private NodeTest[] nodeTest;
-        private NodeTest lastTest;
-        private XPath2NodeIterator iter;
+        private readonly XPathNodeType kind;
+        private readonly XPath2Context context;
+        private readonly NodeTest[] nodeTest;
+        private readonly NodeTest lastTest;
+        private readonly XPath2NodeIterator iter;
         private XPathNavigator curr;
 
         public ChildOverDescendantsNodeIterator(XPath2Context context, NodeTest[] nodeTest, XPath2NodeIterator iter)
@@ -132,10 +132,7 @@ namespace Wmhelp.XPath2.Iterator
             return curr;
         }
 
-        public override int SequentialPosition
-        {
-            get { return sequentialPosition; }
-        }
+        public override int SequentialPosition => sequentialPosition;
 
         public override void ResetSequentialPosition()
         {

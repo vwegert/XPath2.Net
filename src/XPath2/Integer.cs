@@ -10,7 +10,7 @@ namespace Wmhelp.XPath2
 {
     public struct Integer : IFormattable, IComparable, IConvertible, IComparable<Integer>, IEquatable<Integer>
     {
-        private decimal _value;
+        private readonly decimal _value;
 
         internal Integer(Decimal value)
         {

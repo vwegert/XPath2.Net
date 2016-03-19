@@ -13,9 +13,9 @@ namespace Wmhelp.XPath2.Value
     internal sealed class ShadowProxy : ValueProxy
     {
 
-        private object _value;
-        private int _valueCode;
-        private bool _isNumeric;
+        private readonly object _value;
+        private readonly int _valueCode;
+        private readonly bool _isNumeric;
 
         public ShadowProxy(ValueProxy proxy)
         {
@@ -35,13 +35,7 @@ namespace Wmhelp.XPath2.Value
             return _isNumeric;
         }
 
-        public override object Value
-        {
-            get
-            {
-                return _value;
-            }
-        }
+        public override object Value => _value;
 
         protected override bool Eq(ValueProxy val)
         {

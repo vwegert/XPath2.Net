@@ -14,7 +14,7 @@ namespace Wmhelp.XPath2.Proxy
 
         public override ValueProxy Create(object value)
         {
-            return new StringProxy((String)value);
+            return new StringProxy((String) value);
         }
 
         public override int GetValueCode()
@@ -24,13 +24,10 @@ namespace Wmhelp.XPath2.Proxy
 
         public override Type GetValueType()
         {
-            return typeof(String);
+            return typeof (String);
         }
 
-        public override bool IsNumeric
-        {
-            get { return false; }
-        }
+        public override bool IsNumeric => false;
 
         public override int Compare(ValueProxyFactory other)
         {

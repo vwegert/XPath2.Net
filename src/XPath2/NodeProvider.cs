@@ -10,7 +10,7 @@ namespace Wmhelp.XPath2
 {
     public class NodeProvider : IContextProvider
     {
-        private XPathItem item;
+        private readonly XPathItem item;
 
         public NodeProvider(XPathItem item)
         {
@@ -19,22 +19,12 @@ namespace Wmhelp.XPath2
 
         #region IContextProvider Members
 
-        public XPathItem Context
-        {
-            get { return item; }
-        }
+        public XPathItem Context => item;
 
-        public int CurrentPosition
-        {
-            get { return 1; }
-        }
+        public int CurrentPosition => 1;
 
-        public int LastPosition
-        {
-            get { return 1; }
-        }
+        public int LastPosition => 1;
 
         #endregion
     }
-
 }

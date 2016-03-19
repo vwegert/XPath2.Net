@@ -10,7 +10,7 @@ namespace Wmhelp.XPath2.Proxy
 {
     internal sealed class UInt : ValueProxy
     {
-        private uint _value;
+        private readonly uint _value;
 
         public UInt(uint value)
         {
@@ -22,13 +22,7 @@ namespace Wmhelp.XPath2.Proxy
             return UIntFactory.Code;
         }
 
-        public override object Value
-        {
-            get 
-            {
-                return _value;
-            }
-        }
+        public override object Value => _value;
 
         public override bool IsNumeric()
         {
@@ -37,12 +31,12 @@ namespace Wmhelp.XPath2.Proxy
 
         protected override bool Eq(ValueProxy val)
         {
-            return _value == ((UInt)val)._value;
+            return _value == ((UInt) val)._value;
         }
 
         protected override bool Gt(ValueProxy val)
         {
-            return _value > ((UInt)val)._value;
+            return _value > ((UInt) val)._value;
         }
 
         protected override ValueProxy Promote(ValueProxy val)
@@ -57,33 +51,34 @@ namespace Wmhelp.XPath2.Proxy
 
         protected override ValueProxy Add(ValueProxy val)
         {
-            return new UInt(_value + ((UInt)val)._value);
+            return new UInt(_value + ((UInt) val)._value);
         }
 
         protected override ValueProxy Sub(ValueProxy val)
         {
-            return new UInt(_value - ((UInt)val)._value);
+            return new UInt(_value - ((UInt) val)._value);
         }
 
         protected override ValueProxy Mul(ValueProxy val)
         {
-            return new UInt(_value * ((UInt)val)._value);
+            return new UInt(_value*((UInt) val)._value);
         }
 
         protected override ValueProxy Div(ValueProxy val)
         {
-            return new DecimalProxy(Convert.ToDecimal(_value) / Convert.ToDecimal(val));
+            return new DecimalProxy(Convert.ToDecimal(_value)/Convert.ToDecimal(val));
         }
 
         protected override Integer IDiv(ValueProxy val)
         {
-            return (Integer)Convert.ToDecimal(_value / Convert.ToUInt32(val));
+            return (Integer) Convert.ToDecimal(_value/Convert.ToUInt32(val));
         }
 
         protected override ValueProxy Mod(ValueProxy val)
         {
-            return new UInt(_value % ((UInt)val)._value);
+            return new UInt(_value%((UInt) val)._value);
         }
+
         public override TypeCode GetTypeCode()
         {
             return TypeCode.UInt32;

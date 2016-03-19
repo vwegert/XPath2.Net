@@ -8,12 +8,9 @@ namespace Wmhelp.XPath2.AST
 {
     internal sealed class ValueNode : AbstractNode
     {
-        private object _value;
+        private readonly object _value;
 
-        public object Content
-        {
-            get { return _value; }
-        }
+        public object Content => _value;
 
         public ValueNode(XPath2Context context, object value)
             : base(context)

@@ -11,7 +11,7 @@ namespace Wmhelp.XPath2.Iterator
 {
     internal class ItemIterator : XPath2NodeIterator
     {
-        private XPath2NodeIterator iter;
+        private readonly XPath2NodeIterator iter;
 
         public ItemIterator(XPath2NodeIterator baseIter)
         {

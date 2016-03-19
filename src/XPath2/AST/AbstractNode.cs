@@ -14,7 +14,7 @@ namespace Wmhelp.XPath2.AST
     {
         private AbstractNode _parent = null;
         private List<AbstractNode> _childs = null;
-        private XPath2Context _context = null;
+        private readonly XPath2Context _context = null;
 
         public AbstractNode(XPath2Context context)
         {
@@ -31,20 +31,11 @@ namespace Wmhelp.XPath2.AST
             }
         }
 
-        public AbstractNode Parent
-        {
-            get { return _parent; }
-        }
+        public AbstractNode Parent => _parent;
 
-        public XPath2Context Context
-        {
-            get { return _context; }
-        }
+        public XPath2Context Context => _context;
 
-        public bool IsLeaf
-        {
-            get { return _childs == null; }
-        }
+        public bool IsLeaf => _childs == null;
 
         public AbstractNode this[int index]
         {

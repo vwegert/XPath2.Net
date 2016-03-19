@@ -14,7 +14,7 @@ namespace Wmhelp.XPath2.Proxy
 
         public override ValueProxy Create(object value)
         {
-            return new SByteProxy((sbyte)value);
+            return new SByteProxy((sbyte) value);
         }
 
         public override int GetValueCode()
@@ -24,18 +24,15 @@ namespace Wmhelp.XPath2.Proxy
 
         public override Type GetValueType()
         {
-            return typeof(SByte);
+            return typeof (SByte);
         }
 
         public override Type GetResultType()
         {
-            return typeof(Int32);
+            return typeof (Int32);
         }
 
-        public override bool IsNumeric
-        {
-            get { return true; }
-        }
+        public override bool IsNumeric => true;
 
         public override int Compare(ValueProxyFactory other)
         {

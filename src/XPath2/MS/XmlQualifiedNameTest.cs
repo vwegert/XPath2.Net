@@ -26,17 +26,14 @@ namespace Wmhelp.XPath2.MS
     /// </summary>
     public class XmlQualifiedNameTest : XmlQualifiedName
     {
-        bool exclude;
-        const string wildcard = "*";
-        static XmlQualifiedNameTest wc = New(wildcard, wildcard);
+        private readonly bool exclude;
+        private const string wildcard = "*";
+        private static readonly XmlQualifiedNameTest wc = New(wildcard, wildcard);
 
         /// <summary>
         /// Full wildcard
         /// </summary>
-        public static XmlQualifiedNameTest Wildcard
-        {
-            get { return wc; }
-        }
+        public static XmlQualifiedNameTest Wildcard => wc;
 
         /// <summary>
         /// Constructor
@@ -74,26 +71,17 @@ namespace Wmhelp.XPath2.MS
         /// <summary>
         /// True if matches any name and any namespace
         /// </summary>
-        public bool IsWildcard
-        {
-            get { return (object)this == (object)Wildcard; }
-        }
+        public bool IsWildcard => (object) this == (object) Wildcard;
 
         /// <summary>
         /// True if matches any name
         /// </summary>
-        public bool IsNameWildcard
-        {
-            get { return (object)Name == (object)wildcard; }
-        }
+        public bool IsNameWildcard => (object) Name == (object) wildcard;
 
         /// <summary>
         /// True if matches any namespace
         /// </summary>
-        public bool IsNamespaceWildcard
-        {
-            get { return (object)Namespace == (object)wildcard; }
-        }
+        public bool IsNamespaceWildcard => (object) Namespace == (object) wildcard;
 
         private bool IsNameSubsetOf(XmlQualifiedNameTest other)
         {
@@ -103,8 +91,8 @@ namespace Wmhelp.XPath2.MS
         private bool IsNamespaceSubsetOf(XmlQualifiedNameTest other)
         {
             return other.IsNamespaceWildcard
-                || (exclude == other.exclude && Namespace == other.Namespace)
-                || (other.exclude && !exclude && Namespace != other.Namespace);
+                   || (exclude == other.exclude && Namespace == other.Namespace)
+                   || (other.exclude && !exclude && Namespace != other.Namespace);
         }
 
         /// <summary>
@@ -120,7 +108,8 @@ namespace Wmhelp.XPath2.MS
         /// </summary>
         public bool HasIntersection(XmlQualifiedNameTest other)
         {
-            return (IsNamespaceSubsetOf(other) || other.IsNamespaceSubsetOf(this)) && (IsNameSubsetOf(other) || other.IsNameSubsetOf(this));
+            return (IsNamespaceSubsetOf(other) || other.IsNamespaceSubsetOf(this)) &&
+                   (IsNameSubsetOf(other) || other.IsNameSubsetOf(this));
         }
 
         /// <summary>
@@ -128,7 +117,7 @@ namespace Wmhelp.XPath2.MS
         /// </summary>
         public override string ToString()
         {
-            if ((object)this == (object)Wildcard)
+            if ((object) this == (object) Wildcard)
             {
                 return "*";
             }
@@ -138,7 +127,7 @@ namespace Wmhelp.XPath2.MS
                 {
                     return Name;
                 }
-                else if ((object)Namespace == (object)wildcard)
+                else if ((object) Namespace == (object) wildcard)
                 {
                     return "*:" + Name;
                 }

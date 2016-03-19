@@ -12,7 +12,7 @@ namespace Wmhelp.XPath2.Value
 {
     public class DayTimeDurationValue : DurationValue, IComparable
     {
-        new public const int ProxyValueCode = 12;
+        public new const int ProxyValueCode = 12;
 
         public DayTimeDurationValue(TimeSpan value)
             : base(TimeSpan.Zero, value)
@@ -35,7 +35,7 @@ namespace Wmhelp.XPath2.Value
         {
             if (Double.IsNaN(b) || Double.IsNegativeInfinity(b) || Double.IsPositiveInfinity(b))
                 throw new XPath2Exception("FOCA0005", Resources.FOCA0005);
-            long timespan = (long)(a.LowPartValue.Ticks * b);
+            long timespan = (long) (a.LowPartValue.Ticks*b);
             return new DayTimeDurationValue(new TimeSpan(timespan));
         }
 
@@ -45,7 +45,7 @@ namespace Wmhelp.XPath2.Value
                 throw new XPath2Exception("FOAR0001", Resources.FOAR0001);
             if (Double.IsNaN(b))
                 throw new XPath2Exception("FOCA0005", Resources.FOCA0005);
-            long timespan = (long)(a.LowPartValue.Ticks / b);
+            long timespan = (long) (a.LowPartValue.Ticks/b);
             return new DayTimeDurationValue(new TimeSpan(timespan));
         }
 
@@ -53,7 +53,7 @@ namespace Wmhelp.XPath2.Value
         {
             if (b.LowPartValue == TimeSpan.Zero)
                 throw new XPath2Exception("FOAR0001", Resources.FOAR0001);
-            return (decimal)a.LowPartValue.Ticks / (decimal)b.LowPartValue.Ticks;
+            return (decimal) a.LowPartValue.Ticks/(decimal) b.LowPartValue.Ticks;
         }
 
         public static DayTimeDurationValue operator -(DayTimeDurationValue d)
@@ -61,11 +61,11 @@ namespace Wmhelp.XPath2.Value
             return new DayTimeDurationValue(-d.LowPartValue);
         }
 
-        new internal class ProxyFactory : ValueProxyFactory
+        internal new class ProxyFactory : ValueProxyFactory
         {
             public override ValueProxy Create(object value)
             {
-                return new Proxy((DayTimeDurationValue)value);
+                return new Proxy((DayTimeDurationValue) value);
             }
 
             public override int GetValueCode()
@@ -73,14 +73,11 @@ namespace Wmhelp.XPath2.Value
                 return ProxyValueCode;
             }
 
-            public override bool IsNumeric
-            {
-                get { return false; }
-            }
+            public override bool IsNumeric => false;
 
             public override Type GetValueType()
             {
-                return typeof(DayTimeDurationValue);
+                return typeof (DayTimeDurationValue);
             }
 
             public override int Compare(ValueProxyFactory other)
@@ -92,9 +89,9 @@ namespace Wmhelp.XPath2.Value
         }
 
 
-        new internal class Proxy : ValueProxy
+        internal new class Proxy : ValueProxy
         {
-            private DayTimeDurationValue _value;
+            private readonly DayTimeDurationValue _value;
 
             public Proxy(DayTimeDurationValue value)
             {
@@ -106,13 +103,7 @@ namespace Wmhelp.XPath2.Value
                 return ProxyValueCode;
             }
 
-            public override object Value
-            {
-                get
-                {
-                    return _value;
-                }
-            }
+            public override object Value => _value;
 
             protected override bool Eq(ValueProxy val)
             {
@@ -121,7 +112,7 @@ namespace Wmhelp.XPath2.Value
 
             protected override bool Gt(ValueProxy val)
             {
-                return ((IComparable)_value).CompareTo(val.Value) > 0;
+                return ((IComparable) _value).CompareTo(val.Value) > 0;
             }
 
             protected override bool TryGt(ValueProxy val, out bool res)
@@ -129,7 +120,7 @@ namespace Wmhelp.XPath2.Value
                 res = false;
                 if (val.GetValueCode() != ProxyValueCode)
                     return false;
-                res = ((IComparable)_value).CompareTo(val.Value) > 0;
+                res = ((IComparable) _value).CompareTo(val.Value) > 0;
                 return true;
             }
 
@@ -139,7 +130,7 @@ namespace Wmhelp.XPath2.Value
                     return new ShadowProxy(val);
                 if (val.GetValueCode() == DurationValue.ProxyValueCode)
                 {
-                    DurationValue duration = (DurationValue)val.Value;
+                    DurationValue duration = (DurationValue) val.Value;
                     return new Proxy(new DayTimeDurationValue(duration.LowPartValue));
                 }
                 throw new InvalidCastException();
@@ -156,13 +147,16 @@ namespace Wmhelp.XPath2.Value
                 switch (value.GetValueCode())
                 {
                     case ProxyValueCode:
-                        return new Proxy(new DayTimeDurationValue(_value.LowPartValue + ((DayTimeDurationValue)value.Value).LowPartValue));
+                        return
+                            new Proxy(
+                                new DayTimeDurationValue(_value.LowPartValue +
+                                                         ((DayTimeDurationValue) value.Value).LowPartValue));
                     case DateTimeValue.ProxyValueCode:
-                        return new DateTimeValue.Proxy(DateTimeValue.Add((DateTimeValue)value.Value, _value));
+                        return new DateTimeValue.Proxy(DateTimeValue.Add((DateTimeValue) value.Value, _value));
                     case DateValue.ProxyValueCode:
-                        return new DateValue.Proxy(DateValue.Add((DateValue)value.Value, _value));
+                        return new DateValue.Proxy(DateValue.Add((DateValue) value.Value, _value));
                     case TimeValue.ProxyValueCode:
-                        return new TimeValue.Proxy(TimeValue.Add((TimeValue)value.Value, _value));
+                        return new TimeValue.Proxy(TimeValue.Add((TimeValue) value.Value, _value));
                     default:
                         throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:add",
                             new SequenceType(_value.GetType(), XmlTypeCardinality.One),
@@ -175,7 +169,10 @@ namespace Wmhelp.XPath2.Value
                 switch (value.GetValueCode())
                 {
                     case ProxyValueCode:
-                        return new Proxy(new DayTimeDurationValue(_value.LowPartValue - ((DayTimeDurationValue)value.Value).LowPartValue));
+                        return
+                            new Proxy(
+                                new DayTimeDurationValue(_value.LowPartValue -
+                                                         ((DayTimeDurationValue) value.Value).LowPartValue));
                     default:
                         throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:sub",
                             new SequenceType(_value.GetType(), XmlTypeCardinality.One),
@@ -197,7 +194,7 @@ namespace Wmhelp.XPath2.Value
                 if (value.IsNumeric())
                     return new Proxy(Divide(_value, Convert.ToDouble(value)));
                 else if (value.GetValueCode() == ProxyValueCode)
-                    return new DecimalProxy(Divide(_value, (DayTimeDurationValue)value.Value));
+                    return new DecimalProxy(Divide(_value, (DayTimeDurationValue) value.Value));
                 else
                     throw new XPath2Exception("", Resources.BinaryOperatorNotDefined, "op:div",
                         new SequenceType(_value.GetType(), XmlTypeCardinality.One),

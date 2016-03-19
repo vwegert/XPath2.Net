@@ -10,7 +10,7 @@ namespace Wmhelp.XPath2
 {
     sealed class XPathNodeIteratorAdapter: XPathNodeIterator
     {
-        private XPath2NodeIterator iter;
+        private readonly XPath2NodeIterator iter;
 
         public XPathNodeIteratorAdapter(XPath2NodeIterator iter)
         {
@@ -32,13 +32,7 @@ namespace Wmhelp.XPath2
             }
         }
 
-        public override int CurrentPosition
-        {
-            get 
-            {
-                return iter.CurrentPosition;
-            }
-        }
+        public override int CurrentPosition => iter.CurrentPosition;
 
         public override bool MoveNext()
         {

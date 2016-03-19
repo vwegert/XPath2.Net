@@ -11,7 +11,7 @@ namespace Wmhelp.XPath2.AST
     internal class UnaryOperatorNode : AbstractNode
     {
         protected UnaryOperator _unaryOper;
-        private XPath2ResultType _resultType;
+        private readonly XPath2ResultType _resultType;
 
         public UnaryOperatorNode(XPath2Context context, UnaryOperator action, object node, XPath2ResultType resultType)
             : base(context)

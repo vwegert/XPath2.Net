@@ -38,12 +38,12 @@ namespace Wmhelp.XPath2.Value
             return sb.ToString();
         }
 
-        private static string[] GYearMonthFormats = new string[] {             
+        private static readonly string[] GYearMonthFormats = new string[] {             
             "yyyy-MM",             
             "'-'yyyy-MM"        
         };
 
-        private static string[] GYearMonthOffsetFormats = new string[] {             
+        private static readonly string[] GYearMonthOffsetFormats = new string[] {             
             "yyyy-MMzzz", 
             "'-'yyyy-MMzzz"        
         };

@@ -12,14 +12,11 @@ namespace Wmhelp.XPath2.AST
     internal sealed class PathExprNode : AbstractNode
     {
         private bool _isOrderedSet;
-        private PathStep[] _path;
+        private readonly PathStep[] _path;
 
         public bool Unordered { get; set; }
 
-        public PathStep FirstStep
-        {
-            get { return _path[0]; }
-        }
+        public PathStep FirstStep => _path[0];
 
         public PathExprNode(XPath2Context context, PathStep pathStep)
             : base(context)

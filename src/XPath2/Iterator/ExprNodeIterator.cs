@@ -9,7 +9,7 @@ using Wmhelp.XPath2.AST;
 
 namespace Wmhelp.XPath2.Iterator
 {
-    sealed class ExprNodeIterator : XPath2NodeIterator
+    internal sealed class ExprNodeIterator : XPath2NodeIterator
     {
         private XPath2Context context;
         private AbstractNode node;
@@ -65,18 +65,11 @@ namespace Wmhelp.XPath2.Iterator
             }
         }
 
-        public override int SequentialPosition
-        {
-            get
-            {
-                return sequentialPosition;
-            }
-        }
+        public override int SequentialPosition => sequentialPosition;
 
         public override void ResetSequentialPosition()
         {
             iter = null;
         }
     }
-
 }

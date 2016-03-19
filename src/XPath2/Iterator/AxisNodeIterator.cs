@@ -78,10 +78,7 @@ namespace Wmhelp.XPath2.Iterator
             return true;
         }
 
-        public override int SequentialPosition
-        {
-            get { return sequentialPosition; }
-        }
+        public override int SequentialPosition => sequentialPosition;
 
         public override void ResetSequentialPosition()
         {

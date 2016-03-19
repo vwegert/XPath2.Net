@@ -10,7 +10,7 @@ namespace Wmhelp.XPath2.Iterator
 {
     internal sealed class PrecedingNodeIterator : AxisNodeIterator
     {
-        private XPathNodeType kind;
+        private readonly XPathNodeType kind;
 
         public PrecedingNodeIterator(XPath2Context context, object nodeTest, XPath2NodeIterator iter)
             : base(context, nodeTest, false, iter)

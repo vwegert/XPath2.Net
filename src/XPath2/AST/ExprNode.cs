@@ -58,9 +58,9 @@ namespace Wmhelp.XPath2.AST
 
         private sealed class ExprIterator : XPath2NodeIterator
         {
-            private IContextProvider provider;
-            private object[] dataPool;
-            private AbstractNode[] nodes;
+            private readonly IContextProvider provider;
+            private readonly object[] dataPool;
+            private readonly AbstractNode[] nodes;
             private XPath2NodeIterator childIter;
             private int index = 0;
 

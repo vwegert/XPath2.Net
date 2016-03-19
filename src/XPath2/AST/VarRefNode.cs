@@ -11,18 +11,13 @@ namespace Wmhelp.XPath2.AST
 {
     internal sealed class VarRefNode : AbstractNode
     {
-        private Tokenizer.VarName _varName;
+        private readonly Tokenizer.VarName _varName;
         private NameBinder.ReferenceLink _varRef;
 
-        public NameBinder.ReferenceLink VarRef
-        {
-            get { return _varRef; }
-        }
+        public NameBinder.ReferenceLink VarRef => _varRef;
 
         public XmlQualifiedName QNVarName
-        {
-            get { return QNameParser.Parse(_varName.ToString(), Context.NamespaceManager, Context.NameTable); }
-        }
+            => QNameParser.Parse(_varName.ToString(), Context.NamespaceManager, Context.NameTable);
 
         public VarRefNode(XPath2Context context, Tokenizer.VarName varRef)
             : base(context)

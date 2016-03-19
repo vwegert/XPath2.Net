@@ -11,8 +11,8 @@ namespace Wmhelp.XPath2
 {
     class RangeIterator: XPath2NodeIterator
     {
-        private Integer _min;
-        private Integer _max;
+        private readonly Integer _min;
+        private readonly Integer _max;
         private Integer _index;
 
         public RangeIterator(Integer min, Integer max)
@@ -52,12 +52,6 @@ namespace Wmhelp.XPath2
             return Clone();
         }
 
-        public override bool IsRange
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override bool IsRange => true;
     }
 }

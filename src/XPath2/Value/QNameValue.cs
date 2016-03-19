@@ -56,13 +56,7 @@ namespace Wmhelp.XPath2.Value
         public String LocalName { get; }
         public String NamespaceUri { get; }
 
-        public bool IsEmpty
-        {
-            get
-            {
-                return LocalName != "";
-            }
-        }
+        public bool IsEmpty => LocalName != "";
 
         public XmlQualifiedName ToQualifiedName()
         {

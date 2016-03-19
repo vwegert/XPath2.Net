@@ -11,7 +11,7 @@ namespace Wmhelp.XPath2.AST
     internal class BinaryOperatorNode : AbstractNode
     {
         protected BinaryOperator _binaryOper;
-        private XPath2ResultType _resultType;
+        private readonly XPath2ResultType _resultType;
 
         public BinaryOperatorNode(XPath2Context context, BinaryOperator action, object node1, object node2,
             XPath2ResultType resultType)
