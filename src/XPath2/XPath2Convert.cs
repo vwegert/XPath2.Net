@@ -6,7 +6,7 @@ using System.Xml.Schema;
 using System.Xml.XPath;
 using Wmhelp.XPath2.Properties;
 using Wmhelp.XPath2.Value;
-#if !NET35
+#if !(NET35)
 using System.Numerics;
 #endif
 
@@ -48,12 +48,12 @@ namespace Wmhelp.XPath2
 #if NET35
         public static string ToString(double value)
         {
-            value.ToString(CultureInfo.InvariantCulture);
+            return value.ToString(CultureInfo.InvariantCulture);
         }
 
         public static string ToString(float value)
         {
-            value.ToString(CultureInfo.InvariantCulture);
+            return value.ToString(CultureInfo.InvariantCulture);
         }
 #else
         // Based on a published algorithm by Guy L. Steele and Jon L. White.
@@ -105,8 +105,7 @@ namespace Wmhelp.XPath2
             int exp = (int)rawExp - doubleExpBias;
             if (value < 1E-06F || value >= 1000000F)
                 fppfppExponential(sb, exp, fraction, 52);
-            else
-                if (value <= 0.01)
+            else if (value <= 0.01)
                 fppfppBig(sb, exp, fraction, 52);
             else
                 fppfpp(sb, exp, fraction, 52);
@@ -165,7 +164,8 @@ namespace Wmhelp.XPath2
 
             int k = 0;
             while (R < (S + 9) / 10)
-            {  // (S+9)/10 == ceiling(S/10)
+            {
+                // (S+9)/10 == ceiling(S/10)
                 k--;
                 R = R * 10;
                 Mminus = Mminus * 10;
@@ -197,7 +197,7 @@ namespace Wmhelp.XPath2
                 k--;
                 long R10 = R * 10;
                 U = (int)(R10 / S);
-                R = R10 - (U * S);    // = R*10 % S, but faster - saves a division
+                R = R10 - (U * S); // = R*10 % S, but faster - saves a division
                 Mminus = Mminus * 10;
                 Mplus = Mplus * 10;
                 low = 2 * R < Mminus;
@@ -252,7 +252,8 @@ namespace Wmhelp.XPath2
             }
             int k = 0;
             while (R < (S + 9) / 10)
-            {  // (S+9)/10 == ceiling(S/10)
+            {
+                // (S+9)/10 == ceiling(S/10)
                 k--;
                 R = R * 10;
                 Mminus = Mminus * 10;
@@ -283,8 +284,12 @@ namespace Wmhelp.XPath2
             {
                 k--;
                 BigInteger R10 = R * 10;
+#if (NET20)
+                U = BigInteger.ToInt16(R10 / S);
+#else
                 U = (int)(R10 / S);
-                R = R10 - (U * S);    // = R*10 % S, but faster - saves a division
+#endif
+                R = R10 - (U * S); // = R*10 % S, but faster - saves a division
                 Mminus = Mminus * 10;
                 Mplus = Mplus * 10;
                 low = 2 * R < Mminus;
@@ -341,7 +346,8 @@ namespace Wmhelp.XPath2
             }
             int k = 0;
             while (R < (S + 9) / 10)
-            {  // (S+9)/10 == ceiling(S/10)
+            {
+                // (S+9)/10 == ceiling(S/10)
                 k--;
                 R *= 10;
                 Mminus *= 10;
@@ -364,7 +370,11 @@ namespace Wmhelp.XPath2
             {
                 k--;
                 BigInteger R10 = R * 10;
+#if (NET20)
+                U = BigInteger.ToInt16(R10 / S);
+#else
                 U = (int)(R10 / S);
+#endif
                 R = R10 % S;
                 Mminus *= 10;
                 Mplus *= 10;
@@ -457,7 +467,8 @@ namespace Wmhelp.XPath2
                                         case XmlTypeCode.HexBinary:
                                             return new HexBinaryValue((byte[])res);
                                         case XmlTypeCode.Base64Binary:
-                                            if (text.EndsWith("==") && (text.Length < 3 || "AQgw".IndexOf(text[text.Length - 3]) == -1))
+                                            if (text.EndsWith("==") &&
+                                                (text.Length < 3 || "AQgw".IndexOf(text[text.Length - 3]) == -1))
                                                 throw new XPath2Exception("FORG0001", Resources.FORG0001, value);
                                             return new Base64BinaryValue((byte[])res);
                                         case XmlTypeCode.Idref:
@@ -599,7 +610,7 @@ namespace Wmhelp.XPath2
                 value = CoreFuncs.False;
             if (type.TypeCode == XmlTypeCode.None)
                 throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
-                   new SequenceType(value.GetType(), XmlTypeCardinality.One), "empty-sequence()");
+                    new SequenceType(value.GetType(), XmlTypeCardinality.One), "empty-sequence()");
             if (value.GetType() != type.ItemType)
             {
                 UntypedAtomic untypedAtomic = value as UntypedAtomic;
@@ -698,7 +709,7 @@ namespace Wmhelp.XPath2
                 value = CoreFuncs.False;
             if (type.TypeCode == XmlTypeCode.None)
                 throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
-                   new SequenceType(value.GetType(), XmlTypeCardinality.One), "empty-sequence()");
+                    new SequenceType(value.GetType(), XmlTypeCardinality.One), "empty-sequence()");
             if (value.GetType() != type.ItemType &&
                 type.ItemType != typeof(Object))
             {

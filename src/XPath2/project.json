@@ -14,21 +14,28 @@
     ],
 
     "frameworks": {
-        "dnx451": {
+        "net35": {
             "frameworkAssemblies": {
-                "System.Core": "",
-                "System.Data": "",
-                "System.Data.DataSetExtensions": "",
-                "System.Numerics": "",
                 "System.Xml": "",
                 "System.Xml.Linq": ""
             }
         },
         "net40": {
             "frameworkAssemblies": {
-                "System.Core": "",
-                "System.Data": "",
-                "System.Data.DataSetExtensions": "",
+                "System.Numerics": "",
+                "System.Xml": "",
+                "System.Xml.Linq": ""
+            }
+        },
+        "net45": {
+            "frameworkAssemblies": {
+                "System.Numerics": "",
+                "System.Xml": "",
+                "System.Xml.Linq": ""
+            }
+        },
+        "net451": {
+            "frameworkAssemblies": {
                 "System.Numerics": "",
                 "System.Xml": "",
                 "System.Xml.Linq": ""
@@ -36,9 +43,13 @@
         },
         "net452": {
             "frameworkAssemblies": {
-                "System.Core": "",
-                "System.Data": "",
-                "System.Data.DataSetExtensions": "",
+                "System.Numerics": "",
+                "System.Xml": "",
+                "System.Xml.Linq": ""
+            }
+        },
+        "dnx451": {
+            "frameworkAssemblies": {
                 "System.Numerics": "",
                 "System.Xml": "",
                 "System.Xml.Linq": ""
