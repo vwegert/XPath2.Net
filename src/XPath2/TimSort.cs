@@ -1,4 +1,5 @@
-﻿/*
+﻿// ReSharper Disable All
+/*
  * Copyright 2009 Google Inc.  All Rights Reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
@@ -733,7 +734,7 @@ namespace TimSort
 
             var c = this.c;  // Use local variable for performance
             int minGallop = this.minGallop;    //  "    "       "     "      "
-            
+
             while (true)
             {
                 int count1 = 0; // Number of times in a row that first run won
@@ -806,7 +807,7 @@ namespace TimSort
                 minGallop += 2;  // Penalize for leaving gallop mode
             }  // End of "outer" loop
 
-        outer:
+            outer:
             this.minGallop = minGallop < 1 ? 1 : minGallop;  // Write back to field
 
             if (len1 == 1)
@@ -940,7 +941,7 @@ namespace TimSort
                 minGallop += 2;  // Penalize for leaving gallop mode
             }  // End of "outer" loop
 
-        outer:
+            outer:
             this.minGallop = minGallop < 1 ? 1 : minGallop;  // Write back to field
 
             if (len2 == 1)
@@ -1015,6 +1016,7 @@ namespace TimSort
                 throw new ArgumentOutOfRangeException("fromIndex", fromIndex.ToString());
             if (toIndex > arrayLen)
                 throw new ArgumentOutOfRangeException("toIndex", toIndex.ToString());
-        }        
+        }
     }
 }
+// ReSharper Restore All

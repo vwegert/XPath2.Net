@@ -2,7 +2,7 @@
 
 #line 16 "Xpath.y"
   
-
+// ReSharper Disable All
 #pragma warning disable 162
 
 using System;

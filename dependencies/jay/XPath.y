@@ -14,7 +14,7 @@ All rights reserved.
 
 
 %{  
-
+// ReSharper Disable All
 #pragma warning disable 162
 
 using System;

@@ -16,11 +16,6 @@
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace Wmhelp.XPath2
 {
     public class Undefined
@@ -29,13 +24,11 @@ namespace Wmhelp.XPath2
         {
         }
 
-        private static Undefined _value = new Undefined();
-
-        public static Undefined Value { get { return _value; } }
+        public static Undefined Value { get; } = new Undefined();
 
         public override string ToString()
         {
-            return "()";
+            return string.Intern("()");
         }
     }
 }
