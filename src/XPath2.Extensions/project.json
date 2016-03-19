@@ -1,5 +1,6 @@
 ﻿{
     "version": "1.0.0-*",
+    "title": "Non-official extensions for XPath2.dll",
     "description": "Non-official extensions for XPath2.dll",
     "summary": "Non-official extensions for XPath2.dll",
     "authors": [ "Stef Heyenrath" ],
