@@ -1,5 +1,5 @@
 ﻿{
-    "version": "1.0.0-*",
+    "version": "1.0.1-*",
     "title": "Non-official extensions for XPath2.dll",
     "description": "Non-official extensions for XPath2.dll",
     "summary": "Non-official extensions for XPath2.dll",
@@ -33,6 +33,10 @@
             }
         },
         "dnx451": {
+            "frameworkAssemblies": {
+            }
+        },
+        "dnx452": {
             "frameworkAssemblies": {
             }
         }

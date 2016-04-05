@@ -1,0 +1,119 @@
+﻿using Wmhelp.XPath2;
+using Xunit;
+
+namespace XPath2.Extensions.Tests
+{
+    [Collection("xpath2 test collection")]
+    public class XPath2ExtensionsTests
+    {
+        private readonly XPath2TestFixture _fixture;
+
+        public XPath2ExtensionsTests(XPath2TestFixture fixture)
+        {
+            _fixture = fixture;
+        }
+
+        [Fact]
+        public void XPathExtensions_substring()
+        {
+            var result = _fixture.Navigator.XPath2Evaluate("substring(null, 2)");
+
+            Assert.Equal("", result);
+        }
+
+        [Fact]
+        public void XPathExtensions_base64encode()
+        {
+            var result = _fixture.Navigator.XPath2Evaluate("base64encode('stef')");
+
+            Assert.Equal("c3RlZg==", result);
+        }
+
+        [Fact]
+        public void XPathExtensions_base64encode_with_encodings()
+        {
+            foreach (string e in new[] { "'utf-8'", "'ascii'" })
+            {
+                var result = _fixture.Navigator.XPath2Evaluate($"base64encode('stef', {e})");
+
+                Assert.Equal("c3RlZg==", result);
+            }
+        }
+
+        [Fact]
+        public void XPathExtensions_base64encode_invalid_encoding()
+        {
+            var exception = Record.Exception(() => _fixture.Navigator.XPath2Evaluate("base64encode('stef', 'x')"));
+            Assert.NotNull(exception);
+            Assert.IsType<XPath2Exception>(exception);
+            Assert.Equal("The value '\"x\"' is an invalid argument for constructor/cast Encoding.GetEncoding()", exception.Message);
+        }
+
+        [Fact]
+        public void XPathExtensions_base64decode()
+        {
+            var result = _fixture.Navigator.XPath2Evaluate("base64decode('c3RlZg==')");
+
+            Assert.Equal("stef", result);
+        }
+
+        [Fact]
+        public void XPathExtensions_base64decode_with_automaticallyFixLength_true()
+        {
+            foreach (string b in new[] { "'true'", "true()" })
+            {
+                var result = _fixture.Navigator.XPath2Evaluate($"base64decode('c3RlZg', {b})");
+
+                Assert.Equal("stef", result);
+            }
+        }
+
+        [Fact]
+        public void XPathExtensions_base64decode_with_encodings()
+        {
+            foreach (string e in new[] { "'utf-8'", "'ascii'" })
+            {
+                var result = _fixture.Navigator.XPath2Evaluate($"base64decode('c3RlZg==', {e})");
+
+                Assert.Equal("stef", result);
+            }
+        }
+
+        [Fact]
+        public void XPathExtensions_base64decode_with_encoding_and_automaticallyFixLength_true()
+        {
+            foreach (string e in new[] { "'utf-8'", "'ascii'" })
+            {
+                foreach (string b in new[] { "'true'", "true()" })
+                {
+                    var result = _fixture.Navigator.XPath2Evaluate($"base64decode('c3RlZg', {e}, {b})");
+
+                    Assert.Equal("stef", result);
+                }
+            }
+        }
+
+        [Fact]
+        public void XPathExtensions_base64decode_with_encoding_and_automaticallyFixLength_false()
+        {
+            foreach (string e in new[] { "'utf-8'", "'ascii'" })
+            {
+                foreach (string b in new[] { "'false'", "false()" })
+                {
+                    var result = _fixture.Navigator.XPath2Evaluate($"base64decode('c3RlZg==', {e}, {b})");
+
+                    Assert.Equal("stef", result);
+                }
+            }
+        }
+
+        [Fact]
+        public void XPathExtensions_base64decode_invalid_data_length()
+        {
+            var exception = Record.Exception(() => _fixture.Navigator.XPath2Evaluate("base64decode('c3RlZg')"));
+            Assert.NotNull(exception);
+            Assert.IsType<XPath2Exception>(exception);
+            Assert.Equal("Invalid length for a Base-64 char array or string.", exception.Message);
+        }
+    }
+}

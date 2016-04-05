@@ -38,9 +38,16 @@ namespace Wmhelp.XPath2.Extensions
             XPathFunctionDelegate base64EncodeDelegate = (context, provider, args) =>
             {
                 string value = CoreFuncs.CastToStringExactOne(context, args[0]);
-                Encoding encoding = ParseEncodingFromArgs(context, args);
+                Encoding encoding = args.Length == 2 ? ParseEncodingFromArg(context, args[1]) : Encoding.UTF8;
 
-                return Convert.ToBase64String(encoding.GetBytes(value));
+                try
+                {
+                    return Convert.ToBase64String(encoding.GetBytes(value));
+                }
+                catch (Exception ex)
+                {
+                    throw new XPath2Exception("InvalidFormat", ex);
+                }
             };
 
             // base64encode with default UTF-8 encoding
@@ -51,30 +58,68 @@ namespace Wmhelp.XPath2.Extensions
         }
 
         /// <summary>
-        /// Extend the XPath2 FunctionTable with 'base64decode' function to decode base64 string to a string.
+        /// Extend the XPath2 FunctionTable with 'base64decode' function to decode a base64 string to a string.
         /// </summary>
         /// <param name="functionTable">The function table.</param>
         public static void AddBase64Decode(this FunctionTable functionTable)
         {
             XPathFunctionDelegate base64DecodeDelegate = (context, provider, args) =>
             {
+                bool automaticallyFixLength = false;
+                Encoding encoding = Encoding.UTF8;
                 string value = CoreFuncs.CastToStringExactOne(context, args[0]);
-                Encoding encoding = ParseEncodingFromArgs(context, args);
 
-                return encoding.GetString(Convert.FromBase64String(value));
+                if (args.Length == 2)
+                {
+                    try
+                    {
+                        // first try to cast to bool
+                        automaticallyFixLength = CoreFuncs.GetBooleanValue(args[1]);
+                    }
+                    catch (Exception)
+                    {
+                        // else parse as encoding
+                        encoding = ParseEncodingFromArg(context, args[1]);
+                    }
+                }
+
+                if (args.Length == 3)
+                {
+                    encoding = ParseEncodingFromArg(context, args[1]);
+                    automaticallyFixLength = CoreFuncs.GetBooleanValue(args[2]);
+                }
+
+                if (automaticallyFixLength)
+                {
+                    int mod = value.Length % 4;
+                    if (mod != 0)
+                        value = string.Concat(value, new string('=', 4 - mod));
+                }
+
+                try
+                {
+                    return encoding.GetString(Convert.FromBase64String(value));
+                }
+                catch (Exception ex)
+                {
+                    throw new XPath2Exception("InvalidFormat", ex.Message);
+                }
             };
 
             // base64decode with default UTF-8 encoding
             functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64decode", 1, XPath2ResultType.String, (context, provider, args) => base64DecodeDelegate(context, provider, args));
 
-            // base64decode with specified encoding
+            // base64decode with specified encoding (string) or automaticallyFixLength (bool)
             functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64decode", 2, XPath2ResultType.String, (context, provider, args) => base64DecodeDelegate(context, provider, args));
+
+            // base64decode with specified encoding (string) and automaticallyFixLength (bool)
+            functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64decode", 3, XPath2ResultType.String, (context, provider, args) => base64DecodeDelegate(context, provider, args));
         }
 
         #region private helper methods
-        private static Encoding ParseEncodingFromArgs(XPath2Context context, object[] args)
+        private static Encoding ParseEncodingFromArg(XPath2Context context, object arg)
         {
-            string name = args.Length == 2 ? CoreFuncs.CastToStringOptional(context, args[1]) : "UTF-8";
+            string name = CoreFuncs.CastToStringOptional(context, arg);
 
             try
             {

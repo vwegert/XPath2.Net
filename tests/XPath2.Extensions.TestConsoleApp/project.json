@@ -11,7 +11,7 @@
     },
 
     "dependencies": {
-        "XPath2.Extensions": "1.0.0-*"
+        "XPath2.Extensions": "1.0.1-*"
     },
 
     "commands": {
