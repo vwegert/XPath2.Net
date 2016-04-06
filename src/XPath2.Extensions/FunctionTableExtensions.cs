@@ -65,7 +65,7 @@ namespace Wmhelp.XPath2.Extensions
         {
             XPathFunctionDelegate base64DecodeDelegate = (context, provider, args) =>
             {
-                bool automaticallyFixLength = false;
+                bool fixPadding = true;
                 Encoding encoding = Encoding.UTF8;
                 string value = CoreFuncs.CastToStringExactOne(context, args[0]);
 
@@ -74,7 +74,7 @@ namespace Wmhelp.XPath2.Extensions
                     try
                     {
                         // first try to cast to bool
-                        automaticallyFixLength = CoreFuncs.GetBooleanValue(args[1]);
+                        fixPadding = CoreFuncs.GetBooleanValue(args[1]);
                     }
                     catch (Exception)
                     {
@@ -86,10 +86,10 @@ namespace Wmhelp.XPath2.Extensions
                 if (args.Length == 3)
                 {
                     encoding = ParseEncodingFromArg(context, args[1]);
-                    automaticallyFixLength = CoreFuncs.GetBooleanValue(args[2]);
+                    fixPadding = CoreFuncs.GetBooleanValue(args[2]);
                 }
 
-                if (automaticallyFixLength)
+                if (fixPadding)
                 {
                     int mod = value.Length % 4;
                     if (mod != 0)
@@ -109,10 +109,10 @@ namespace Wmhelp.XPath2.Extensions
             // base64decode with default UTF-8 encoding
             functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64decode", 1, XPath2ResultType.String, (context, provider, args) => base64DecodeDelegate(context, provider, args));
 
-            // base64decode with specified encoding (string) or automaticallyFixLength (bool)
+            // base64decode with specified encoding (string) or fixPadding (bool)
             functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64decode", 2, XPath2ResultType.String, (context, provider, args) => base64DecodeDelegate(context, provider, args));
 
-            // base64decode with specified encoding (string) and automaticallyFixLength (bool)
+            // base64decode with specified encoding (string) and fixPadding (bool)
             functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64decode", 3, XPath2ResultType.String, (context, provider, args) => base64DecodeDelegate(context, provider, args));
         }
 

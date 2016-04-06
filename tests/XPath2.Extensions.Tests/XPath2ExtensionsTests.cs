@@ -58,7 +58,7 @@ namespace XPath2.Extensions.Tests
         }
 
         [Fact]
-        public void XPathExtensions_base64decode_with_automaticallyFixLength_true()
+        public void XPathExtensions_base64decode_with_fixPadding_true()
         {
             foreach (string b in new[] { "'true'", "true()" })
             {
@@ -80,7 +80,7 @@ namespace XPath2.Extensions.Tests
         }
 
         [Fact]
-        public void XPathExtensions_base64decode_with_encoding_and_automaticallyFixLength_true()
+        public void XPathExtensions_base64decode_with_encoding_and_fixPadding_true()
         {
             foreach (string e in new[] { "'utf-8'", "'ascii'" })
             {
@@ -94,7 +94,7 @@ namespace XPath2.Extensions.Tests
         }
 
         [Fact]
-        public void XPathExtensions_base64decode_with_encoding_and_automaticallyFixLength_false()
+        public void XPathExtensions_base64decode_with_encoding_and_fixPadding_false()
         {
             foreach (string e in new[] { "'utf-8'", "'ascii'" })
             {
@@ -110,10 +110,9 @@ namespace XPath2.Extensions.Tests
         [Fact]
         public void XPathExtensions_base64decode_invalid_data_length()
         {
-            var exception = Record.Exception(() => _fixture.Navigator.XPath2Evaluate("base64decode('c3RlZg')"));
-            Assert.NotNull(exception);
-            Assert.IsType<XPath2Exception>(exception);
-            Assert.Equal("Invalid length for a Base-64 char array or string.", exception.Message);
+            var result = _fixture.Navigator.XPath2Evaluate("base64decode('c3RlZg')");
+
+            Assert.Equal("stef", result);
         }
     }
 }
