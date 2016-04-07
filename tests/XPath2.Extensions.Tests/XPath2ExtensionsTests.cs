@@ -82,13 +82,16 @@ namespace XPath2.Extensions.Tests
         [Fact]
         public void XPathExtensions_base64decode_with_encoding_and_fixPadding_true()
         {
-            foreach (string e in new[] { "'utf-8'", "'ascii'" })
+            foreach (string e in new[] { "utf-8", "ascii" })
             {
                 foreach (string b in new[] { "'true'", "true()" })
                 {
-                    var result = _fixture.Navigator.XPath2Evaluate($"base64decode('c3RlZg', {e}, {b})");
+                    foreach (string str in new[] { "c3RlZg", "=c3RlZg=", "c3RlZg=======" })
+                    {
+                        var result = _fixture.Navigator.XPath2Evaluate($"base64decode('{str}', '{e}', {b})");
 
-                    Assert.Equal("stef", result);
+                        Assert.Equal("stef", result);
+                    }
                 }
             }
         }

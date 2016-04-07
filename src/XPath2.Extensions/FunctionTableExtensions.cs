@@ -91,6 +91,7 @@ namespace Wmhelp.XPath2.Extensions
 
                 if (fixPadding)
                 {
+                    value = value.Trim('=');
                     int mod = value.Length % 4;
                     if (mod != 0)
                         value = string.Concat(value, new string('=', 4 - mod));
