@@ -8,8 +8,8 @@
     "tags": [ "XPath", "XPath2", "XPath2.0", "Xml", "W3C", "XQuery", "XQTS" ],
     "projectUrl": "https://github.com/StefH/XPath2.Net",
     "licenseUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/license",
-    "releaseNotes": "initial version",
     "iconUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2-icon-64x64.png",
+    "releaseNotes": "Fixed #1",
 
     "exclude": [
         "XPath2.cs.original"
@@ -50,7 +50,28 @@
                 "System.Xml.Linq": ""
             }
         },
+        "net46": {
+            "frameworkAssemblies": {
+                "System.Numerics": "",
+                "System.Xml": "",
+                "System.Xml.Linq": ""
+            }
+        },
+        "net461": {
+            "frameworkAssemblies": {
+                "System.Numerics": "",
+                "System.Xml": "",
+                "System.Xml.Linq": ""
+            }
+        },
         "dnx451": {
+            "frameworkAssemblies": {
+                "System.Numerics": "",
+                "System.Xml": "",
+                "System.Xml.Linq": ""
+            }
+        },
+        "dnx452": {
             "frameworkAssemblies": {
                 "System.Numerics": "",
                 "System.Xml": "",

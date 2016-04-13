@@ -29,9 +29,7 @@ namespace Wmhelp.XPath2
 
         public object Invoke(XPath2Context context, IContextProvider provider, object[] args)
         {
-            if (Delegate != null)
-                return Delegate(context, provider, args);
-            return null;
+            return Delegate?.Invoke(context, provider, args);
         }
     }
 
@@ -409,19 +407,23 @@ namespace Wmhelp.XPath2
             return res;
         }
 
-        public void Add(string ns, string name, XPath2ResultType resultType, XPathFunctionDelegate action)
+        public void Add(string ns, string name, XPath2ResultType resultType, XPathFunctionDelegate action, bool overwriteExistingEntry = true)
         {
-            Add(ns, name, -1, resultType, action);
+            Add(ns, name, -1, resultType, action, overwriteExistingEntry);
         }
 
-        public void Add(string ns, string name, int arity, XPath2ResultType resultType, XPathFunctionDelegate action)
+        public void Add(string ns, string name, int arity, XPath2ResultType resultType, XPathFunctionDelegate action, bool overwriteExistingEntry = true)
         {
-            _funcTable.Add(new FunctionDesc(name, ns, arity),
-                new XPathFunctionDef(name, action, resultType));
+            var key = new FunctionDesc(name, ns, arity);
+
+            if (_funcTable.ContainsKey(key) && overwriteExistingEntry)
+                _funcTable[key] = new XPathFunctionDef(name, action, resultType);
+            else
+                _funcTable.Add(key, new XPathFunctionDef(name, action, resultType));
         }
 
         private static readonly object syncRoot = new object();
-        private static volatile FunctionTable _inst = null;
+        private static volatile FunctionTable _inst;
 
         public static FunctionTable Inst
         {
@@ -454,8 +456,8 @@ namespace Wmhelp.XPath2
             {
                 FunctionDesc other = obj as FunctionDesc;
                 if (other != null)
-                    return Name == other.Name && Ns == other.Ns
-                        && (Arity == other.Arity || Arity == -1 || other.Arity == -1);
+                    return Name == other.Name && Ns == other.Ns && (Arity == other.Arity || Arity == -1 || other.Arity == -1);
+
                 return false;
             }
 

@@ -16,6 +16,9 @@ namespace XPath2.Extensions.Tests
             Navigator = doc.CreateNavigator();
 
             FunctionTable.Inst.AddAllExtensions();
+
+            // Adding the extensions again should not throw exception
+            FunctionTable.Inst.AddAllExtensions();
         }
 
         public void Dispose()
