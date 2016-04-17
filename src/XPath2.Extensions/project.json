@@ -8,8 +8,8 @@
     "tags": [ "XPath", "XPath2", "XPath2.0", "Xml", "W3C", "XQuery", "XQTS", "Extensions" ],
     "projectUrl": "https://github.com/StefH/XPath2.Net",
     "licenseUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/license",
-    "releaseNotes": "initial version",
     "iconUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2ex-icon-64x64.png",
+    "releaseNotes": "Update base64decode",
 
     "dependencies": {
         "XPath2": "1.0.0-*"
