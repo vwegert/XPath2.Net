@@ -5,8 +5,10 @@ Project is forked from https://xpath2.codeplex.com/
 Supported frameworks:
 - NET 3.5
 - NET 4.0
+- NET 4.5
 - NET 4.5.x
-- DNX 4.5.1
+- NET 4.6.x
+- DNX 4.5.x
 
 This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET Framework based on standard XPathNavigator API.
 The given implementation based on practice of developing XQuery is fully corresponding to the specification demands. This is single assembly 302K size.
@@ -19,10 +21,10 @@ functions for XNode, XPathNavigator and XmlNode classes.
 
 | System.Xml.XPath 	          | WmHelp.XPath2
 | ----------------------------|------------------------------
-| XPathNavigator.Evaluate() 	| XPathNavigator.XPath2Evaluate()
-| XmlNode.SelectNodes() 	    | XmlNode.XPath2SelectNodes()
-| XmlNode.SelectSingleNode() 	| XmlNode.XPath2SelectSingleNode()
-| XNode.Select<T>() 	        | XNode.XPath2Select<T>()
+| XPathNavigator.Evaluate()   | XPathNavigator.XPath2Evaluate()
+| XmlNode.SelectNodes() 	  | XmlNode.XPath2SelectNodes()
+| XmlNode.SelectSingleNode()  | XmlNode.XPath2SelectSingleNode()
+| XNode.Select<T>() 	      | XNode.XPath2Select<T>()
 | ..., etc.                   | ..., etc.
 
 
