@@ -12,7 +12,7 @@
     "releaseNotes": "Update base64decode",
 
     "dependencies": {
-        "XPath2": "1.0.0-*"
+        "XPath2": "1.0.1-*"
     },
 
     "frameworks": {
@@ -29,6 +29,14 @@
             }
         },
         "net452": {
+            "frameworkAssemblies": {
+            }
+        },
+        "net46": {
+            "frameworkAssemblies": {
+            }
+        },
+        "net461": {
             "frameworkAssemblies": {
             }
         },
