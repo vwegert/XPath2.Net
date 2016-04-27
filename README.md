@@ -1,5 +1,7 @@
 # XPath2.Net : Lightweight XPath2 for .NET
 
+[![Build status](https://ci.appveyor.com/api/projects/status/kwow5frjv8nl42oy?svg=true)](https://ci.appveyor.com/project/StefH/xpath2-net)
+
 Project is forked from https://xpath2.codeplex.com/
 
 Supported frameworks:
