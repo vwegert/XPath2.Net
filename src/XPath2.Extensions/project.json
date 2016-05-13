@@ -9,7 +9,7 @@
     "projectUrl": "https://github.com/StefH/XPath2.Net",
     "licenseUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/license",
     "iconUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2ex-icon-64x64.png",
-    "releaseNotes": "Update base64decode",
+    "releaseNotes": "use XPath2 version 1.0.2",
 
     "dependencies": {
         "XPath2": "1.0.2-*"
