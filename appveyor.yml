@@ -29,8 +29,8 @@ build_script:
 - dotnet build .\tests\XPath2.Extensions.Tests\project.json -c %CONFIGURATION%
 - cmd: msbuild .\src\XQTSRun\XQTSRun.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
 
-- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o .\artifacts .\XPath2\project.json
-- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o .\artifacts .\XPath2.Extensions\project.json
+- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o .\artifacts .\src\XPath2\project.json
+- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o .\artifacts .\src\XPath2.Extensions\project.json
 
 test_script:
 - dotnet test -c %CONFIGURATION% --no-build .\tests\XPath2.Extensions.Test
