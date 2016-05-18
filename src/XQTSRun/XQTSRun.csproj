@@ -72,7 +72,8 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="XPath2">
-      <HintPath>..\..\artifacts\bin\XPath2\$(Configuration)\net452\XPath2.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\XPath2\bin\$(Configuration)\net452\XPath2.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
