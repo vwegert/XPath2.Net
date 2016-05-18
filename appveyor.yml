@@ -11,3 +11,50 @@ build:
 
 test_script:
 - cmd: dnx -p tests/XPath2.Extensions.Tests test
+
+
+
+
+
+os: Visual Studio 2015
+
+version: 1.0.3.{build}
+
+configuration:
+- Debug
+- Release
+
+platform: Any CPU
+
+init:
+- ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
+
+install:
+- ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/beta/Installers/Latest/dotnet-dev-win-x64.latest.exe'
+- cmd: dotnet-dev-win-x64.latest.exe /quiet
+
+environment:
+  PATH: $(PATH);$(PROGRAMFILES)\dotnet\
+
+build_script:
+- appveyor-retry dotnet restore .\src\XPath2 -v Minimal
+- appveyor-retry dotnet restore .\src\XPath2.Extensions -v Minimal
+- appveyor-retry dotnet restore .\tests\XPath2.Extensions.Tests -v Minimal
+- appveyor-retry nuget restore .\src\XQTSRun\XQTSRun.csproj -PackagesDirectory packages
+
+- dotnet build .\src\XPath2\project.json -c %CONFIGURATION%
+- dotnet build .\src\XPath2.Extensions\project.json -c %CONFIGURATION%
+- dotnet build .\tests\XPath2.Extensions.Tests\project.json -c %CONFIGURATION%
+- cmd: msbuild .\src\XQTSRun\XQTSRun.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
+
+- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o .\artifacts .\XPath2\project.json
+- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o .\artifacts .\XPath2.Extensions\project.json
+
+test_script:
+- dotnet test -c %CONFIGURATION% --no-build .\tests\XPath2.Extensions.Test
+
+artifacts:
+- path: artifacts\**\*.*
+
+cache:
+- packages

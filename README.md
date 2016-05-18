@@ -4,18 +4,18 @@
 
 Project is forked from https://xpath2.codeplex.com/
 
-Supported frameworks:
+## Supported frameworks: ##
 - NET 3.5
 - NET 4.0
 - NET 4.5
 - NET 4.5.x
 - NET 4.6.x
-- DNX 4.5.x
+- DNX 4.5.1
 
 This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET Framework based on standard XPathNavigator API.
 The given implementation based on practice of developing XQuery is fully corresponding to the specification demands. This is single assembly 302K size.
 
-It conforms for 15133 from 12965 (85,67%) regarding the test-set (XQTS 1.0.2 	Nov. 20, 2006) at https://dev.w3.org/2006/xquery-test-suite/PublicPagesStagingArea/
+It conforms for 15133 from 12965 (85,67%) regarding the test-set (XQTS 1.0.2 Nov. 20, 2006) at https://dev.w3.org/2006/xquery-test-suite/PublicPagesStagingArea/
 
 API used is an anology to the standard one built into the platform: you utilize
 XPath2Expression instead of the common XPathExpression and a set of extension

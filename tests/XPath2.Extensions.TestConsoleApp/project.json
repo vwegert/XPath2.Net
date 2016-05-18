@@ -1,27 +1,28 @@
 ﻿{
     "version": "1.0.0-*",
-    "description": "XPath2.Extensions.TestConsoleApp",
     "authors": [ "Stef Heyenrath" ],
-    "tags": [ "" ],
-    "projectUrl": "",
-    "licenseUrl": "",
 
-    "compilationOptions": {
-        "emitEntryPoint": true
+    "buildOptions": {
+        "emitEntryPoint": true,
+        "compile": [
+            "../../test/System.Linq.Dynamic.Core.Tests/Helpers/*.cs",
+            "../../test/System.Linq.Dynamic.Core.Tests/Helpers/Models/*.cs",
+            "../../test/System.Linq.Dynamic.Core.Tests/Helpers/Entities/Blog.cs",
+            "../../test/System.Linq.Dynamic.Core.Tests/Helpers/Entities/Post.cs"
+        ]
     },
 
     "dependencies": {
-        "XPath2": "1.0.2-*",
-        "XPath2.Extensions": "1.0.1-*"
-    },
-
-    "commands": {
-        "XPath2.Extensions.TestConsoleApp": "XPath2.Extensions.TestConsoleApp"
+        "Microsoft.NETCore.App": {
+            "type": "platform",
+            "version": "1.0.0-rc2-*"
+        },
+        "XPath2": { "target": "project" },
+        "XPath2.Extensions": { "target": "project" }
     },
 
     "frameworks": {
         "dnx451": {
-            
         }
     }
 }

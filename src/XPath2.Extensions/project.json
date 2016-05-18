@@ -1,18 +1,21 @@
 ﻿{
-    "version": "1.0.2-*",
+    "version": "1.0.3-*",
     "title": "Non-official extensions for XPath2.dll",
     "description": "Non-official extensions for XPath2.dll",
-    "summary": "Non-official extensions for XPath2.dll",
     "authors": [ "Stef Heyenrath" ],
     "copyright": "Stef Heyenrath",
-    "tags": [ "XPath", "XPath2", "XPath2.0", "Xml", "W3C", "XQuery", "XQTS", "Extensions" ],
-    "projectUrl": "https://github.com/StefH/XPath2.Net",
-    "licenseUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/license",
-    "iconUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2ex-icon-64x64.png",
-    "releaseNotes": "use XPath2 version 1.0.2",
+
+    "packOptions": {
+        "summary": "Non-official extensions for XPath2.dll",
+        "tags": [ "XPath", "XPath2", "XPath2.0", "Xml", "W3C", "XQuery", "XQTS", "Extensions" ],
+        "projectUrl": "https://github.com/StefH/XPath2.Net",
+        "licenseUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/license",
+        "iconUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2ex-icon-64x64.png",
+        "releaseNotes": "use XPath2 version 1.0.3"
+    },
 
     "dependencies": {
-        "XPath2": "1.0.2-*"
+        "XPath2": "1.0.3-*"
     },
 
     "frameworks": {
@@ -41,10 +44,6 @@
             }
         },
         "dnx451": {
-            "frameworkAssemblies": {
-            }
-        },
-        "dnx452": {
             "frameworkAssemblies": {
             }
         }

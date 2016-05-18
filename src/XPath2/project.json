@@ -1,19 +1,22 @@
 {
-    "version": "1.0.2-*",
+    "version": "1.0.3-*",
     "title": "Lightweight XPath2 implementation for .NET",
     "description": "This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET Framework based on standard XPathNavigator API.",
-    "summary": "This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET Framework based on standard XPathNavigator API. The given implementation based on practice of developing XQuery is fully corresponding to the specification demands.",
     "authors": [ "Semyon A. Chertkov and Stef Heyenrath" ],
     "copyright": "Semyon A. Chertkov and Stef Heyenrath",
-    "tags": [ "XPath", "XPath2", "XPath2.0", "Xml", "W3C", "XQuery", "XQTS" ],
-    "projectUrl": "https://github.com/StefH/XPath2.Net",
-    "licenseUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/license",
-    "iconUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2-icon-64x64.png",
-    "releaseNotes": "Fix AssemblyInfo.cs",
 
-    "exclude": [
-        "XPath2.cs.original"
-    ],
+    "packOptions": {
+        "summary": "This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET Framework based on standard XPathNavigator API. The given implementation based on practice of developing XQuery is fully corresponding to the specification demands.",
+        "tags": [ "XPath", "XPath2", "XPath2.0", "Xml", "W3C", "XQuery", "XQTS" ],
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/StefH/XPath2.Net"
+        },
+        "projectUrl": "https://github.com/StefH/XPath2.Net",
+        "licenseUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/license",
+        "iconUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2-icon-64x64.png",
+        "releaseNotes": "rc2"
+    },
 
     "frameworks": {
         "net35": {
@@ -65,13 +68,6 @@
             }
         },
         "dnx451": {
-            "frameworkAssemblies": {
-                "System.Numerics": "",
-                "System.Xml": "",
-                "System.Xml.Linq": ""
-            }
-        },
-        "dnx452": {
             "frameworkAssemblies": {
                 "System.Numerics": "",
                 "System.Xml": "",
