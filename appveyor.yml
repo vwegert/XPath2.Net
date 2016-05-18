@@ -1,23 +1,5 @@
 os: Visual Studio 2015
 
-version: 1.0.2.{build}
-
-install:
-- dnvm upgrade -r clr
-- dnu restore
-
-build:
-  verbosity: minimal
-
-test_script:
-- cmd: dnx -p tests/XPath2.Extensions.Tests test
-
-
-
-
-
-os: Visual Studio 2015
-
 version: 1.0.3.{build}
 
 configuration:
