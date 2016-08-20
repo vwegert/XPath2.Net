@@ -2,6 +2,11 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/kwow5frjv8nl42oy?svg=true)](https://ci.appveyor.com/project/StefH/xpath2-net)
 
+| Project | NuGet |
+| ------- | ----- |
+| XPath2  | [![Version](https://img.shields.io/nuget/v/XPath2.svg)](https://www.nuget.org/packages/XPath2) |
+| XPath2.Extensions | [![Version](https://img.shields.io/nuget/v/XPath2.Extensions.svg)](https://www.nuget.org/packages/XPath2.Extensions) |
+
 Project is forked from https://xpath2.codeplex.com/
 
 ## Supported frameworks: ##
