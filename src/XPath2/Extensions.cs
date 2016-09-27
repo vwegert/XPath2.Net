@@ -205,11 +205,11 @@ namespace Wmhelp.XPath2
                     XPathNavigator curr = (XPathNavigator)item;
                     XObject o = (XObject)curr.UnderlyingObject;
                     if (!(o is T))
-                        throw new InvalidOperationException(string.Format("Unexpected evalution {0}", o.GetType()));
+                        throw new InvalidOperationException(string.Format("Unexpected evaluation {0}", o.GetType()));
                     yield return (T)o;
                 }
                 else
-                    throw new InvalidOperationException(string.Format("Unexpected evalution {0}", item.TypedValue.GetType()));
+                    throw new InvalidOperationException(string.Format("Unexpected evaluation {0}", item.TypedValue.GetType()));
         }
 
         public static IEnumerable<object> XPath2Select(this XNode node, string xpath)

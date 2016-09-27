@@ -83,7 +83,13 @@ namespace Wmhelp.XPath2
             return Compile(xpath2, nsResolver).EvaluateWithProperties(null, arg);
         }
 
+        [Obsolete("Please use Evaluate")]
         public static object Evalute(string xpath2, IXmlNamespaceResolver nsResolver, IDictionary<XmlQualifiedName, object> param)
+        {
+            return Evaluate(xpath2, nsResolver, param);
+        }
+
+        public static object Evaluate(string xpath2, IXmlNamespaceResolver nsResolver, IDictionary<XmlQualifiedName, object> param)
         {
             return Compile(xpath2, nsResolver).Evaluate(null, param);
         }
@@ -104,11 +110,11 @@ namespace Wmhelp.XPath2
                     XPathNavigator curr = (XPathNavigator)item;
                     XObject o = (XObject)curr.UnderlyingObject;
                     if (!(o is T))
-                        throw new InvalidOperationException(String.Format("Unexpected evalution {0}", o.GetType()));
+                        throw new InvalidOperationException(String.Format("Unexpected evaluation {0}", o.GetType()));
                     yield return (T)o;
                 }
                 else
-                    throw new InvalidOperationException(String.Format("Unexpected evalution {0}", item.TypedValue.GetType()));
+                    throw new InvalidOperationException(String.Format("Unexpected evaluation {0}", item.TypedValue.GetType()));
         }
 
         public static IEnumerable<Object> SelectValues(string xpath, object arg)
@@ -138,7 +144,7 @@ namespace Wmhelp.XPath2
         public static XPath2Expression Compile(string xpath, IXmlNamespaceResolver resolver)
         {
             if (xpath == null)
-                throw new ArgumentNullException("xpath");
+                throw new ArgumentNullException(nameof(xpath));
             if (xpath == "")
                 throw new XPath2Exception("", "Empty xpath expression");
             XPath2Context context = new XPath2Context(resolver);
