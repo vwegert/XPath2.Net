@@ -637,17 +637,21 @@ namespace Wmhelp.XPath2
             XPathItem item = value as XPathItem;
             if (item != null)
                 return item.GetTypedValue();
+
             XPath2NodeIterator iter = value as XPath2NodeIterator;
             if (iter != null)
             {
                 iter = iter.Clone();
                 if (!iter.MoveNext())
                     return Undefined.Value;
+
                 object res = iter.Current.GetTypedValue();
                 if (iter.MoveNext())
                     throw new XPath2Exception("XPDY0050", Resources.MoreThanOneItem);
+
                 return res;
             }
+
             return value;
         }
 
@@ -659,12 +663,7 @@ namespace Wmhelp.XPath2
             return (T)res;
         }
 
-        public static XPathNavigator NodeValue(object value)
-        {
-            return NodeValue(value, true);
-        }
-
-        public static XPathNavigator NodeValue(object value, bool raise)
+        public static XPathNavigator NodeValue(object value, bool raise = true)
         {
             if (value == Undefined.Value)
             {
@@ -672,6 +671,7 @@ namespace Wmhelp.XPath2
                     throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequence()", "item()");
                 return null;
             }
+
             XPath2NodeIterator iter = value as XPath2NodeIterator;
             if (iter != null)
             {
@@ -682,12 +682,15 @@ namespace Wmhelp.XPath2
                         throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequence()", "item()");
                     return null;
                 }
+
                 XPathItem res = iter.Current.Clone();
                 if (iter.MoveNext())
                     throw new XPath2Exception("XPDY0050", Resources.MoreThanOneItem);
+
                 XPathNavigator nav = res as XPathNavigator;
                 if (nav == null)
                     throw new XPath2Exception("XPTY0004", Resources.XPST0004, "node()");
+
                 return nav;
             }
             else
@@ -695,6 +698,7 @@ namespace Wmhelp.XPath2
                 XPathNavigator nav = value as XPathNavigator;
                 if (nav == null)
                     throw new XPath2Exception("XPTY0004", Resources.XPST0004, "node()");
+
                 return nav.Clone();
             }
         }
@@ -727,16 +731,19 @@ namespace Wmhelp.XPath2
         {
             if (destType == SequenceType.Item)
                 return value;
+
             if (value == Undefined.Value)
             {
                 if (destType.Cardinality == XmlTypeCardinality.ZeroOrMore)
                     return EmptyIterator.Shared;
+
                 if (destType.TypeCode != XmlTypeCode.None && destType.Cardinality != XmlTypeCardinality.ZeroOrOne)
                     throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequence()", destType);
+
                 return Undefined.Value;
             }
-            if (destType.Cardinality == XmlTypeCardinality.One ||
-                destType.Cardinality == XmlTypeCardinality.ZeroOrOne)
+
+            if (destType.Cardinality == XmlTypeCardinality.One || destType.Cardinality == XmlTypeCardinality.ZeroOrOne)
             {
                 XPathItem res;
                 XPath2NodeIterator iter = value as XPath2NodeIterator;
@@ -748,43 +755,51 @@ namespace Wmhelp.XPath2
                         if (destType.TypeCode != XmlTypeCode.None &&
                             (destType.Cardinality == XmlTypeCardinality.One || destType.Cardinality == XmlTypeCardinality.OneOrMore))
                             throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequence()", destType);
+
                         return Undefined.Value;
                     }
+
                     if (!isLiteral)
                     {
-                        if ((destType.TypeCode == XmlTypeCode.QName && iter.Current.GetSchemaType().TypeCode != XmlTypeCode.QName) ||
-                            (destType.TypeCode == XmlTypeCode.Notation && iter.Current.GetSchemaType().TypeCode != XmlTypeCode.Notation))
+                        if (destType.TypeCode == XmlTypeCode.QName && iter.Current.GetSchemaType().TypeCode != XmlTypeCode.QName ||
+                            destType.TypeCode == XmlTypeCode.Notation && iter.Current.GetSchemaType().TypeCode != XmlTypeCode.Notation)
                             throw new XPath2Exception("XPTY0004", Resources.XPTY0004_CAST, destType);
                     }
+
                     res = iter.Current.ChangeType(destType, context);
                     if (iter.MoveNext())
                         throw new XPath2Exception("XPDY0050", Resources.MoreThanOneItem);
+
                     if (destType.IsNode)
                         return res;
+
                     return res.GetTypedValue();
                 }
-                XPathItem item = value as XPathItem;
-                if (item == null)
-                    item = new XPath2Item(value);
+
+                XPathItem item = value as XPathItem ?? new XPath2Item(value);
+
                 if (!isLiteral)
                 {
-                    if ((destType.TypeCode == XmlTypeCode.QName && item.XmlType.TypeCode != XmlTypeCode.QName) ||
-                        (destType.TypeCode == XmlTypeCode.Notation && item.XmlType.TypeCode != XmlTypeCode.Notation))
+                    if (destType.TypeCode == XmlTypeCode.QName && item.XmlType.TypeCode != XmlTypeCode.QName ||
+                        destType.TypeCode == XmlTypeCode.Notation && item.XmlType.TypeCode != XmlTypeCode.Notation)
                         throw new XPath2Exception("XPTY0004", Resources.XPTY0004_CAST, destType);
                 }
+
                 res = item.ChangeType(destType, context);
                 if (destType.IsNode)
                     return res;
+
                 return res.GetTypedValue();
             }
-            else
-                return new NodeIterator(ConvertIterator(XPath2NodeIterator.Create(value), destType, context));
+
+            return new NodeIterator(ConvertIterator(XPath2NodeIterator.Create(value), destType, context));
         }
 
         public static object CastArg(XPath2Context context, object value, SequenceType destType)
         {
             if (destType == SequenceType.Item)
                 return value;
+
             if (value == Undefined.Value)
             {
                 if (destType.Cardinality == XmlTypeCardinality.ZeroOrMore)
@@ -793,55 +808,56 @@ namespace Wmhelp.XPath2
                     throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequence()", destType);
                 return Undefined.Value;
             }
-            if (destType.Cardinality == XmlTypeCardinality.One ||
-                destType.Cardinality == XmlTypeCardinality.ZeroOrOne)
+
+            if (destType.Cardinality == XmlTypeCardinality.One || destType.Cardinality == XmlTypeCardinality.ZeroOrOne)
             {
-                object res;
                 XPath2NodeIterator iter = value as XPath2NodeIterator;
                 if (iter != null)
                 {
                     iter = iter.Clone();
                     if (!iter.MoveNext())
                     {
-                        if (destType.TypeCode != XmlTypeCode.None &&
-                            (destType.Cardinality == XmlTypeCardinality.One || destType.Cardinality == XmlTypeCardinality.OneOrMore))
+                        if (destType.TypeCode != XmlTypeCode.None && (destType.Cardinality == XmlTypeCardinality.One || destType.Cardinality == XmlTypeCardinality.OneOrMore))
                             throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequence()", destType);
+
                         return Undefined.Value;
                     }
+
+                    object res;
                     if (destType.IsNode)
                     {
                         if (!destType.Match(iter.Current, context))
-                            throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
-                                new SequenceType(iter.Current.GetSchemaType(), XmlTypeCardinality.OneOrMore, null), destType);
+                            throw new XPath2Exception("XPTY0004", Resources.XPTY0004, new SequenceType(iter.Current.GetSchemaType(), XmlTypeCardinality.OneOrMore, null), destType);
+
                         res = iter.Current.Clone();
                     }
                     else
                         res = XPath2Convert.ValueAs(iter.Current.GetTypedValue(), destType, context.NameTable, context.NamespaceManager);
+
                     if (iter.MoveNext())
                         throw new XPath2Exception("XPDY0050", Resources.MoreThanOneItem);
+
                     return res;
                 }
-                else
+
+                XPathItem item = value as XPathItem;
+                if (item != null)
                 {
-                    XPathItem item = value as XPathItem;
-                    if (item != null)
+                    if (item.IsNode)
                     {
-                        if (item.IsNode)
-                        {
-                            if (!destType.Match(item, context))
-                                throw new XPath2Exception("XPTY0004", Resources.XPTY0004,
-                                    new SequenceType(item.GetSchemaType(), XmlTypeCardinality.OneOrMore, null), destType);
-                            return item;
-                        }
-                        else
-                            return XPath2Convert.ValueAs(item.GetTypedValue(), destType,
-                                context.NameTable, context.NamespaceManager);
+                        if (!destType.Match(item, context))
+                            throw new XPath2Exception("XPTY0004", Resources.XPTY0004, new SequenceType(item.GetSchemaType(), XmlTypeCardinality.OneOrMore, null), destType);
+
+                        return item;
                     }
-                    return XPath2Convert.ValueAs(value, destType, context.NameTable, context.NamespaceManager);
+
+                    return XPath2Convert.ValueAs(item.GetTypedValue(), destType, context.NameTable, context.NamespaceManager);
                 }
+
+                return XPath2Convert.ValueAs(value, destType, context.NameTable, context.NamespaceManager);
             }
-            else
-                return new NodeIterator(ValueIterator(XPath2NodeIterator.Create(value), destType, context));
+
+            return new NodeIterator(ValueIterator(XPath2NodeIterator.Create(value), destType, context));
         }
 
         public static object TreatAs(XPath2Context context, object value, SequenceType destType)
