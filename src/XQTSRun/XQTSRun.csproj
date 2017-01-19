@@ -73,7 +73,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="XPath2">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\XPath2\bin\$(Configuration)\net452\XPath2.dll</HintPath>
+      <HintPath>..\XPath2\bin\$(Configuration)\net40\XPath2.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

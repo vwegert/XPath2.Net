@@ -624,7 +624,7 @@ namespace Wmhelp.XPath2
                 input = (string)arg1;
             string pattern;
             if (arg2 == Undefined.Value)
-                throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequnece()", "xs:string in fn:matches");
+                throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequence()", "xs:string in fn:matches");
             else
                 pattern = (string)arg2;
             RegexOptions flags;
@@ -649,7 +649,7 @@ namespace Wmhelp.XPath2
                 input = (string)arg1;
             string pattern;
             if (arg2 == Undefined.Value)
-                throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequnece()", "xs:string in fn:matches");
+                throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequence()", "xs:string in fn:matches");
             else
                 pattern = (string)arg2;
             try
@@ -671,7 +671,7 @@ namespace Wmhelp.XPath2
                 input = (string)arg1;
             string pattern;
             if (arg2 == Undefined.Value)
-                throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequnece()", "xs:string in fn:replace");
+                throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequence()", "xs:string in fn:replace");
             else
                 pattern = (string)arg2;
             if (!IsValidReplacementString(replacement))
@@ -693,7 +693,7 @@ namespace Wmhelp.XPath2
                 input = (string)arg1;
             string pattern;
             if (arg2 == Undefined.Value)
-                throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequnece()", "xs:string in fn:replace");
+                throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequence()", "xs:string in fn:replace");
             else
                 pattern = (string)arg2;
             if (!IsValidReplacementString(replacement))
@@ -722,7 +722,7 @@ namespace Wmhelp.XPath2
                 input = (string)arg1;
             string pattern;
             if (arg2 == Undefined.Value)
-                throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequnece()", "xs:string in fn:tokenize");
+                throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequence()", "xs:string in fn:tokenize");
             else
                 pattern = (string)arg2;
             RegexOptions flags;
@@ -742,7 +742,7 @@ namespace Wmhelp.XPath2
                 input = (string)arg1;
             string pattern;
             if (arg2 == Undefined.Value)
-                throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequnece()", "xs:string in fn:tokenize");
+                throw new XPath2Exception("XPTY0004", Resources.XPTY0004, "empty-sequence()", "xs:string in fn:tokenize");
             else
                 pattern = (string)arg2;
             if (Regex.IsMatch("", pattern))

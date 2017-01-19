@@ -1,5 +1,5 @@
 ﻿{
-    "version": "1.0.3-*",
+    "version": "1.0.3.2",
     "title": "Non-official extensions for XPath2.dll",
     "description": "Non-official extensions for XPath2.dll",
     "authors": [ "Stef Heyenrath" ],
@@ -11,11 +11,11 @@
         "projectUrl": "https://github.com/StefH/XPath2.Net",
         "licenseUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/license",
         "iconUrl": "https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2ex-icon-64x64.png",
-        "releaseNotes": "use XPath2 version 1.0.3"
+        "releaseNotes": "use XPath2 version 1.0.3.2"
     },
 
     "dependencies": {
-        "XPath2": "1.0.3-*"
+        "XPath2": { "target": "project" }
     },
 
     "frameworks": {
@@ -24,26 +24,6 @@
             }
         },
         "net40": {
-            "frameworkAssemblies": {
-            }
-        },
-        "net45": {
-            "frameworkAssemblies": {
-            }
-        },
-        "net452": {
-            "frameworkAssemblies": {
-            }
-        },
-        "net46": {
-            "frameworkAssemblies": {
-            }
-        },
-        "net461": {
-            "frameworkAssemblies": {
-            }
-        },
-        "dnx451": {
             "frameworkAssemblies": {
             }
         }
