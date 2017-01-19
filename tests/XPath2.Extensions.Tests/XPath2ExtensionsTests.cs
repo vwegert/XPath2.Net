@@ -1,4 +1,5 @@
-﻿using Wmhelp.XPath2;
+﻿using System.Xml;
+using Wmhelp.XPath2;
 using Xunit;
 
 namespace XPath2.Extensions.Tests
@@ -13,10 +14,49 @@ namespace XPath2.Extensions.Tests
             _fixture = fixture;
         }
 
+        private XmlDocument GetTodoListDoc()
+        {
+            return new XmlDocument
+            {
+                InnerXml = @"
+                    <todo-list>
+                        <todo-item id='a1'>abc</todo-item>
+                        <todo-item id='a2'>def</todo-item>
+                        <todo-item id='a3'>xyz</todo-item>
+                    </todo-list>"
+            };
+        }
+
+        [Fact]
+        public void XPathExtensions_XPath2Evaluate_true()
+        {
+            var nav = GetTodoListDoc().CreateNavigator();
+            var result = nav.XPath2Evaluate("boolean(/todo-list[count(todo-item) = 3])");
+
+            Assert.True(true.Equals(result));
+        }
+
+        [Fact]
+        public void XPathExtensions_XPath2Evaluate_false()
+        {
+            var nav = GetTodoListDoc().CreateNavigator();
+            var result = nav.XPath2Evaluate("boolean(/todo-list[count(todo-item) = 4])");
+
+            Assert.False(true.Equals(result));
+        }
+
         [Fact]
         public void XPathExtensions_matches_true()
         {
             var result = _fixture.Navigator.XPath2Evaluate("matches(\"abracadabra\", \"bra\")");
+
+            Assert.Equal(true, result);
+        }
+
+        [Fact]
+        public void XPathExtensions_matches_IgnoreCase_true()
+        {
+            var result = _fixture.Navigator.XPath2Evaluate("matches(\"abracadabra\", \"BRa\", \"i\")");
 
             Assert.Equal(true, result);
         }
