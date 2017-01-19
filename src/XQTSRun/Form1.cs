@@ -168,7 +168,7 @@ namespace XQTSRun
                 string targetNs = node.GetAttribute("uri");
                 string schemaFileName = Path.Combine(_basePath, node.GetAttribute("FileName").Replace('/', '\\'));
                 if (!File.Exists(schemaFileName))
-                    _out.WriteLine("Schema file {0} is not exists", schemaFileName);
+                    _out.WriteLine("Schema file {0} does not exists", schemaFileName);
                 _schema.Add(id, new string[] { targetNs, schemaFileName });
             }
             foreach (XmlElement node in _catalog.SelectNodes("/ts:test-suite/ts:sources/ts:source", _nsmgr))
@@ -176,7 +176,7 @@ namespace XQTSRun
                 string id = node.GetAttribute("ID");
                 string sourceFileName = Path.Combine(_basePath, node.GetAttribute("FileName").Replace('/', '\\'));
                 if (!File.Exists(sourceFileName))
-                    _out.WriteLine("Source file {0} is not exists", sourceFileName);
+                    _out.WriteLine("Source file {0} does not exists", sourceFileName);
                 _sources.Add(id, sourceFileName);
             }
             foreach (XmlElement node in _catalog.SelectNodes("/ts:test-suite/ts:sources/ts:collection", _nsmgr))
@@ -198,7 +198,7 @@ namespace XQTSRun
                 string id = node.GetAttribute("ID");
                 string moduleFileName = Path.Combine(_basePath, node.GetAttribute("FileName").Replace('/', '\\') + _queryFileExtension);
                 if (!File.Exists(moduleFileName))
-                    _out.WriteLine("Module file {0} is not exists", moduleFileName);
+                    _out.WriteLine("Module file {0} does not exists", moduleFileName);
                 _module.Add(id, moduleFileName);
             }
             treeView1.Nodes.Clear();
@@ -536,7 +536,7 @@ namespace XQTSRun
                 {
                     decimal total = _total;
                     decimal passed = _passed;
-                    _out.WriteLine("{0} executed, {1} ({2}%) successed.", total, passed,
+                    _out.WriteLine("{0} executed, {1} ({2}%) succeeded.", total, passed,
                         Math.Round(passed / total * 100, 2));
                 }
                 foreach (DataRow row in _testTab.Rows)
