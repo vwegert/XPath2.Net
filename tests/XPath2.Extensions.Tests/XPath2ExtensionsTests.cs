@@ -14,6 +14,22 @@ namespace XPath2.Extensions.Tests
         }
 
         [Fact]
+        public void XPathExtensions_matches_true()
+        {
+            var result = _fixture.Navigator.XPath2Evaluate("matches(\"abracadabra\", \"bra\")");
+
+            Assert.Equal(true, result);
+        }
+
+        [Fact]
+        public void XPathExtensions_matches_false()
+        {
+            var result = _fixture.Navigator.XPath2Evaluate("matches(\"abracadabra\", \"test\")");
+
+            Assert.Equal(false, result);
+        }
+
+        [Fact]
         public void XPathExtensions_substring()
         {
             var result = _fixture.Navigator.XPath2Evaluate("substring(null, 2)");
