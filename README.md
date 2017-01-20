@@ -4,8 +4,8 @@
 
 | Project | NuGet |
 | ------- | ----- |
-| XPath2  | [![Version](https://img.shields.io/nuget/v/XPath2.svg)](https://www.nuget.org/packages/XPath2) |
-| XPath2.Extensions | [![Version](https://img.shields.io/nuget/v/XPath2.Extensions.svg)](https://www.nuget.org/packages/XPath2.Extensions) |
+| XPath2  | [![NuGet Badge](https://buildstats.info/nuget/XPath2)](https://www.nuget.org/packages/XPath2) |
+| XPath2.Extensions | [![NuGet Badge](https://buildstats.info/nuget/XPath2.Extensions)](https://www.nuget.org/packages/XPath2.Extensions) |
 
 Project is forked from https://xpath2.codeplex.com/
 
