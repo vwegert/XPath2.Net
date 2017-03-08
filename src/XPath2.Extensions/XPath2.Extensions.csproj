@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Non-official extensions for XPath2.dll</Description>
+    <Copyright>Stef Heyenrath</Copyright>
+    <AssemblyTitle>Non-official extensions for XPath2.dll</AssemblyTitle>
+    <VersionPrefix>1.0.3.2</VersionPrefix>
+    <Authors>Stef Heyenrath</Authors>
+    <TargetFrameworks>net35;net40</TargetFrameworks>
+    <AssemblyName>XPath2.Extensions</AssemblyName>
+    <PackageId>XPath2.Extensions</PackageId>
+    <PackageTags>XPath;XPath2;XPath2.0;Xml;W3C;XQuery;XQTS;Extensions</PackageTags>
+    <PackageReleaseNotes>use XPath2 version 1.0.3.2</PackageReleaseNotes>
+    <PackageIconUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2ex-icon-64x64.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/StefH/XPath2.Net</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/license</PackageLicenseUrl>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XPath2\XPath2.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
+    <Reference Include="System" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>
