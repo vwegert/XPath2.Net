@@ -21,15 +21,15 @@
     "frameworks": {
         "net35": {
             "frameworkAssemblies": {
-                "System.Xml": "",
-                "System.Xml.Linq": ""
+                "System.Xml": { "type": "build" },
+                "System.Xml.Linq": { "type": "build" }
             }
         },
         "net40": {
             "frameworkAssemblies": {
-                "System.Numerics": "",
-                "System.Xml": "",
-                "System.Xml.Linq": ""
+                "System.Numerics": { "type": "build" },
+                "System.Xml": { "type": "build" },
+                "System.Xml.Linq": { "type": "build" }
             }
         }
     }
