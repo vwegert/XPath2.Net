@@ -102,7 +102,11 @@ namespace Wmhelp.XPath2
             TimSort<XPathItem>.sort(_items, 0, _size, new XPathComparer());
         }
 
+#if !NETSTANDARD
         [Serializable, StructLayout(LayoutKind.Sequential)]
+#else
+        [StructLayout(LayoutKind.Sequential)]
+#endif
         public struct Enumerator : IEnumerator<XPathItem>, IDisposable, IEnumerator
         {
             private readonly ItemSet itemSet;
@@ -144,22 +148,22 @@ namespace Wmhelp.XPath2
             }
         }
 
-        #region IEnumerable<XPathItem> Members
+#region IEnumerable<XPathItem> Members
 
         public IEnumerator<XPathItem> GetEnumerator()
         {
             return new Enumerator(this);
         }
 
-        #endregion
+#endregion
 
-        #region IEnumerable Members
+#region IEnumerable Members
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return new Enumerator(this);
         }
 
-        #endregion
+#endregion
     }
 }
