@@ -4,7 +4,7 @@
     <Description>This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET Framework based on standard XPathNavigator API.</Description>
     <Copyright>Semyon A. Chertkov and Stef Heyenrath</Copyright>
     <AssemblyTitle>Lightweight XPath2 implementation for .NET</AssemblyTitle>
-    <VersionPrefix>1.0.3.3</VersionPrefix>
+    <VersionPrefix>1.0.4.0</VersionPrefix>
     <Authors>Semyon A. Chertkov and Stef Heyenrath</Authors>
     <TargetFrameworks>net35;net40</TargetFrameworks>
     <AssemblyName>XPath2</AssemblyName>
@@ -24,6 +24,8 @@
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.3' ">$(PackageTargetFallback);dotnet5.4</PackageTargetFallback>
     <DefaultLanguage>en-us</DefaultLanguage>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <DebugType>full</DebugType>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">

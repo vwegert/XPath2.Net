@@ -1,11 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{09DD64B0-16A6-4710-A86F-EDCABDAB2BB4}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
+		codecov-local.cmd = codecov-local.cmd
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -19,7 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "jay", "jay", "{8946E3FE-DF8
 		dependencies\jay\jay.exe = dependencies\jay\jay.exe
 		dependencies\jay\run-jay.cmd = dependencies\jay\run-jay.cmd
 		dependencies\jay\skeleton.cs = dependencies\jay\skeleton.cs
-		dependencies\jay\XPath.y = dependencies\jay\XPath.y
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E2D9AE26-4F0F-4D09-BFD2-434DE9BDF433}"
