@@ -71,10 +71,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="XPath2">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\XPath2\bin\$(Configuration)\net40\XPath2.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FindForm.cs">
@@ -118,6 +114,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XPath2\XPath2.csproj">
+      <Project>{f82b8dc3-fdfd-4a46-9d14-e25151f8d64b}</Project>
+      <Name>XPath2</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

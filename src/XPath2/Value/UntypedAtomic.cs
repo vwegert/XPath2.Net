@@ -10,7 +10,10 @@ using Wmhelp.XPath2.Properties;
 
 namespace Wmhelp.XPath2.Value
 {
-    public class UntypedAtomic : ICloneable, IComparable, IConvertible, IEquatable<UntypedAtomic>, IComparable<UntypedAtomic>
+    public class UntypedAtomic : IComparable, IConvertible, IEquatable<UntypedAtomic>, IComparable<UntypedAtomic>
+#if !NETSTANDARD
+        , ICloneable
+#endif
     {
         public UntypedAtomic(string value)
         {
@@ -92,16 +95,16 @@ namespace Wmhelp.XPath2.Value
             return false;
         }
 
-        #region ICloneable Members
+#region ICloneable Members
 
         public object Clone()
         {
             return new UntypedAtomic(Value);
         }
 
-        #endregion
+#endregion
 
-        #region IComparable Members
+#region IComparable Members
 
         int IComparable.CompareTo(object obj)
         {
@@ -111,9 +114,9 @@ namespace Wmhelp.XPath2.Value
             return Value.CompareTo(src.Value);
         }
 
-        #endregion
+#endregion
 
-        #region IConvertible Members
+#region IConvertible Members
 
         public TypeCode GetTypeCode()
         {
@@ -310,9 +313,9 @@ namespace Wmhelp.XPath2.Value
             }
         }
 
-        #endregion
+#endregion
 
-        #region IEquatable<UntypedAtomic> Members
+#region IEquatable<UntypedAtomic> Members
 
         bool IEquatable<UntypedAtomic>.Equals(UntypedAtomic other)
         {
@@ -321,9 +324,9 @@ namespace Wmhelp.XPath2.Value
             return Value.Equals(other.Value);
         }
 
-        #endregion
+#endregion
 
-        #region IComparable<UntypedAtomic> Members
+#region IComparable<UntypedAtomic> Members
 
         int IComparable<UntypedAtomic>.CompareTo(UntypedAtomic other)
         {
@@ -332,6 +335,6 @@ namespace Wmhelp.XPath2.Value
             return Value.CompareTo(other.Value);
         }
 
-        #endregion
+#endregion
     }
 }

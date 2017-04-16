@@ -25,6 +25,7 @@
     <DefaultLanguage>en-us</DefaultLanguage>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <DebugType>full</DebugType>
+    <RootNamespace>Wmhelp.XPath2</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
