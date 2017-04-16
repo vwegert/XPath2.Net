@@ -6,7 +6,7 @@
     <AssemblyTitle>Non-official extensions for XPath2.dll</AssemblyTitle>
     <VersionPrefix>1.0.4.0</VersionPrefix>
     <Authors>Stef Heyenrath</Authors>
-    <TargetFrameworks>net35;net40</TargetFrameworks>
+    <TargetFrameworks>net40</TargetFrameworks>
     <AssemblyName>XPath2.Extensions</AssemblyName>
     <PackageId>XPath2.Extensions</PackageId>
     <PackageTags>XPath;XPath2;XPath2.0;Xml;W3C;XQuery;XQTS;Extensions</PackageTags>
@@ -28,13 +28,19 @@
     <ProjectReference Include="..\XPath2\XPath2.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="10.4.0" PrivateAssets="All" />
+    <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
+  </ItemGroup>
+
   <ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
     <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
 
 </Project>

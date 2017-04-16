@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Text;
+using System.Xml;
+using System.Xml.XPath;
+using JetBrains.Annotations;
 using Wmhelp.XPath2.MS;
 
 namespace Wmhelp.XPath2.Extensions
@@ -11,6 +14,8 @@ namespace Wmhelp.XPath2.Extensions
         /// - generate-id
         /// - base64encode
         /// - base64decode
+        /// - json-to-xml
+        /// - json-to-xmlstring
         /// </summary>
         /// <param name="functionTable">The function table.</param>
         public static void AddAllExtensions(this FunctionTable functionTable)
@@ -18,6 +23,7 @@ namespace Wmhelp.XPath2.Extensions
             functionTable.AddGenerateId();
             functionTable.AddBase64Encode();
             functionTable.AddBase64Decode();
+            functionTable.AddJsonToXml();
         }
 
         /// <summary>
@@ -35,7 +41,7 @@ namespace Wmhelp.XPath2.Extensions
         /// <param name="functionTable">The function table.</param>
         public static void AddBase64Encode(this FunctionTable functionTable)
         {
-            XPathFunctionDelegate base64EncodeDelegate = (context, provider, args) =>
+            string Base64EncodeDelegate(XPath2Context context, IContextProvider provider, object[] args)
             {
                 string value = CoreFuncs.CastToStringExactOne(context, args[0]);
                 Encoding encoding = args.Length == 2 ? ParseEncodingFromArg(context, args[1]) : Encoding.UTF8;
@@ -48,13 +54,13 @@ namespace Wmhelp.XPath2.Extensions
                 {
                     throw new XPath2Exception("InvalidFormat", ex);
                 }
-            };
+            }
 
             // base64encode with default UTF-8 encoding
-            functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64encode", 1, XPath2ResultType.String, (context, provider, args) => base64EncodeDelegate(context, provider, args));
+            functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64encode", 1, XPath2ResultType.String, Base64EncodeDelegate);
 
             // base64encode with specified encoding
-            functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64encode", 2, XPath2ResultType.String, (context, provider, args) => base64EncodeDelegate(context, provider, args));
+            functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64encode", 2, XPath2ResultType.String, Base64EncodeDelegate);
         }
 
         /// <summary>
@@ -63,7 +69,7 @@ namespace Wmhelp.XPath2.Extensions
         /// <param name="functionTable">The function table.</param>
         public static void AddBase64Decode(this FunctionTable functionTable)
         {
-            XPathFunctionDelegate base64DecodeDelegate = (context, provider, args) =>
+            string Base64DecodeDelegate(XPath2Context context, IContextProvider provider, object[] args)
             {
                 bool fixPadding = true;
                 Encoding encoding = Encoding.UTF8;
@@ -105,16 +111,53 @@ namespace Wmhelp.XPath2.Extensions
                 {
                     throw new XPath2Exception("InvalidFormat", ex.Message);
                 }
-            };
+            }
 
             // base64decode with default UTF-8 encoding
-            functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64decode", 1, XPath2ResultType.String, (context, provider, args) => base64DecodeDelegate(context, provider, args));
+            functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64decode", 1, XPath2ResultType.String, Base64DecodeDelegate);
 
             // base64decode with specified encoding (string) or fixPadding (bool)
-            functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64decode", 2, XPath2ResultType.String, (context, provider, args) => base64DecodeDelegate(context, provider, args));
+            functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64decode", 2, XPath2ResultType.String, Base64DecodeDelegate);
 
             // base64decode with specified encoding (string) and fixPadding (bool)
-            functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64decode", 3, XPath2ResultType.String, (context, provider, args) => base64DecodeDelegate(context, provider, args));
+            functionTable.Add(XmlReservedNs.NsXQueryFunc, "base64decode", 3, XPath2ResultType.String, Base64DecodeDelegate);
+        }
+
+        /// <summary>
+        /// Extend the XPath2 FunctionTable with 'json-to-xml' functions
+        /// </summary>
+        /// <param name="functionTable">The function table.</param>
+        public static void AddJsonToXml([NotNull] this FunctionTable functionTable)
+        {
+            XPathNavigator JsonStringToXPathNavigator(XPath2Context context, IContextProvider provider, object[] args)
+            {
+                string value = CoreFuncs.CastToStringExactOne(context, args[0]);
+                string root = args.Length == 2 ? CoreFuncs.CastToStringOptional(context, args[1]) : null;
+
+                string dynamicRootObject;
+                XmlNode xmlDoc = Json2XmlUtils.Json2XmlNode(value, out dynamicRootObject, root);
+
+                return xmlDoc?.CreateNavigator();
+            }
+
+            string JsonStringToXmlString(XPath2Context context, IContextProvider provider, object[] args)
+            {
+                var nav = JsonStringToXPathNavigator(context, provider, args);
+
+                return nav != null ? nav.InnerXml : string.Empty;
+            }
+
+            // json-to-xml with no root element
+            functionTable.Add(XmlReservedNs.NsXQueryFunc, "json-to-xml", 1, XPath2ResultType.Navigator, JsonStringToXPathNavigator);
+
+            // json-to-xml with specified root element
+            functionTable.Add(XmlReservedNs.NsXQueryFunc, "json-to-xml", 2, XPath2ResultType.Navigator, JsonStringToXPathNavigator);
+
+            // json-to-xmlstring with no root element
+            functionTable.Add(XmlReservedNs.NsXQueryFunc, "json-to-xmlstring", 1, XPath2ResultType.String, JsonStringToXmlString);
+
+            // json-to-xmlstring with specified root element
+            functionTable.Add(XmlReservedNs.NsXQueryFunc, "json-to-xmlstring", 2, XPath2ResultType.String, JsonStringToXmlString);
         }
 
         #region private helper methods
