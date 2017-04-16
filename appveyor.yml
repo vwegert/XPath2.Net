@@ -24,8 +24,8 @@ build_script:
 - dotnet restore .\tests\XPath2.Extensions.Tests\XPath2.Extensions.Tests.csproj
 - nuget restore .\src\XQTSRun\XQTSRun.csproj
 
-- dotnet build .\src\XPath2\XPath2.csproj -c %CONFIGURATION%
-- dotnet build .\src\XPath2.Extensions\XPath2.Extensions.csproj -c %CONFIGURATION%
+- dotnet build .\src\XPath2\XPath2.csproj -c %CONFIGURATION% --framework net40
+- dotnet build .\src\XPath2.Extensions\XPath2.Extensions.csproj -c %CONFIGURATION% --framework net40
 - dotnet build .\tests\XPath2.Extensions.Tests\XPath2.Extensions.Tests.csproj -c %CONFIGURATION%
 - cmd: msbuild .\src\XQTSRun\XQTSRun.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
 
