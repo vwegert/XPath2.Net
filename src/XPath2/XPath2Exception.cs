@@ -7,7 +7,9 @@
 //        any later version.
 
 using System;
+#if !NETSTANDARD
 using System.Runtime.Serialization;
+#endif
 
 namespace Wmhelp.XPath2
 {
@@ -15,7 +17,9 @@ namespace Wmhelp.XPath2
     {
         public string ErrorCode { get; internal set; }
 
+#if !NETSTANDARD
         protected XPath2Exception(SerializationInfo info, StreamingContext context) : base(info, context) { }
+#endif
 
         public XPath2Exception(string message, Exception innerException) : base(message, innerException) { }
 

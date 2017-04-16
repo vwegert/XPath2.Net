@@ -57,7 +57,10 @@ namespace Wmhelp.XPath2
 
     [DebuggerDisplay("{curr}")]
     [DebuggerTypeProxy(typeof (XPath2NodeIteratorDebugView))]
-    public abstract class XPath2NodeIterator : ICloneable, IEnumerable, IEnumerable<XPathItem>
+    public abstract class XPath2NodeIterator : IEnumerable, IEnumerable<XPathItem>
+#if !NETSTANDARD
+        , ICloneable
+#endif
     {
         internal int count = -1;
         private XPathItem curr;
@@ -204,14 +207,14 @@ namespace Wmhelp.XPath2
             return new SingleIterator(item);
         }
 
+#if !NETSTANDARD
         #region ICloneable Members
-
         object ICloneable.Clone()
         {
             return Clone();
         }
-
         #endregion
+#endif
 
         #region IEnumerable Members
 

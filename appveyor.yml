@@ -1,10 +1,9 @@
-os: Visual Studio 2015
+os: Visual Studio 2017
 
-version: 1.0.3.{build}
+version: 1.0.4.{build}
 
 configuration:
 - Debug
-- Release
 
 platform: Any CPU
 
@@ -12,31 +11,35 @@ init:
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 
 install:
-- ps: Start-FileDownload 'https://download.microsoft.com/download/0/A/3/0A372822-205D-4A86-BFA7-084D2CBE9EDF/DotNetCore.1.0.1-SDK.1.0.0.Preview2-003133-x64.exe'
-- cmd: DotNetCore.1.0.1-SDK.1.0.0.Preview2-003133-x64.exe /quiet
+  - ps: Start-FileDownload 'https://download.microsoft.com/download/8/F/9/8F9659B9-E628-4D1A-B6BF-C3004C8C954B/dotnet-1.1.1-sdk-win-x64.exe'
+  - cmd: dotnet-1.1.1-sdk-win-x64.exe /quiet
+  - ps: $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = "true"
 
 environment:
   PATH: $(PATH);$(PROGRAMFILES)\dotnet\
 
 build_script:
-- appveyor-retry dotnet restore .\src\XPath2 -v Minimal
-- appveyor-retry dotnet restore .\src\XPath2.Extensions -v Minimal
-- appveyor-retry dotnet restore .\tests\XPath2.Extensions.Tests -v Minimal
-- appveyor-retry nuget restore .\src\XQTSRun\XQTSRun.csproj -PackagesDirectory packages
+- dotnet restore .\src\XPath2\XPath2.csproj
+- dotnet restore .\src\XPath2.Extensions\XPath2.Extensions.csproj
+- dotnet restore .\tests\XPath2.Extensions.Tests\XPath2.Extensions.Tests.csproj
+- nuget restore .\src\XQTSRun\XQTSRun.csproj
 
-- dotnet build .\src\XPath2\project.json -c %CONFIGURATION%
-- dotnet build .\src\XPath2.Extensions\project.json -c %CONFIGURATION%
-- dotnet build .\tests\XPath2.Extensions.Tests\project.json -c %CONFIGURATION%
+- dotnet build .\src\XPath2\XPath2.csproj -c %CONFIGURATION% --framework net40
+- dotnet build .\src\XPath2.Extensions\XPath2.Extensions.csproj -c %CONFIGURATION% --framework net40
+- dotnet build .\tests\XPath2.Extensions.Tests\XPath2.Extensions.Tests.csproj -c %CONFIGURATION%
 - cmd: msbuild .\src\XQTSRun\XQTSRun.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
 
-- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o .\artifacts .\src\XPath2\project.json
-- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o .\artifacts .\src\XPath2.Extensions\project.json
+#- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o .\artifacts .\src\XPath2\project.json
+#- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o .\artifacts .\src\XPath2.Extensions\project.json
 
-test_script:
-- dotnet test -c %CONFIGURATION% --no-build .\tests\XPath2.Extensions.Tests
+#test_script:
+#- dotnet test -c %CONFIGURATION% --no-build .\tests\XPath2.Extensions.Tests
 
-artifacts:
-- path: artifacts\**\*.*
+after_test:
+  - nuget.exe install OpenCover -ExcludeVersion
+  - nuget.exe install coveralls.net -ExcludeVersion
+  - pip install codecov
 
-cache:
-- packages
+  - cmd: '"OpenCover\tools\OpenCover.Console.exe" -target:dotnet.exe -targetargs:"test tests\XPath2.Extensions.Tests\XPath2.Extensions.Tests.csproj --no-build" -filter:"+[XPath2]* -[*Tests*]*" -output:coverage.xml -register:user -oldStyle -searchdirs:".\tests\XPath2.Extensions.Tests\bin\%CONFIGURATION%\net452"'
+  - codecov -f "coverage.xml"
+  - coveralls.net\tools\csmacnz.Coveralls.exe --opencover -i .\coverage.xml
