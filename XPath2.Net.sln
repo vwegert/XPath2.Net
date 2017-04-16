@@ -1,14 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "XPath2", "src\XPath2\XPath2.xproj", "{F82B8DC3-FDFD-4A46-9D14-E25151F8D64B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{09DD64B0-16A6-4710-A86F-EDCABDAB2BB4}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
-		global.json = global.json
+		codecov-local.cmd = codecov-local.cmd
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -22,19 +20,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "jay", "jay", "{8946E3FE-DF8
 		dependencies\jay\jay.exe = dependencies\jay\jay.exe
 		dependencies\jay\run-jay.cmd = dependencies\jay\run-jay.cmd
 		dependencies\jay\skeleton.cs = dependencies\jay\skeleton.cs
-		dependencies\jay\XPath.y = dependencies\jay\XPath.y
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E2D9AE26-4F0F-4D09-BFD2-434DE9BDF433}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPath2", "src\XPath2\XPath2.csproj", "{F82B8DC3-FDFD-4A46-9D14-E25151F8D64B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XQTSRun", "src\XQTSRun\XQTSRun.csproj", "{327B2985-B218-42AA-86C0-958E7EEA2EBC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F82B8DC3-FDFD-4A46-9D14-E25151F8D64B} = {F82B8DC3-FDFD-4A46-9D14-E25151F8D64B}
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "XPath2.Extensions", "src\XPath2.Extensions\XPath2.Extensions.xproj", "{12279454-FC88-44FE-B037-B514AB23C2B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPath2.Extensions", "src\XPath2.Extensions\XPath2.Extensions.csproj", "{12279454-FC88-44FE-B037-B514AB23C2B0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E2D9AE26-4F0F-4D09-BFD2-434DE9BDF433}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "XPath2.Extensions.Tests", "tests\XPath2.Extensions.Tests\XPath2.Extensions.Tests.xproj", "{45D205D1-2338-438A-A850-52A9677EC924}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPath2.Extensions.Tests", "tests\XPath2.Extensions.Tests\XPath2.Extensions.Tests.csproj", "{45D205D1-2338-438A-A850-52A9677EC924}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,8 +62,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F82B8DC3-FDFD-4A46-9D14-E25151F8D64B} = {0C331956-D83C-4A5C-8A73-6B948ADEA559}
 		{8946E3FE-DF8B-4FDE-AD1F-BAFDAA955828} = {813DE82D-158B-4671-A497-19863B790758}
+		{F82B8DC3-FDFD-4A46-9D14-E25151F8D64B} = {0C331956-D83C-4A5C-8A73-6B948ADEA559}
 		{327B2985-B218-42AA-86C0-958E7EEA2EBC} = {0C331956-D83C-4A5C-8A73-6B948ADEA559}
 		{12279454-FC88-44FE-B037-B514AB23C2B0} = {0C331956-D83C-4A5C-8A73-6B948ADEA559}
 		{45D205D1-2338-438A-A850-52A9677EC924} = {E2D9AE26-4F0F-4D09-BFD2-434DE9BDF433}
