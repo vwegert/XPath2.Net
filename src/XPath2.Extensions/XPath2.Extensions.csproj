@@ -20,6 +20,8 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <RootNamespace>Wmhelp.XPath2.Extensions</RootNamespace>
+    <DebugType>full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
