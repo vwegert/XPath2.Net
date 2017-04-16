@@ -5,8 +5,6 @@ version: 1.0.4.{build}
 configuration:
 - Debug
 
-platform: Any CPU
-
 init:
 - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
 
@@ -28,12 +26,6 @@ build_script:
 - dotnet build .\src\XPath2.Extensions\XPath2.Extensions.csproj -c %CONFIGURATION% --framework net40
 - dotnet build .\tests\XPath2.Extensions.Tests\XPath2.Extensions.Tests.csproj -c %CONFIGURATION%
 - cmd: msbuild .\src\XQTSRun\XQTSRun.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU
-
-#- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o .\artifacts .\src\XPath2\project.json
-#- dotnet pack -c %CONFIGURATION% --no-build --version-suffix %LABEL% -o .\artifacts .\src\XPath2.Extensions\project.json
-
-#test_script:
-#- dotnet test -c %CONFIGURATION% --no-build .\tests\XPath2.Extensions.Tests
 
 after_test:
   - nuget.exe install OpenCover -ExcludeVersion
