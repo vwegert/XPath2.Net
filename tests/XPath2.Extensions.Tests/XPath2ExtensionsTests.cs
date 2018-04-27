@@ -1,10 +1,9 @@
-﻿using System.Xml;
-using Wmhelp.XPath2;
+﻿using Wmhelp.XPath2;
 using Xunit;
 
 namespace XPath2.Extensions.Tests
 {
-    [Collection("xpath2 test collection")]
+    [Collection("xpath2 extensions collection")]
     public class XPath2ExtensionsTests
     {
         private readonly XPath2TestFixture _fixture;
@@ -12,69 +11,6 @@ namespace XPath2.Extensions.Tests
         public XPath2ExtensionsTests(XPath2TestFixture fixture)
         {
             _fixture = fixture;
-        }
-
-        private XmlDocument GetTodoListDoc()
-        {
-            return new XmlDocument
-            {
-                InnerXml = @"
-                    <todo-list>
-                        <todo-item id='a1'>abc</todo-item>
-                        <todo-item id='a2'>def</todo-item>
-                        <todo-item id='a3'>xyz</todo-item>
-                    </todo-list>"
-            };
-        }
-
-        [Fact]
-        public void XPath2_Evaluate_true()
-        {
-            var nav = GetTodoListDoc().CreateNavigator();
-            var result = nav.XPath2Evaluate("boolean(/todo-list[count(todo-item) = 3])");
-
-            Assert.True(true.Equals(result));
-        }
-
-        [Fact]
-        public void XPath2_Evaluate_false()
-        {
-            var nav = GetTodoListDoc().CreateNavigator();
-            var result = nav.XPath2Evaluate("boolean(/todo-list[count(todo-item) = 4])");
-
-            Assert.False(true.Equals(result));
-        }
-
-        [Fact]
-        public void XPath2_matches_true()
-        {
-            var result = _fixture.Navigator.XPath2Evaluate("matches(\"abracadabra\", \"bra\")");
-
-            Assert.Equal(true, result);
-        }
-
-        [Fact]
-        public void XPath2_matches_IgnoreCase_true()
-        {
-            var result = _fixture.Navigator.XPath2Evaluate("matches(\"abracadabra\", \"BRa\", \"i\")");
-
-            Assert.Equal(true, result);
-        }
-
-        [Fact]
-        public void XPath2_matches_false()
-        {
-            var result = _fixture.Navigator.XPath2Evaluate("matches(\"abracadabra\", \"test\")");
-
-            Assert.Equal(false, result);
-        }
-
-        [Fact]
-        public void XPath2_substring()
-        {
-            var result = _fixture.Navigator.XPath2Evaluate("substring(null, 2)");
-
-            Assert.Equal("", result);
         }
 
         [Fact]
@@ -180,6 +116,14 @@ namespace XPath2.Extensions.Tests
             var result = _fixture.Navigator.XPath2Evaluate(@"string(json-to-xml('{ ""id"": 42, ""hello"": ""world"" }', 'r')/r/id)");
 
             Assert.Equal("42", result);
+        }
+
+        [Fact]
+        public void XPathExtensions_json_to_xmlstring()
+        {
+            var result = _fixture.Navigator.XPath2Evaluate(@"json-to-xmlstring('{ ""id"": 42, ""hello"": ""world"" }', 'r')");
+
+            Assert.Equal("<r>\r\n  <id>42</id>\r\n  <hello>world</hello>\r\n</r>", result);
         }
     }
 }

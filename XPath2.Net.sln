@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		appveyor.yml = appveyor.yml
 		codecov-local.cmd = codecov-local.cmd
 		README.md = README.md
+		XPath2.Net.sln.DotSettings = XPath2.Net.sln.DotSettings
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0C331956-D83C-4A5C-8A73-6B948ADEA559}"
@@ -35,6 +36,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPath2.Extensions", "src\XP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPath2.Extensions.Tests", "tests\XPath2.Extensions.Tests\XPath2.Extensions.Tests.csproj", "{45D205D1-2338-438A-A850-52A9677EC924}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XQTSRunConsole", "src\XQTSRunConsole\XQTSRunConsole.csproj", "{D439F305-067F-4ABE-808A-D6832BF3F291}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPath2.Tests", "tests\XPath2.Tests\XPath2.Tests.csproj", "{7F697F7F-5ABD-4494-8537-5E211F611DF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +62,14 @@ Global
 		{45D205D1-2338-438A-A850-52A9677EC924}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45D205D1-2338-438A-A850-52A9677EC924}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45D205D1-2338-438A-A850-52A9677EC924}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D439F305-067F-4ABE-808A-D6832BF3F291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D439F305-067F-4ABE-808A-D6832BF3F291}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D439F305-067F-4ABE-808A-D6832BF3F291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D439F305-067F-4ABE-808A-D6832BF3F291}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F697F7F-5ABD-4494-8537-5E211F611DF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F697F7F-5ABD-4494-8537-5E211F611DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F697F7F-5ABD-4494-8537-5E211F611DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F697F7F-5ABD-4494-8537-5E211F611DF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,5 +80,10 @@ Global
 		{327B2985-B218-42AA-86C0-958E7EEA2EBC} = {0C331956-D83C-4A5C-8A73-6B948ADEA559}
 		{12279454-FC88-44FE-B037-B514AB23C2B0} = {0C331956-D83C-4A5C-8A73-6B948ADEA559}
 		{45D205D1-2338-438A-A850-52A9677EC924} = {E2D9AE26-4F0F-4D09-BFD2-434DE9BDF433}
+		{D439F305-067F-4ABE-808A-D6832BF3F291} = {E2D9AE26-4F0F-4D09-BFD2-434DE9BDF433}
+		{7F697F7F-5ABD-4494-8537-5E211F611DF7} = {E2D9AE26-4F0F-4D09-BFD2-434DE9BDF433}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {66C0CAE3-D093-4276-BCAC-BC3749408CE9}
 	EndGlobalSection
 EndGlobal

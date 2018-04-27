@@ -1623,19 +1623,19 @@ namespace Wmhelp.XPath2
 
         public static DateTimeValue GetCurrentDateTime(XPath2Context context)
         {
-            return new DateTimeValue(false, new DateTimeOffset(context.RunningContext.now));
+            return new DateTimeValue(false, new DateTimeOffset(context.RunningContext.Now));
         }
 
         public static DateValue GetCurrentDate(XPath2Context context)
         {
-            DateValue res = new DateValue(false, context.RunningContext.now.Date);
+            DateValue res = new DateValue(false, context.RunningContext.Now.Date);
             res.IsLocal = false;
             return res;
         }
 
         public static TimeValue GetCurrentTime(XPath2Context context)
         {
-            return new TimeValue(new DateTimeOffset(context.RunningContext.now));
+            return new TimeValue(new DateTimeOffset(context.RunningContext.Now));
         }
 
         public static void ScanLocalNamespaces(XmlNamespaceManager nsmgr, XPathNavigator node, bool recursive)
@@ -1829,7 +1829,7 @@ namespace Wmhelp.XPath2
 
         public static DayTimeDurationValue ImplicitTimezone(XPath2Context context)
         {
-            return new DayTimeDurationValue(new DateTimeOffset(context.RunningContext.now).Offset);
+            return new DayTimeDurationValue(new DateTimeOffset(context.RunningContext.Now).Offset);
         }
 
         public static bool NodeLang(IContextProvider provider, object testLang)
