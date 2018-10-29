@@ -1,4 +1,4 @@
-# next (29 October 2018)
+# 1.0.6.1 (29 October 2018)
 - [#16](https://github.com/StefH/XPath2.Net/pull/16) - ns:number function does not operate on a node #15 contributed by [wjgerritsen-0001](https://github.com/wjgerritsen-0001)
 - [#18](https://github.com/StefH/XPath2.Net/pull/18) - Set up CI with Azure Pipelines contributed by [azure-pipelines[bot]](https://github.com/apps/azure-pipelines)
 - [#15](https://github.com/StefH/XPath2.Net/issues/15) - ns:number function does not operate on a node
