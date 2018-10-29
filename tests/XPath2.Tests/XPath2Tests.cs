@@ -105,5 +105,21 @@ namespace XPath2.Tests
 
             Assert.Equal("", result);
         }
+
+        [Fact]
+        public void XPath2_number()
+        {
+            var xml = new XmlDocument
+            {
+                InnerXml = @"
+                    <root num=' 123 '>
+                        <numeric>456.78
+                        </numeric>
+                    </root>"
+            };
+
+            Assert.Equal(123.0, xml.XPath2Evaluate("number(/root/@num)"));
+            Assert.Equal(456.78, xml.XPath2Evaluate("number(/root/numeric)"));
+        }
     }
 }

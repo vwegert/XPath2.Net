@@ -1394,8 +1394,31 @@ namespace Wmhelp.XPath2
 
         public static double Number(XPath2Context context, object value)
         {
-            if (value == Undefined.Value || !(value is IConvertible))
+            if (value == Undefined.Value)
+            {
                 return double.NaN;
+            }
+
+            if (value is IXmlConvertable xmlConvertableValue)
+            {
+                try
+                {
+                    return (double) xmlConvertableValue.ValueAs(SequenceType.Double, context.NamespaceManager);
+                } 
+                catch (InvalidCastException e)
+                {
+                    return double.NaN;
+                }
+            }
+            if (!(value is IConvertible))
+            {
+                var stringValue = StringValue(context, value);
+                if (string.IsNullOrWhiteSpace(stringValue))
+                {
+                    return double.NaN;
+                }
+                value = stringValue.Trim();
+            }
 
             try
             {
@@ -1410,7 +1433,6 @@ namespace Wmhelp.XPath2
                 return double.NaN;
             }
         }
-
         public static object CastToNumber1(XPath2Context context, object value)
         {
             try
