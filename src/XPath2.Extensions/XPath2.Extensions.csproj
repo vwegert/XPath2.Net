@@ -9,7 +9,7 @@
     <AssemblyName>XPath2.Extensions</AssemblyName>
     <PackageId>XPath2.Extensions</PackageId>
     <PackageTags>XPath;XPath2;XPath2.0;Xml;W3C;XQuery;XQTS;Extensions</PackageTags>
-    <PackageReleaseNotes>Sign Assembly</PackageReleaseNotes>
+    <PackageReleaseNotes>See ReleaseNotes.md</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/resources/XPath2ex-icon-64x64.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/StefH/XPath2.Net</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/StefH/XPath2.Net/master/license</PackageLicenseUrl>

@@ -1,6 +1,6 @@
 # XPath2.Net : Lightweight XPath2 for .NET
 
-[![Build Status](https://stef.visualstudio.com/XPath2.Net/_apis/build/status/StefH.XPath2.Net)](https://stef.visualstudio.com/XPath2.Net/_build/latest?definitionId=14)
+[![Build Status](https://stef.visualstudio.com/XPath2.Net/_apis/build/status/XPath2.Net)](https://stef.visualstudio.com/XPath2.Net/_build/latest?definitionId=14)
 [![Coverage Status](https://coveralls.io/repos/github/StefH/XPath2.Net/badge.svg)](https://coveralls.io/github/StefH/XPath2.Net)
 
 | Project | NuGet |
