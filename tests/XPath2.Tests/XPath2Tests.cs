@@ -121,5 +121,24 @@ namespace XPath2.Tests
             Assert.Equal(123.0, xml.XPath2Evaluate("number(/root/@num)"));
             Assert.Equal(456.78, xml.XPath2Evaluate("number(/root/numeric)"));
         }
+
+        [Fact]
+        public void XPath2_Arithmetic_With_DecimalConversion()
+        {
+            var xml1 = new XmlDocument { InnerXml = "<total taxableAmount=\"1.23\" taxAmount=\"7.89\" netAmountIncTax=\"9.12\" />" };
+            var xml2 = new XmlDocument { InnerXml = "<total taxableAmount=\"1441.64\" taxAmount=\"273.91\" netAmountIncTax=\"1715.55\" />" };
+
+            var add1 = xml1.XPath2Evaluate("/total/@taxableAmount + /total/@taxAmount");
+            var equal1 = xml1.XPath2Evaluate("/total/@taxableAmount + /total/@taxAmount = /total/@netAmountIncTax");
+
+            var add2 = xml2.XPath2Evaluate("xs:decimal(/total/@taxableAmount + /total/@taxAmount)");
+            var equal2 = xml2.XPath2Evaluate("xs:decimal(/total/@taxableAmount + /total/@taxAmount) = xs:decimal(/total/@netAmountIncTax)");
+
+            Assert.Equal(9.12, add1);
+            Assert.Equal(true, equal1);
+
+            Assert.Equal((decimal)1715.55, add2);
+            Assert.Equal(true, equal2);
+        }
     }
 }
