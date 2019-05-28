@@ -1,3 +1,7 @@
+# 1.0.8.0 (28 May 2019)
+- [#24](https://github.com/StefH/XPath2.Net/pull/24) - Add function &quot;string()&quot; [bug] contributed by [StefH](https://github.com/StefH)
+- [#23](https://github.com/StefH/XPath2.Net/issues/23) - Calling string() in step fails with Wmhelp.XPath2.XPath2Exception: The function 'string'/0 was not found [bug]
+
 # 1.0.7.0 (23 May 2019)
 - [#22](https://github.com/StefH/XPath2.Net/pull/22) - Using a variable in XPath2Select on an XPathNavigator should work [bug] contributed by [StefH](https://github.com/StefH)
 - [#20](https://github.com/StefH/XPath2.Net/issues/20) - Should using  a variable in XPath2Select on an XPathNavigator work?
