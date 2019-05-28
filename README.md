@@ -1,9 +1,11 @@
 # XPath2.Net : Lightweight XPath2 for .NET
 
+This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET Framework based on standard XPathNavigator API.
+The given implementation based on practice of developing XQuery is fully corresponding to the specification demands.
 
+Project is forked from https://xpath2.codeplex.com/
 
-
-
+## Build
 | | |
 | --- | --- |
 | ***Quality*** | &nbsp; |
@@ -19,21 +21,17 @@
 | &nbsp;&nbsp;**XPath2** | [![NuGet Badge](https://buildstats.info/nuget/XPath2)](https://www.nuget.org/packages/XPath2) |
 | &nbsp;&nbsp;**XPath2.Extensions** | [![NuGet Badge](https://buildstats.info/nuget/XPath2.Extensions)](https://www.nuget.org/packages/XPath2.Extensions) |
 
-Project is forked from https://xpath2.codeplex.com/
-
-## Supported frameworks: ##
+## Supported frameworks
 - .NET 3.5
 - .NET 4.0 and up
 - .NET Standard 2.0
 
-This is an implementation of W3C XML Path Language (XPath) 2.0 for .NET Framework based on standard XPathNavigator API.
-The given implementation based on practice of developing XQuery is fully corresponding to the specification demands. This is single assembly 302K size.
+
+## Info
 
 It conforms for 12952 from 15133 (85.59%) regarding the test-set (XQTS 1.0.2 Nov. 20, 2006) at https://dev.w3.org/2006/xquery-test-suite/PublicPagesStagingArea/
 
-API used is an anology to the standard one built into the platform: you utilize
-XPath2Expression instead of the common XPathExpression and a set of extension
-functions for XNode, XPathNavigator and XmlNode classes.
+API used is an anology to the standard one built into the platform: you utilize XPath2Expression instead of the common XPathExpression and a set of extension functions for XNode, XPathNavigator and XmlNode classes.
 
 | System.Xml.XPath 	          | WmHelp.XPath2
 | ----------------------------|------------------------------
@@ -44,16 +42,11 @@ functions for XNode, XPathNavigator and XmlNode classes.
 | ..., etc.                   | ..., etc.
 
 
-In addition there parameterized XPath2 expressions are
-implemented that allow to compose XQuery requests by standard Linq-to-XML means.
-Though it is not generally necessary to use XPath during writing Linq-to-XML queries
-nevertheless they allow to make it simple.
-To pass variable values into XPath expression we use C# 4.0 anonimous
-structures, e.g. new { varname = value, ... }
-creates variable $varname,... inside XPath expression.
+In addition there parameterized XPath2 expressions are implemented that allow to compose XQuery requests by standard Linq-to-XML means.
+Though it is not generally necessary to use XPath during writing Linq-to-XML queries nevertheless they allow to make it simple.
+To pass variable values into XPath expression we use C# 4.0 anonimous structures, e.g. new { varname = value, ... } creates variable $varname,... inside XPath expression.
 
-Here're examples of some W3C XQuery usecases and their translations
-into C# and LINQ.
+Here are examples of some W3C XQuery usecases and their translations into C# and LINQ.
 
 **XQuery (RQ2.xq)**
 ```xml
@@ -72,6 +65,7 @@ into C# and LINQ.
   }
 </result> 
 ```
+
 **C#**
 ```c#
 XNode items = XDocument.Load("items.xml");
@@ -110,6 +104,7 @@ XNode result = new XDocument(
   }
 </result>
 ```
+
 **C#**
 ```c#
 XNode users = XDocument.Load("users.xml");
@@ -147,6 +142,7 @@ XNode result =
   }
 </result>
 ```
+
 **C#**
 ```c#
 XNode items = XDocument.Load("items.xml");
