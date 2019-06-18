@@ -1,3 +1,7 @@
+# 1.0.9.0 (18 June 2019)
+- [#26](https://github.com/StefH/XPath2.Net/pull/26) - Fix Round() [bug] contributed by [StefH](https://github.com/StefH)
+- [#25](https://github.com/StefH/XPath2.Net/issues/25) - round(2.5) evaluates to 2 [bug]
+
 # 1.0.8.0 (28 May 2019)
 - [#24](https://github.com/StefH/XPath2.Net/pull/24) - Add function &quot;string()&quot; [bug] contributed by [StefH](https://github.com/StefH)
 - [#23](https://github.com/StefH/XPath2.Net/issues/23) - Calling string() in step fails with Wmhelp.XPath2.XPath2Exception: The function 'string'/0 was not found [bug]
