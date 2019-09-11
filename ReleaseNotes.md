@@ -1,3 +1,7 @@
+# 1.0.10.0 (11 September 2019)
+- [#28](https://github.com/StefH/XPath2.Net/pull/28) - Fix &quot;MoveToNext&quot; (throws Null Exception on .NET Standard / Core) [bug] contributed by [StefH](https://github.com/StefH)
+- [#27](https://github.com/StefH/XPath2.Net/issues/27) - Selecting multiple results throws null exception on .NET Core [bug]
+
 # 1.0.9.0 (18 June 2019)
 - [#26](https://github.com/StefH/XPath2.Net/pull/26) - Fix Round() [bug] contributed by [StefH](https://github.com/StefH)
 - [#25](https://github.com/StefH/XPath2.Net/issues/25) - round(2.5) evaluates to 2 [bug]
