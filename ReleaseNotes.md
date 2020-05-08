@@ -1,3 +1,7 @@
+# 1.0.11.0 (08 May 2020)
+- [#30](https://github.com/StefH/XPath2.Net/pull/30) - Fix NuGet for net40 and add source-link [bug] contributed by [StefH](https://github.com/StefH)
+- [#29](https://github.com/StefH/XPath2.Net/issues/29) - Wrong version of XPath.dll is packaged in the 1.0.10 nupkg for net40 [bug]
+
 # 1.0.10.0 (11 September 2019)
 - [#28](https://github.com/StefH/XPath2.Net/pull/28) - Fix &quot;MoveToNext&quot; (throws Null Exception on .NET Standard / Core) [bug] contributed by [StefH](https://github.com/StefH)
 - [#27](https://github.com/StefH/XPath2.Net/issues/27) - Selecting multiple results throws null exception on .NET Core [bug]
@@ -7,13 +11,11 @@
 - [#25](https://github.com/StefH/XPath2.Net/issues/25) - round(2.5) evaluates to 2 [bug]
 
 # 1.0.8.0 (28 May 2019)
-- [#24](https://github.com/StefH/XPath2.Net/pull/24) - Add function &quot;string()&quot; [bug] contributed by [StefH](https://github.com/StefH)
-- [#23](https://github.com/StefH/XPath2.Net/issues/23) - Calling string() in step fails with Wmhelp.XPath2.XPath2Exception: The function 'string'/0 was not found [bug]
-
-# 1.0.7.0 (23 May 2019)
 - [#22](https://github.com/StefH/XPath2.Net/pull/22) - Using a variable in XPath2Select on an XPathNavigator should work [bug] contributed by [StefH](https://github.com/StefH)
+- [#24](https://github.com/StefH/XPath2.Net/pull/24) - Add function &quot;string()&quot; [bug] contributed by [StefH](https://github.com/StefH)
 - [#20](https://github.com/StefH/XPath2.Net/issues/20) - Should using  a variable in XPath2Select on an XPathNavigator work?
 - [#21](https://github.com/StefH/XPath2.Net/issues/21) - Arithmetic error [question]
+- [#23](https://github.com/StefH/XPath2.Net/issues/23) - Calling string() in step fails with Wmhelp.XPath2.XPath2Exception: The function 'string'/0 was not found [bug]
 
 # 1.0.6.1 (29 October 2018)
 - [#16](https://github.com/StefH/XPath2.Net/pull/16) - ns:number function does not operate on a node #15 contributed by [wjgerritsen-0001](https://github.com/wjgerritsen-0001)
