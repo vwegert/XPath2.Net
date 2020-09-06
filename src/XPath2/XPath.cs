@@ -71,14 +71,25 @@ namespace Wmhelp.XPath2
       @param message text to be displayed.
       @param expected vector of acceptable tokens, if available.
     */
-  public void yyerror (string message, string[] expected) {
-    if ((errorText != null) && (expected != null) && (expected.Length  > 0)) {
-      errorText.Write (message+", expecting");
-      for (int n = 0; n < expected.Length; ++ n)
-        errorText.Write (" "+expected[n]);
-        errorText.WriteLine ();
-    } else
-      errorText.WriteLine (message);
+  public void yyerror (string message, string[] expected)
+  {
+    if (errorText == null)
+    {
+      return;
+    }
+    
+    if (expected?.Length > 0)
+    {
+      errorText.Write(message + ", expecting");
+      for (int n = 0; n < expected.Length; ++n)
+      {
+        errorText.WriteLine(" " + expected[n]);
+      }
+    }
+    else
+    {
+      errorText.WriteLine(message);
+    }
   }
 
   /** debugging support, requires the package jay.yydebug.
