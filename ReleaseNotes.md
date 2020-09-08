@@ -1,3 +1,8 @@
+# 1.1.0.0 (08 September 2020)
+- [#36](https://github.com/StefH/XPath2.Net/pull/36) - Rewrite yyerror method to fix SonarQube issue [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#37](https://github.com/StefH/XPath2.Net/pull/37) - Make ast public [enhancement] contributed by [binarycow](https://github.com/binarycow)
+- [#35](https://github.com/StefH/XPath2.Net/issues/35) - Expose the AST? [enhancement]
+
 # 1.0.12.0 (04 August 2020)
 - [#34](https://github.com/StefH/XPath2.Net/pull/34) - Fixed 'XPath2Expression.Compile throws exception in Mono' [bug] contributed by [StefH](https://github.com/StefH)
 - [#33](https://github.com/StefH/XPath2.Net/issues/33) - XPath2Expression.Compile throws exception in Mono [bug]
