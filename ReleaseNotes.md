@@ -1,3 +1,8 @@
+# 1.1.1 (18 June 2021)
+- [#42](https://github.com/StefH/XPath2.Net/pull/42) - Default element namespace fix contributed by [martin-honnen](https://github.com/martin-honnen)
+- [#43](https://github.com/StefH/XPath2.Net/pull/43) - Fix CI build [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#31](https://github.com/StefH/XPath2.Net/issues/31) - Default namespace not handled in XPath query [enhancement]
+
 # 1.1.0.0 (08 September 2020)
 - [#36](https://github.com/StefH/XPath2.Net/pull/36) - Rewrite yyerror method to fix SonarQube issue [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#37](https://github.com/StefH/XPath2.Net/pull/37) - Make ast public [enhancement] contributed by [binarycow](https://github.com/binarycow)
