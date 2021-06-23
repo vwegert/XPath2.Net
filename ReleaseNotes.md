@@ -1,3 +1,7 @@
+# 1.1.2 (23 June 2021)
+- [#45](https://github.com/StefH/XPath2.Net/pull/45) - XPath2Evaluate - ToString [bug] contributed by [StefH](https://github.com/StefH)
+- [#13](https://github.com/StefH/XPath2.Net/issues/13) - Using XPath2Evaluate() without a function in command there's always a comma at the end of the value [bug]
+
 # 1.1.1 (18 June 2021)
 - [#42](https://github.com/StefH/XPath2.Net/pull/42) - Default element namespace fix contributed by [martin-honnen](https://github.com/martin-honnen)
 - [#43](https://github.com/StefH/XPath2.Net/pull/43) - Fix CI build [enhancement] contributed by [StefH](https://github.com/StefH)
