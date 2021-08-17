@@ -10,6 +10,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.XPath;
 using Wmhelp.XPath2;
+using XPath2.TestRunner.Utils;
 
 namespace XPath2.TestRunner
 {
@@ -23,6 +24,7 @@ namespace XPath2.TestRunner
         private string _queryFileExtension;
 
         private readonly TextWriter _out;
+        private readonly TextWriter _passedWriter;
         private readonly TextWriter _errorWriter;
 
         private readonly NameTable _nameTable = new NameTable();
@@ -60,13 +62,14 @@ namespace XPath2.TestRunner
             "followingsibling-21", "preceding-21", "preceding-sibling-21"
         };
 
-        public XQTSRunner(TextWriter writer, TextWriter errorWriter = null)
+        public XQTSRunner(TextWriter writer, TextWriter passedWriter = null, TextWriter errorWriter = null)
         {
             _out = writer;
+            _passedWriter = passedWriter;
             _errorWriter = errorWriter;
         }
 
-        public TestRunResult RunParallel(string fileName)
+        public TestRunResult Run(string fileName, RunType run)
         {
             _nsmgr = new XmlNamespaceManager(_nameTable);
             _nsmgr.AddNamespace("ts", XQTSNamespace);
@@ -170,15 +173,17 @@ namespace XPath2.TestRunner
                 _module.Add(id, moduleFileName);
             }
 
-
             var rootNode = new TreeNode("Test-suite");
             ReadTestTree(_catalog.DocumentElement, rootNode);
             _out.Write(rootNode);
 
             SelectAll();
-            // SelectSupported();            
+            // SelectSupported();
 
-            return RunParallel();
+            using (new FakeLocalTimeZone(TimeZoneInfo.Utc))
+            {
+                return run == RunType.Parallel ? RunParallel() : RunSequential();
+            }
         }
 
         private void ReadTestTree(XmlNode node, TreeNode parentNode)
@@ -207,20 +212,56 @@ namespace XPath2.TestRunner
                     var tw = new StringWriter();
                     if (PerformTest(tw, item))
                     {
-                        // tw.WriteLine("Passed.");
+                        if (_passedWriter != null)
+                        {
+                            _passedWriter.WriteLine("Test '{0}{1}.xqx' passed", item.FilePath, item.Name);
+                        }
                         Interlocked.Increment(ref _passed);
                     }
                     else
                     {
                         tw.WriteLine("Failed.");
-                        // _out.Write(tw.ToString());
                     }
                     Interlocked.Increment(ref _total);
                 }
             });
             sw.Stop();
             _out.WriteLine("Elapsed {0}", sw.Elapsed);
+            return TestRunResult();
+        }
 
+        private TestRunResult RunSequential()
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            foreach (var item in _testItems)
+            {
+                if (item.Selected)
+                {
+                    var tw = new StringWriter();
+                    if (PerformTest(tw, item))
+                    {
+                        if (_passedWriter != null)
+                        {
+                            _passedWriter.WriteLine("Test '{0}{1}.xqx' passed", item.FilePath, item.Name);
+                        }
+                        Interlocked.Increment(ref _passed);
+                    }
+                    else
+                    {
+                        tw.WriteLine("Failed.");
+                    }
+                    Interlocked.Increment(ref _total);
+                }
+            };
+            sw.Stop();
+            _out.WriteLine("Elapsed {0}", sw.Elapsed);
+
+            return TestRunResult();
+        }
+
+        private TestRunResult TestRunResult()
+        {
             decimal total = _total;
             decimal passed = _passed;
             decimal percentage = Math.Round(passed / total * 100, 2);
