@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Net;
-using System.Xml;
-using System.Xml.Schema;
+using System;
+using XPath2.TestRunner;
 
 namespace XQTSRunConsole
 {
     class Program
     {
-        
-
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-        }
+            var runner = new XQTSRunner(Console.Out);
 
-        
+            var result = runner.Run(args[0]);
+            Console.WriteLine("{0} / {1} = {2}%", result.Passed, result.Total, result.Percentage);
+        }
     }
 }
