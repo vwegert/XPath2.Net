@@ -1,6 +1,6 @@
+using FluentAssertions;
 using System.Xml;
 using System.Xml.XPath;
-using FluentAssertions;
 using Wmhelp.XPath2;
 using Xunit;
 
@@ -184,6 +184,52 @@ namespace XPath2.Tests
 
             Assert.Equal((decimal)1715.55, add2);
             Assert.Equal(true, equal2);
+        }
+
+        [Fact]
+        public void TestDocumentNodeElementSelection()
+        {
+            var doc = GetTodoListDoc();
+
+            var result1 = doc.XPath2SelectNodes("self::document-node(element(todo-list))");
+            var result2 = doc.XPath2SelectNodes("self::document-node()");
+
+            Assert.Equal(result2.Count, result1.Count);
+        }
+
+        [Fact]
+        public void TestDescendantOrSelfDocumentNodeElementSelection()
+        {
+            var doc = GetTodoListDoc();
+
+            var result1 = doc.XPath2SelectNodes("descendant-or-self::document-node(element(todo-list))");
+            var result2 = doc.XPath2SelectNodes("descendant-or-self::document-node()");
+
+            Assert.Equal(result2.Count, result1.Count);
+        }
+
+        [Fact]
+        public void TestNoDocumentNodeOnChildAxis()
+        {
+            var doc = GetTodoListDoc();
+
+            var result1 = doc.XPath2SelectNodes("/document-node(element(todo-list))");
+            var result2 = doc.XPath2SelectNodes("/document-node()");
+
+            Assert.Equal(result2.Count, result1.Count);
+        }
+
+        [Fact]
+        public void TestDocumentNodeOnAncestorAxis()
+        {
+            var doc = GetTodoListDoc();
+
+            var item1 = doc.XPath2SelectSingleNode("todo-list/todo-item");
+
+            var result1 = item1.XPath2SelectNodes("ancestor::document-node(element(todo-list))");
+            var result2 = item1.XPath2SelectNodes("ancestor::document-node()");
+
+            Assert.Equal(result2.Count, result1.Count);
         }
 
         [Fact]
