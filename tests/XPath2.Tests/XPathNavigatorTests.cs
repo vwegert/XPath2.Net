@@ -4,8 +4,11 @@ using System.Xml.XPath;
 using Wmhelp.XPath2;
 using Xunit;
 
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
+
 namespace XPath2.Tests
 {
+    [Collection("Sequential")]
     public class XPathNavigatorTests
     {
         private readonly XPathNavigator _navigator;

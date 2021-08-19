@@ -1,3 +1,4 @@
+#if NET5_0_OR_GREATER
 using System;
 using System.Xml;
 using FluentAssertions;
@@ -7,6 +8,7 @@ using Xunit;
 
 namespace XPath2.Tests
 {
+    [Collection("Sequential")]
     public class XQTSTests
     {
         /// <summary>
@@ -25,3 +27,4 @@ namespace XPath2.Tests
         }
     }
 }
+#endif
