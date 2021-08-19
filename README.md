@@ -15,8 +15,7 @@ Project is copied and forked from https://xpath2.codeplex.com/. Original credits
 | &nbsp;&nbsp;**Sonar Bugs** | [![Sonar Bugs](https://sonarcloud.io/api/project_badges/measure?project=StefH_XPath2.Net&metric=bugs)](https://sonarcloud.io/project/issues?id=StefH_XPath2.Net&resolved=false&types=BUG) |
 | &nbsp;&nbsp;**Sonar Code Smells** | [![Sonar Code Smells](https://sonarcloud.io/api/project_badges/measure?project=StefH_XPath2.Net&metric=code_smells)](https://sonarcloud.io/project/issues?id=StefH_XPath2.Net&resolved=false&types=CODE_SMELL) |
 | &nbsp;&nbsp;**Sonar Coverage** | [![Sonar Coverage](https://sonarcloud.io/api/project_badges/measure?project=StefH_XPath2.Net&metric=coverage)](https://sonarcloud.io/component_measures?id=StefH_XPath2.Net&metric=coverage) |
-| &nbsp;&nbsp;**Codecov** | [![codecov](https://codecov.io/gh/StefH/XPath2.Net/branch/master/graph/badge.svg)](https://codecov.io/gh/StefH/XPath2.Net) |
-| |
+| | |
 | ***NuGet*** | &nbsp; |
 | &nbsp;&nbsp;**XPath2** | [![NuGet Badge](https://buildstats.info/nuget/XPath2)](https://www.nuget.org/packages/XPath2) |
 | &nbsp;&nbsp;**XPath2.Extensions** | [![NuGet Badge](https://buildstats.info/nuget/XPath2.Extensions)](https://www.nuget.org/packages/XPath2.Extensions) |
