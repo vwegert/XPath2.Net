@@ -1,3 +1,16 @@
+# 1.1.3 (25 April 2022)
+- [#49](https://github.com/StefH/XPath2.Net/pull/49) - Fixed rules in XPath.y for DocumentTest and added test cases that sho&#8230; contributed by [martin-honnen](https://github.com/martin-honnen)
+- [#50](https://github.com/StefH/XPath2.Net/pull/50) - Add XPath2.TestRunner Project + ConsoleApp [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#51](https://github.com/StefH/XPath2.Net/pull/51) - Add AttributeSelection tests [tests] contributed by [StefH](https://github.com/StefH)
+- [#52](https://github.com/StefH/XPath2.Net/pull/52) - Fix TestRunner contributed by [StefH](https://github.com/StefH)
+- [#53](https://github.com/StefH/XPath2.Net/pull/53) - Update TestRunner (fix for implicit-timezone) contributed by [StefH](https://github.com/StefH)
+- [#54](https://github.com/StefH/XPath2.Net/pull/54) - Runner + unittests [tests] contributed by [StefH](https://github.com/StefH)
+- [#55](https://github.com/StefH/XPath2.Net/pull/55) - Fix some SonarCloud issues [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#56](https://github.com/StefH/XPath2.Net/pull/56) - [Snyk] Security upgrade Newtonsoft.Json from 11.0.2 to 13.0.1 contributed by [StefH](https://github.com/StefH)
+- [#57](https://github.com/StefH/XPath2.Net/pull/57) - Update NuGet packages [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#47](https://github.com/StefH/XPath2.Net/issues/47) - Attribute node selection with &quot;kind test&quot; attribute() or attribute(foo) doesn't work
+- [#48](https://github.com/StefH/XPath2.Net/issues/48) - Node test of the form document-node(element(foo)) seems broken [bug]
+
 # 1.1.2 (23 June 2021)
 - [#45](https://github.com/StefH/XPath2.Net/pull/45) - XPath2Evaluate - ToString [bug] contributed by [StefH](https://github.com/StefH)
 - [#13](https://github.com/StefH/XPath2.Net/issues/13) - Using XPath2Evaluate() without a function in command there's always a comma at the end of the value [bug]
