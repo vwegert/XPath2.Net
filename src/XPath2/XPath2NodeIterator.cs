@@ -1,4 +1,4 @@
-﻿// Microsoft Public License (Ms-PL)
+// Microsoft Public License (Ms-PL)
 // See the file License.rtf or License.txt for the license details.
 
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
@@ -62,7 +62,7 @@ namespace Wmhelp.XPath2
         , ICloneable
 #endif
     {
-        internal int count = -1;
+        private int count = -1;
         private XPathItem curr;
         private int pos;
         private bool iteratorStarted;
