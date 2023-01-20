@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -386,7 +385,7 @@ public class XPathNavigatorTests
 
         // Assert 2
         brandCount.Should().Be(5);
-        
+
         // Act 3
         var highVolumeBrandSet = navigator.XPath2SelectNodes("/report/brand[units > 20000]");
 
