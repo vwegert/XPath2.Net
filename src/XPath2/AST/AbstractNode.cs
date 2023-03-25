@@ -1,4 +1,4 @@
-﻿// Microsoft Public License (Ms-PL)
+// Microsoft Public License (Ms-PL)
 // See the file License.rtf or License.txt for the license details.
 
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
@@ -119,6 +119,17 @@ namespace Wmhelp.XPath2.AST
         }
 
         public abstract object Execute(IContextProvider provider, object[] dataPool);
+
+        /// <summary>
+        /// Recreates the textual representation of the AST node expression. This method is intended to be used
+        /// after individual elements of the AST have been manipulated.
+        /// </summary>
+        /// <returns></returns>
+        public virtual string Render()
+        {
+            // TODO make abstract
+            return string.Empty;
+        }
 
         public virtual XPath2ResultType GetReturnType(object[] dataPool)
         {

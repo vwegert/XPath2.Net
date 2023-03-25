@@ -1,4 +1,4 @@
-﻿// Microsoft Public License (Ms-PL)
+// Microsoft Public License (Ms-PL)
 // See the file License.rtf or License.txt for the license details.
 
 // Copyright (c) 2011-2014, Semyon A. Chertkov (semyonc@gmail.com)
@@ -17,7 +17,7 @@ namespace Wmhelp.XPath2
 {
     public class XPath2Expression
     {
-        private readonly string expr;
+        private string expr;
         private readonly XPath2Context context;
         private XPath2ResultType? resultType;
         /// <summary>
@@ -230,6 +230,18 @@ namespace Wmhelp.XPath2
             if (!resultType.HasValue)
                 resultType = ExpressionTree.GetReturnType(BindExpr(vars));
             return resultType.Value;
+        }
+
+        /// <summary>
+        /// Recreates the textual representation of the XPath expression. This method is intended to be used
+        /// after individual elements of the AST have been manipulated.
+        /// </summary>
+        /// <returns></returns>
+        public string Render()
+        {
+            expr = ExpressionTree.Render();
+            return expr;
+
         }
     }
 }
