@@ -1,4 +1,4 @@
-﻿// Microsoft Public License (Ms-PL)
+// Microsoft Public License (Ms-PL)
 // See the file License.rtf or License.txt for the license details.
 
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
@@ -9,12 +9,13 @@ using System;
 namespace Wmhelp.XPath2.AST
 {
     /// <summary>
+    /// Apparently this AST node type is not used by the parser.
     /// This class is used by XPath.Net internally. It isn't intended for use in application code.
     /// </summary>
     public class ArithmeticUnaryOperatorNode : AtomizedUnaryOperatorNode
     {
-        public ArithmeticUnaryOperatorNode(XPath2Context context, UnaryOperator action, object node)
-            : base(context, action, node, XPath2ResultType.Number)
+        public ArithmeticUnaryOperatorNode(XPath2Context context, UnaryOperatorType operatorType, object node)
+            : base(context, operatorType, node, XPath2ResultType.Number)
         {
         }
 

@@ -1,4 +1,4 @@
-﻿// Microsoft Public License (Ms-PL)
+// Microsoft Public License (Ms-PL)
 // See the file License.rtf or License.txt for the license details.
 
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
@@ -7,13 +7,14 @@
 namespace Wmhelp.XPath2.AST
 {
     /// <summary>
+    /// An AST node that represents a unary operator and its operand. This can be a positive or negative value prefix.
     /// This class is used by XPath.Net internally. It isn't intended for use in application code.
     /// </summary>
     public class AtomizedUnaryOperatorNode : UnaryOperatorNode
     {
-        public AtomizedUnaryOperatorNode(XPath2Context context, UnaryOperator action, object node,
+        public AtomizedUnaryOperatorNode(XPath2Context context, UnaryOperatorType operatorType, object node,
             XPath2ResultType resultType)
-            : base(context, action, node, resultType)
+            : base(context, operatorType, node, resultType)
         {
         }
 

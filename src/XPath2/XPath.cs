@@ -531,7 +531,7 @@ case 12:
   {
      ForNode node = (ForNode)yyVals[-2+yyTop];
      node.AddTail(yyVals[0+yyTop]);
-     yyVal = new UnaryOperatorNode(context, (provider, arg) => CoreFuncs.Some(arg), node, XPath2ResultType.Boolean);
+     yyVal = new UnaryOperatorNode(context, UnaryOperatorType.SOME, node, XPath2ResultType.Boolean);
   }
   break;
 case 13:
@@ -539,7 +539,7 @@ case 13:
   {
      ForNode node = (ForNode)yyVals[-2+yyTop];
      node.AddTail(yyVals[0+yyTop]);
-     yyVal = new UnaryOperatorNode(context, (provider, arg) => CoreFuncs.Every(arg), node, XPath2ResultType.Boolean);
+     yyVal = new UnaryOperatorNode(context, UnaryOperatorType.EVERY, node, XPath2ResultType.Boolean);
   }
   break;
 case 15:
@@ -764,16 +764,14 @@ case 58:
 #line 417 "Xpath.y"
   {
      SequenceType destType = (SequenceType)yyVals[0+yyTop];
-     yyVal = new UnaryOperatorNode(context, 
-        (provider, arg) => CoreFuncs.InstanceOf(context, arg, destType), yyVals[-2+yyTop], XPath2ResultType.Boolean);
+     yyVal = new UnaryOperatorNode(context, UnaryOperatorType.INSTANCE_OF, destType, yyVals[-2+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 60:
 #line 427 "Xpath.y"
   {
      SequenceType destType = (SequenceType)yyVals[0+yyTop];
-     yyVal = new UnaryOperatorNode(context, 
-        (provider, arg) => CoreFuncs.TreatAs(context, arg, destType), yyVals[-2+yyTop], CoreFuncs.GetXPath2ResultType(destType));
+     yyVal = new UnaryOperatorNode(context, UnaryOperatorType.TREAT_AS, destType, yyVals[-2+yyTop], CoreFuncs.GetXPath2ResultType(destType));
   }
   break;
 case 62:
@@ -794,7 +792,7 @@ case 62:
          throw new XPath2Exception("XPST0080", Properties.Resources.XPST0080, destType);
      if (destType.Cardinality == XmlTypeCardinality.ZeroOrMore || destType.Cardinality == XmlTypeCardinality.OneOrMore)
          throw new XPath2Exception("XPST0080",Properties.Resources.XPST0080, destType);
-     yyVal = new UnaryOperatorNode(context, (provider, arg) => CoreFuncs.Castable(context, arg, destType, isString), yyVals[-2+yyTop], XPath2ResultType.Boolean);
+     yyVal = new UnaryOperatorNode(context, UnaryOperatorType.CASTABLE, destType, isString, yyVals[-2+yyTop], XPath2ResultType.Boolean);
   }
   break;
 case 64:
@@ -815,8 +813,7 @@ case 64:
          throw new XPath2Exception("XPST0080", Properties.Resources.XPST0080, destType);
      if (destType.Cardinality == XmlTypeCardinality.ZeroOrMore || destType.Cardinality == XmlTypeCardinality.OneOrMore)
          throw new XPath2Exception("XPST0080", Properties.Resources.XPST0080, destType);
-     yyVal = new UnaryOperatorNode(context, (provider, arg) => 
-        CoreFuncs.CastTo(context, arg, destType, isString), yyVals[-2+yyTop], CoreFuncs.GetXPath2ResultType(destType));
+     yyVal = new UnaryOperatorNode(context, UnaryOperatorType.CAST_TO, destType, isString, yyVals[-2+yyTop], CoreFuncs.GetXPath2ResultType(destType));
   }
   break;
 case 65:
@@ -825,9 +822,9 @@ case 65:
      if (yyVals[-1+yyTop] != null)
      {
        if (yyVals[-1+yyTop] == CoreFuncs.True)
-          yyVal = new AtomizedUnaryOperatorNode(context, (provider, arg) => -ValueProxy.New(arg), yyVals[0+yyTop], XPath2ResultType.Number);
+          yyVal = new AtomizedUnaryOperatorNode(context, UnaryOperatorType.MINUS, yyVals[0+yyTop], XPath2ResultType.Number);
         else
-          yyVal = new AtomizedUnaryOperatorNode(context, (provider, arg) => 0 + ValueProxy.New(arg), yyVals[0+yyTop], XPath2ResultType.Number);
+          yyVal = new AtomizedUnaryOperatorNode(context, UnaryOperatorType.PLUS, yyVals[0+yyTop], XPath2ResultType.Number);
      }
      else
         yyVal = yyVals[0+yyTop];
@@ -860,8 +857,7 @@ case 68:
 case 70:
 #line 523 "Xpath.y"
   {
-     yyVal = new UnaryOperatorNode(context, (provider, arg) => 
-        XPath2NodeIterator.Create(CoreFuncs.GetRoot(arg)), new ContextItemNode(context), XPath2ResultType.NodeSet);
+     yyVal = new UnaryOperatorNode(context, UnaryOperatorType.CREATE, new ContextItemNode(context), XPath2ResultType.NodeSet);
   }
   break;
 case 71:
@@ -1132,8 +1128,7 @@ case 128:
                throw new XPath2Exception("XPST0051", Properties.Resources.XPST0051, "untyped");
             if (seqtype.TypeCode == XmlTypeCode.Notation)
                throw new XPath2Exception("XPST0051", Properties.Resources.XPST0051, "NOTATION");
-            yyVal = new UnaryOperatorNode(context, (provider, arg) => 
-               CoreFuncs.CastToItem(context, arg, seqtype), args[0], CoreFuncs.GetXPath2ResultType(seqtype)); 
+            yyVal = new UnaryOperatorNode(context, UnaryOperatorType.CAST_TO_ITEM, seqtype, args[0], CoreFuncs.GetXPath2ResultType(seqtype)); 
           }
       else
          yyVal = new FuncNode(context, identity.Name, ns, (List<Object>)yyVals[-1+yyTop]);

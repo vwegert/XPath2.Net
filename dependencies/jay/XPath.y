@@ -191,13 +191,13 @@ QuantifiedExpr
   {
      ForNode node = (ForNode)$2;
      node.AddTail($4);
-     $$ = new UnaryOperatorNode(context, (provider, arg) => CoreFuncs.Some(arg), node, XPath2ResultType.Boolean);
+     $$ = new UnaryOperatorNode(context, UnaryOperatorType.SOME, node, XPath2ResultType.Boolean);
   }
   | EVERY QuantifiedExprBody SATISFIES ExprSingle
   {
      ForNode node = (ForNode)$2;
      node.AddTail($4);
-     $$ = new UnaryOperatorNode(context, (provider, arg) => CoreFuncs.Every(arg), node, XPath2ResultType.Boolean);
+     $$ = new UnaryOperatorNode(context, UnaryOperatorType.EVERY, node, XPath2ResultType.Boolean);
   }
   ;
 
@@ -416,8 +416,7 @@ InstanceofExpr
   | TreatExpr INSTANCE_OF SequenceType
   {
      SequenceType destType = (SequenceType)$3;
-     $$ = new UnaryOperatorNode(context, 
-        (provider, arg) => CoreFuncs.InstanceOf(context, arg, destType), $1, XPath2ResultType.Boolean);
+     $$ = new UnaryOperatorNode(context, UnaryOperatorType.INSTANCE_OF, destType, yyVals[-2+yyTop], XPath2ResultType.Boolean);
   }
   ;
 
@@ -426,8 +425,7 @@ TreatExpr
   | CastableExpr TREAT_AS SequenceType      
   {
      SequenceType destType = (SequenceType)$3;
-     $$ = new UnaryOperatorNode(context, 
-        (provider, arg) => CoreFuncs.TreatAs(context, arg, destType), $1, CoreFuncs.GetXPath2ResultType(destType));
+     $$ = new UnaryOperatorNode(context, UnaryOperatorType.TREAT_AS, destType, yyVals[-2+yyTop], CoreFuncs.GetXPath2ResultType(destType));
   }
   ;
 
@@ -450,7 +448,7 @@ CastableExpr
          throw new XPath2Exception("XPST0080", Properties.Resources.XPST0080, destType);
      if (destType.Cardinality == XmlTypeCardinality.ZeroOrMore || destType.Cardinality == XmlTypeCardinality.OneOrMore)
          throw new XPath2Exception("XPST0080",Properties.Resources.XPST0080, destType);
-     $$ = new UnaryOperatorNode(context, (provider, arg) => CoreFuncs.Castable(context, arg, destType, isString), $1, XPath2ResultType.Boolean);
+     $$ = new UnaryOperatorNode(context, UnaryOperatorType.CASTABLE, destType, isString, yyVals[-2+yyTop], XPath2ResultType.Boolean);
   }
   ;
 
@@ -473,8 +471,7 @@ CastExpr
          throw new XPath2Exception("XPST0080", Properties.Resources.XPST0080, destType);
      if (destType.Cardinality == XmlTypeCardinality.ZeroOrMore || destType.Cardinality == XmlTypeCardinality.OneOrMore)
          throw new XPath2Exception("XPST0080", Properties.Resources.XPST0080, destType);
-     $$ = new UnaryOperatorNode(context, (provider, arg) => 
-        CoreFuncs.CastTo(context, arg, destType, isString), $1, CoreFuncs.GetXPath2ResultType(destType));
+     $$ = new UnaryOperatorNode(context, UnaryOperatorType.CAST_TO, destType, isString, yyVals[-2+yyTop], CoreFuncs.GetXPath2ResultType(destType));
   }
   ;
   
@@ -484,9 +481,9 @@ UnaryExpr
      if ($1 != null)
      {
        if ($1 == CoreFuncs.True)
-          $$ = new AtomizedUnaryOperatorNode(context, (provider, arg) => -ValueProxy.New(arg), $2, XPath2ResultType.Number);
+          $$ = new AtomizedUnaryOperatorNode(context, UnaryOperatorType.MINUS, $2, XPath2ResultType.Number);
         else
-          $$ = new AtomizedUnaryOperatorNode(context, (provider, arg) => 0 + ValueProxy.New(arg), $2, XPath2ResultType.Number);
+          $$ = new AtomizedUnaryOperatorNode(context, UnaryOperatorType.PLUS, $2, XPath2ResultType.Number);
      }
      else
         $$ = $2;
@@ -521,8 +518,7 @@ ValueExpr
 PathExpr
   : '/' 
   {
-     $$ = new UnaryOperatorNode(context, (provider, arg) => 
-        XPath2NodeIterator.Create(CoreFuncs.GetRoot(arg)), new ContextItemNode(context), XPath2ResultType.NodeSet);
+     $$ = new UnaryOperatorNode(context, UnaryOperatorType.CREATE, new ContextItemNode(context), XPath2ResultType.NodeSet);
   }
   | '/' RelativePathExpr
   { 
@@ -798,8 +794,7 @@ FunctionCall
                throw new XPath2Exception("XPST0051", Properties.Resources.XPST0051, "untyped");
             if (seqtype.TypeCode == XmlTypeCode.Notation)
                throw new XPath2Exception("XPST0051", Properties.Resources.XPST0051, "NOTATION");
-            $$ = new UnaryOperatorNode(context, (provider, arg) => 
-               CoreFuncs.CastToItem(context, arg, seqtype), args[0], CoreFuncs.GetXPath2ResultType(seqtype)); 
+            $$ = new UnaryOperatorNode(context, UnaryOperatorType.CAST_TO_ITEM, seqtype, args[0], CoreFuncs.GetXPath2ResultType(seqtype)); 
           }
       else
          $$ = new FuncNode(context, identity.Name, ns, (List<Object>)$3);

@@ -26,7 +26,27 @@ namespace XPath2.Tests
         #endregion
 
         #region isolated tests for AtomizedUnaryOperatorNode
-        // TODO support AtomizedUnaryOperatorNode
+        [Fact]
+        public void AtomizedUnaryOperatorNode_AfterChangingToPlus_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("- 42");
+            Assert.IsType<AtomizedUnaryOperatorNode>(exp.ExpressionTree);
+            var node = (AtomizedUnaryOperatorNode)exp.ExpressionTree;
+            node.SetOperatorType(UnaryOperatorType.PLUS);
+            Assert.Equal("+42", node.Render());
+            Assert.Equal("+42", exp.Render());
+        }
+
+        [Fact]
+        public void AtomizedUnaryOperatorNode_AfterChangingToMinus_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("+ 42");
+            Assert.IsType<AtomizedUnaryOperatorNode>(exp.ExpressionTree);
+            var node = (AtomizedUnaryOperatorNode)exp.ExpressionTree;
+            node.SetOperatorType(UnaryOperatorType.MINUS);
+            Assert.Equal("-42", node.Render());
+            Assert.Equal("-42", exp.Render());
+        }
         #endregion
 
         #region isolated tests for BinaryOperatorNode
@@ -82,7 +102,83 @@ namespace XPath2.Tests
         #endregion
 
         #region isolated tests for UnaryOperatorNode
-        // TODO support UnaryOperatorNode
+        [Fact]
+        public void UnaryOperatorNode_AfterChangingSomeToEvery_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("some $a in (1, 2, 3) satisfies $a = 1");
+            Assert.IsType<UnaryOperatorNode>(exp.ExpressionTree);
+            var node = (UnaryOperatorNode)exp.ExpressionTree;
+            node.SetOperatorType(UnaryOperatorType.EVERY);
+            Assert.StartsWith("every", node.Render());
+            Assert.StartsWith("every", exp.Render());
+        }
+
+        [Fact]
+        public void UnaryOperatorNode_AfterChangingEveryToSome_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("every $a in (1, 2, 3) satisfies $a = 1");
+            Assert.IsType<UnaryOperatorNode>(exp.ExpressionTree);
+            var node = (UnaryOperatorNode)exp.ExpressionTree;
+            node.SetOperatorType(UnaryOperatorType.SOME);
+            Assert.StartsWith("some", node.Render());
+            Assert.StartsWith("some", exp.Render());
+        }
+
+        [Fact]
+        public void UnaryOperatorNode_AfterChangingInstanceOfToTreatAs_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("5 instance of xs:integer");
+            Assert.IsType<UnaryOperatorNode>(exp.ExpressionTree);
+            var node = (UnaryOperatorNode)exp.ExpressionTree;
+            node.SetOperatorType(UnaryOperatorType.TREAT_AS);
+            Assert.StartsWith("5 treat as", node.Render());
+            Assert.StartsWith("5 treat as", exp.Render());
+        }
+
+        [Fact]
+        public void UnaryOperatorNode_AfterChangingTreatAsToInstanceOf_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("5 treat as xs:integer");
+            Assert.IsType<UnaryOperatorNode>(exp.ExpressionTree);
+            var node = (UnaryOperatorNode)exp.ExpressionTree;
+            node.SetOperatorType(UnaryOperatorType.INSTANCE_OF);
+            Assert.StartsWith("5 instance of", node.Render());
+            Assert.StartsWith("5 instance of", exp.Render());
+        }
+
+        [Fact]
+        public void UnaryOperatorNode_AfterChangingInstanceOfToCastable_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("5 instance of xs:integer");
+            Assert.IsType<UnaryOperatorNode>(exp.ExpressionTree);
+            var node = (UnaryOperatorNode)exp.ExpressionTree;
+            node.SetOperatorType(UnaryOperatorType.CASTABLE);
+            Assert.StartsWith("5 castable as", node.Render());
+            Assert.StartsWith("5 castable as", exp.Render());
+        }
+
+        [Fact]
+        public void UnaryOperatorNode_AfterChangingInstanceOfToCastAs_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("5 instance of xs:integer");
+            Assert.IsType<UnaryOperatorNode>(exp.ExpressionTree);
+            var node = (UnaryOperatorNode)exp.ExpressionTree;
+            node.SetOperatorType(UnaryOperatorType.CAST_TO);
+            Assert.StartsWith("5 cast as", node.Render());
+            Assert.StartsWith("5 cast as", exp.Render());
+        }
+
+        [Fact]
+        public void UnaryOperatorNode_UnchangedRootPathExpr_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("/");
+            Assert.IsType<UnaryOperatorNode>(exp.ExpressionTree);
+            var node = (UnaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("/", node.Render());
+            Assert.Equal("/", exp.Render());
+        }
+
+        // TODO Test for CAST_TO_ITEM (requires FunctionNode rendering)
         #endregion
 
         #region isolated tests for ValueNode
