@@ -1,4 +1,4 @@
-﻿// Microsoft Public License (Ms-PL)
+// Microsoft Public License (Ms-PL)
 // See the file License.rtf or License.txt for the license details.
 
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
@@ -7,11 +7,12 @@
 namespace Wmhelp.XPath2.AST
 {
     /// <summary>
+    /// An AST node that represents a discrete value.
     /// This class is used by XPath.Net internally. It isn't intended for use in application code.
     /// </summary>
     public sealed class ValueNode : AbstractNode
     {
-        private readonly object _value;
+        private object _value;
 
         public object Content => _value;
 
@@ -35,5 +36,28 @@ namespace Wmhelp.XPath2.AST
         {
             return _value == Undefined.Value;
         }
+
+        /// <summary>
+        /// Changes the value represented by this AST node.
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetValue(object value)
+        {
+            _value = value;
+        }
+
+        public override string Render()
+        {
+            if (_value is string)
+            {
+                // TODO implement more sophisticated escaping / quote handling
+                return "'" + _value + "'";
+            }
+            else
+            {
+                return _value.ToString();
+            }
+        }
+
     }
 }
