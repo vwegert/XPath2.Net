@@ -86,7 +86,6 @@ namespace XPath2.Tests
         #endregion
 
         #region isolated tests for ValueNode
-
         [Fact]
         public void ValueNode_AfterChangingValueToInteger_ShouldReturnCorrectExpression()
         {
@@ -108,11 +107,30 @@ namespace XPath2.Tests
             Assert.Equal("'FooBar'", node.Render());
             Assert.Equal("'FooBar'", exp.Render());
         }
-
         #endregion
 
         #region isolated tests for VarRefNode
-        // TODO support VarRefNode
+        [Fact]
+        public void VarRefNode_AfterChangingLocalName_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("$var");
+            Assert.IsType<VarRefNode>(exp.ExpressionTree);
+            var node = (VarRefNode)exp.ExpressionTree;
+            node.SetVarName("foo");
+            Assert.Equal("$foo", node.Render());
+            Assert.Equal("$foo", exp.Render());
+        }
+
+        [Fact]
+        public void VarRefNode_AfterChangingQName_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("$var");
+            Assert.IsType<VarRefNode>(exp.ExpressionTree);
+            var node = (VarRefNode)exp.ExpressionTree;
+            node.SetVarName("foo", "xyz");
+            Assert.Equal("$xyz:foo", node.Render());
+            Assert.Equal("$xyz:foo", exp.Render());
+        }
         #endregion
 
     }
