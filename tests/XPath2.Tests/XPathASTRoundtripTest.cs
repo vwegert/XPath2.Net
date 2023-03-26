@@ -250,7 +250,45 @@ namespace XPath2.Tests
         #endregion
 
         #region isolated tests for ForNode
-        // TODO support ForNode
+        [Fact]
+        public void ForNode_WhenRenderingParsedExpression1_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("for $foo1 in $bar1 return 1");
+            Assert.IsType<ForNode>(exp.ExpressionTree);
+            var node = (ForNode)exp.ExpressionTree;
+            Assert.Equal("for $foo1 in $bar1 return 1", node.Render());
+            Assert.Equal("for $foo1 in $bar1 return 1", exp.Render());
+        }
+
+        [Fact]
+        public void ForNode_WhenRenderingParsedExpression2_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("for $foo1 in $bar1, $foo2 in $bar2 return 1");
+            Assert.IsType<ForNode>(exp.ExpressionTree);
+            var node = (ForNode)exp.ExpressionTree;
+            Assert.Equal("for $foo1 in $bar1, $foo2 in $bar2 return 1", node.Render());
+            Assert.Equal("for $foo1 in $bar1, $foo2 in $bar2 return 1", exp.Render());
+        }
+
+        [Fact]
+        public void ForNode_WhenRenderingParsedExpression3_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("for $foo1 in $bar1, $foo2 in $bar2, $foo3 in $bar3 return 1");
+            Assert.IsType<ForNode>(exp.ExpressionTree);
+            var node = (ForNode)exp.ExpressionTree;
+            Assert.Equal("for $foo1 in $bar1, $foo2 in $bar2, $foo3 in $bar3 return 1", node.Render());
+            Assert.Equal("for $foo1 in $bar1, $foo2 in $bar2, $foo3 in $bar3 return 1", exp.Render());
+        }
+
+        [Fact]
+        public void ForNode_WhenRenderingParsedExpression4_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("for $foo1 in $bar1, $foo2 in $bar2, $foo3 in $bar3, $foo4 in $bar4 return 1");
+            Assert.IsType<ForNode>(exp.ExpressionTree);
+            var node = (ForNode)exp.ExpressionTree;
+            Assert.Equal("for $foo1 in $bar1, $foo2 in $bar2, $foo3 in $bar3, $foo4 in $bar4 return 1", node.Render());
+            Assert.Equal("for $foo1 in $bar1, $foo2 in $bar2, $foo3 in $bar3, $foo4 in $bar4 return 1", exp.Render());
+        }
         #endregion
 
         #region isolated tests for FuncNode

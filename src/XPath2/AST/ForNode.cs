@@ -1,9 +1,10 @@
-﻿// Microsoft Public License (Ms-PL)
+// Microsoft Public License (Ms-PL)
 // See the file License.rtf or License.txt for the license details.
 
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
+using System.Text;
 using System.Xml;
 using System.Xml.XPath;
 
@@ -29,7 +30,7 @@ namespace Wmhelp.XPath2.AST
             if (Count == 1)
                 Add(expr);
             else
-                ((ForNode) this[1]).AddTail(expr);
+                ((ForNode)this[1]).AddTail(expr);
         }
 
         public override void Bind()
@@ -63,6 +64,39 @@ namespace Wmhelp.XPath2.AST
             if (res != Undefined.Value)
                 return true;
             return false;
+        }
+
+        /// <inheritdoc/>
+        public override string Render()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("for ");
+            AbstractNode resultNode = null;
+            sb.Append(this.RenderForClauseOperator());
+            for (int i = 1; i < this.Count; i++)
+            {
+                if (this[i] is ForNode)
+                {
+                    sb.Append(", ");
+                    sb.Append(((ForNode)this[i]).RenderForClauseOperator());
+                    if (this[i].Count > 1)
+                    {
+                        resultNode = this[i][1];
+                    }
+                }
+                else
+                {
+                    resultNode = this[i];                
+                }
+            }
+            sb.Append(" return ");
+            sb.Append(resultNode.Render());
+            return sb.ToString();
+        }
+
+        private string RenderForClauseOperator()
+        {
+            return "$" + _varName.ToString() + " in " + this[0].Render();
         }
 
         private sealed class ForIterator : XPath2NodeIterator
@@ -124,6 +158,7 @@ namespace Wmhelp.XPath2.AST
                     }
                 }
             }
+
         }
     }
 }
