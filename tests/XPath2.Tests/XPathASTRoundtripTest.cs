@@ -18,11 +18,127 @@ namespace XPath2.Tests
         #endregion
 
         #region isolated tests for ArithmeticBinaryOperatorNode
-        // TODO support ArithmeticBinaryOperatorNode
+        [Fact]
+        public void ArithmeticBinaryOperatorNode_WhenRenderingAddExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 + 2");
+            Assert.IsType<ArithmeticBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (ArithmeticBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 + 2", node.Render());
+            Assert.Equal("1 + 2", exp.Render());
+        }
+
+        [Fact]
+        public void ArithmeticBinaryOperatorNode_WhenRenderingSubtractExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 - 2");
+            Assert.IsType<ArithmeticBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (ArithmeticBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 - 2", node.Render());
+            Assert.Equal("1 - 2", exp.Render());
+        }
+
+        [Fact]
+        public void ArithmeticBinaryOperatorNode_WhenRenderingMultiplyExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 * 2");
+            Assert.IsType<ArithmeticBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (ArithmeticBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 * 2", node.Render());
+            Assert.Equal("1 * 2", exp.Render());
+        }
+
+        [Fact]
+        public void ArithmeticBinaryOperatorNode_WhenRenderingDivideExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 div 2");
+            Assert.IsType<ArithmeticBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (ArithmeticBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 div 2", node.Render());
+            Assert.Equal("1 div 2", exp.Render());
+        }
+
+        [Fact]
+        public void ArithmeticBinaryOperatorNode_WhenRenderingIntDivideExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 idiv 2");
+            Assert.IsType<ArithmeticBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (ArithmeticBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 idiv 2", node.Render());
+            Assert.Equal("1 idiv 2", exp.Render());
+        }
+
+        [Fact]
+        public void ArithmeticBinaryOperatorNode_WhenRenderingModuloExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 mod 2");
+            Assert.IsType<ArithmeticBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (ArithmeticBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 mod 2", node.Render());
+            Assert.Equal("1 mod 2", exp.Render());
+        }
         #endregion
 
         #region isolated tests for AtomizedBinaryOperatorNode
-        // TODO support AtomizedBinaryOperatorNode
+        [Fact]
+        public void AtomizedBinaryOperatorNode_WhenRenderingEQExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 eq 2");
+            Assert.IsType<AtomizedBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (AtomizedBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 eq 2", node.Render());
+            Assert.Equal("1 eq 2", exp.Render());
+        }
+
+        [Fact]
+        public void AtomizedBinaryOperatorNode_WhenRenderingNEExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 ne 2");
+            Assert.IsType<AtomizedBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (AtomizedBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 ne 2", node.Render());
+            Assert.Equal("1 ne 2", exp.Render());
+        }
+
+        [Fact]
+        public void AtomizedBinaryOperatorNode_WhenRenderingGTExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 gt 2");
+            Assert.IsType<AtomizedBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (AtomizedBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 gt 2", node.Render());
+            Assert.Equal("1 gt 2", exp.Render());
+        }
+
+        [Fact]
+        public void AtomizedBinaryOperatorNode_WhenRenderingGEExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 ge 2");
+            Assert.IsType<AtomizedBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (AtomizedBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 ge 2", node.Render());
+            Assert.Equal("1 ge 2", exp.Render());
+        }
+
+        [Fact]
+        public void AtomizedBinaryOperatorNode_WhenRenderingLTExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 lt 2");
+            Assert.IsType<AtomizedBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (AtomizedBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 lt 2", node.Render());
+            Assert.Equal("1 lt 2", exp.Render());
+        }
+
+        [Fact]
+        public void AtomizedBinaryOperatorNode_WhenRenderingLEExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 le 2");
+            Assert.IsType<AtomizedBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (AtomizedBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 le 2", node.Render());
+            Assert.Equal("1 le 2", exp.Render());
+        }
         #endregion
 
         #region isolated tests for AtomizedUnaryOperatorNode
@@ -50,7 +166,75 @@ namespace XPath2.Tests
         #endregion
 
         #region isolated tests for BinaryOperatorNode
-        // TODO support BinaryOperatorNode
+        [Fact]
+        public void BinaryOperatorNode_WhenRenderingEQExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 = 2");
+            Assert.IsType<BinaryOperatorNode>(exp.ExpressionTree);
+            var node = (BinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 = 2", node.Render());
+            Assert.Equal("1 = 2", exp.Render());
+        }
+
+        [Fact]
+        public void BinaryOperatorNode_WhenRenderingNEExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 != 2");
+            Assert.IsType<BinaryOperatorNode>(exp.ExpressionTree);
+            var node = (BinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 != 2", node.Render());
+            Assert.Equal("1 != 2", exp.Render());
+        }
+
+        [Fact]
+        public void BinaryOperatorNode_WhenRenderingGTExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 > 2");
+            Assert.IsType<BinaryOperatorNode>(exp.ExpressionTree);
+            var node = (BinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 > 2", node.Render());
+            Assert.Equal("1 > 2", exp.Render());
+        }
+
+        [Fact]
+        public void BinaryOperatorNode_WhenRenderingGEExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 >= 2");
+            Assert.IsType<BinaryOperatorNode>(exp.ExpressionTree);
+            var node = (BinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 >= 2", node.Render());
+            Assert.Equal("1 >= 2", exp.Render());
+        }
+
+        [Fact]
+        public void BinaryOperatorNode_WhenRenderingLTExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 < 2");
+            Assert.IsType<BinaryOperatorNode>(exp.ExpressionTree);
+            var node = (BinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 < 2", node.Render());
+            Assert.Equal("1 < 2", exp.Render());
+        }
+
+        [Fact]
+        public void BinaryOperatorNode_WhenRenderingLEExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 <= 2");
+            Assert.IsType<BinaryOperatorNode>(exp.ExpressionTree);
+            var node = (BinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 <= 2", node.Render());
+            Assert.Equal("1 <= 2", exp.Render());
+        }
+
+        [Fact]
+        public void BinaryOperatorNode_WhenRenderingExceptExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 except 2");
+            Assert.IsType<BinaryOperatorNode>(exp.ExpressionTree);
+            var node = (BinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 except 2", node.Render());
+            Assert.Equal("1 except 2", exp.Render());
+        }
         #endregion
 
         #region isolated tests for ContextItemNode
@@ -78,7 +262,25 @@ namespace XPath2.Tests
         #endregion
 
         #region isolated tests for OrderedBinaryOperatorNode
-        // TODO support OrderedBinaryOperatorNode
+        [Fact]
+        public void OrderedBinaryOperatorNode_WhenRenderingUnionExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 union 2");
+            Assert.IsType<OrderedBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (OrderedBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 union 2", node.Render());
+            Assert.Equal("1 union 2", exp.Render());
+        }
+
+        [Fact]
+        public void OrderedBinaryOperatorNode_WhenRenderingIntersectExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 intersect 2");
+            Assert.IsType<OrderedBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (OrderedBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 intersect 2", node.Render());
+            Assert.Equal("1 intersect 2", exp.Render());
+        }
         #endregion
 
         #region isolated tests for OrExprNode
@@ -98,7 +300,35 @@ namespace XPath2.Tests
         #endregion
 
         #region isolated tests for SingletonBinaryOperatorNode
-        // TODO support SingletonBinaryOperatorNode
+        [Fact]
+        public void SingletonBinaryOperatorNode_WhenRenderingSameExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 is 2");
+            Assert.IsType<SingletonBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (SingletonBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 is 2", node.Render());
+            Assert.Equal("1 is 2", exp.Render());
+        }
+
+        [Fact]
+        public void SingletonBinaryOperatorNode_WhenRenderingPrecedingExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 << 2");
+            Assert.IsType<SingletonBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (SingletonBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 << 2", node.Render());
+            Assert.Equal("1 << 2", exp.Render());
+        }
+
+        [Fact]
+        public void SingletonBinaryOperatorNode_WhenRenderingFollowingExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 >> 2");
+            Assert.IsType<SingletonBinaryOperatorNode>(exp.ExpressionTree);
+            var node = (SingletonBinaryOperatorNode)exp.ExpressionTree;
+            Assert.Equal("1 >> 2", node.Render());
+            Assert.Equal("1 >> 2", exp.Render());
+        }
         #endregion
 
         #region isolated tests for UnaryOperatorNode

@@ -1,4 +1,4 @@
-﻿// Microsoft Public License (Ms-PL)
+// Microsoft Public License (Ms-PL)
 // See the file License.rtf or License.txt for the license details.
 
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
@@ -11,9 +11,9 @@ namespace Wmhelp.XPath2.AST
     /// </summary>
     public sealed class OrderedBinaryOperatorNode : BinaryOperatorNode
     {
-        public OrderedBinaryOperatorNode(XPath2Context context, BinaryOperator action, object node1, object node2,
+        public OrderedBinaryOperatorNode(XPath2Context context, BinaryOperatorType operatorType, object node1, object node2,
             XPath2ResultType resultType)
-            : base(context, action, node1, node2, resultType)
+            : base(context, operatorType, node1, node2, resultType)
         {
         }
     }
