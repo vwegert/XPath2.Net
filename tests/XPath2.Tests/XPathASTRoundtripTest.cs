@@ -347,7 +347,24 @@ namespace XPath2.Tests
         #endregion
 
         #region isolated tests for OrExprNode
-        // TODO support OrExprNode
+        [Fact]
+        public void OrExprNode_WhenRenderingParsedExpression1_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("$a or $b");
+            Assert.IsType<OrExprNode>(exp.ExpressionTree);
+            var node = (OrExprNode)exp.ExpressionTree;
+            Assert.Equal("$a or $b", node.Render());
+            Assert.Equal("$a or $b", exp.Render());
+        }
+        [Fact]
+        public void OrExprNode_WhenRenderingParsedExpression2_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("$a or $b or $c");
+            Assert.IsType<OrExprNode>(exp.ExpressionTree);
+            var node = (OrExprNode)exp.ExpressionTree;
+            Assert.Equal("$a or $b or $c", node.Render());
+            Assert.Equal("$a or $b or $c", exp.Render());
+        }
         #endregion
 
         #region isolated tests for PathExprNode
