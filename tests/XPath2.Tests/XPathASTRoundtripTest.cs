@@ -14,7 +14,24 @@ namespace XPath2.Tests
     {
 
         #region isolated tests for AndExprNode
-        // TODO support AndExprNode
+        [Fact]
+        public void AndExprNode_WhenRenderingParsedExpression1_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("$a and $b");
+            Assert.IsType<AndExprNode>(exp.ExpressionTree);
+            var node = (AndExprNode)exp.ExpressionTree;
+            Assert.Equal("$a and $b", node.Render());
+            Assert.Equal("$a and $b", exp.Render());
+        }
+        [Fact]
+        public void AndExprNode_WhenRenderingParsedExpression2_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("$a and $b and $c");
+            Assert.IsType<AndExprNode>(exp.ExpressionTree);
+            var node = (AndExprNode)exp.ExpressionTree;
+            Assert.Equal("$a and $b and $c", node.Render());
+            Assert.Equal("$a and $b and $c", exp.Render());
+        }
         #endregion
 
         #region isolated tests for ArithmeticBinaryOperatorNode
