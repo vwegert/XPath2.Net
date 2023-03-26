@@ -296,7 +296,27 @@ namespace XPath2.Tests
         #endregion
 
         #region isolated tests for RangeNode
-        // TODO support RangeNode
+        [Fact]
+        public void RangeNode_WhenRenderingParsedExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 to 4");
+            Assert.IsType<RangeNode>(exp.ExpressionTree);
+            var node = (RangeNode)exp.ExpressionTree;
+            Assert.Equal("1 to 4", node.Render());
+            Assert.Equal("1 to 4", exp.Render());
+        }
+
+        [Fact]
+        public void RangeNode_WhenRenderingChangedExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1 to 4");
+            Assert.IsType<RangeNode>(exp.ExpressionTree);
+            var node = (RangeNode)exp.ExpressionTree;
+            ((ValueNode)node[0]).SetValue(17);
+            ((ValueNode)node[1]).SetValue(23);
+            Assert.Equal("17 to 23", node.Render());
+            Assert.Equal("17 to 23", exp.Render());
+        }
         #endregion
 
         #region isolated tests for SingletonBinaryOperatorNode
