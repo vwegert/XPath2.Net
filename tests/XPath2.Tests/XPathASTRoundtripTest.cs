@@ -258,7 +258,15 @@ namespace XPath2.Tests
         #endregion
 
         #region isolated tests for IfNode
-        // TODO support IfNode
+        [Fact]
+        public void IfNode_WhenRenderingParsedExpression_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("if ( 1 < 2 ) then 3 else 4");
+            Assert.IsType<IfNode>(exp.ExpressionTree);
+            var node = (IfNode)exp.ExpressionTree;
+            Assert.Equal("if ( 1 < 2 ) then 3 else 4", node.Render());
+            Assert.Equal("if ( 1 < 2 ) then 3 else 4", exp.Render());
+        }
         #endregion
 
         #region isolated tests for OrderedBinaryOperatorNode
