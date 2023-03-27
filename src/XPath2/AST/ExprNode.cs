@@ -1,10 +1,11 @@
-﻿// Microsoft Public License (Ms-PL)
+// Microsoft Public License (Ms-PL)
 // See the file License.rtf or License.txt for the license details.
 
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
 // All rights reserved.
 
 using System.Linq;
+using System.Text;
 using System.Xml.XPath;
 
 namespace Wmhelp.XPath2.AST
@@ -57,6 +58,18 @@ namespace Wmhelp.XPath2.AST
                 }
             }
             return resType;
+        }
+
+        /// <inheritdoc/>
+        public override string Render()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(this[0].Render());
+            for (int i = 1; i < Count; i++)
+            {
+                sb.Append(", " + this[i].Render());
+            }
+            return sb.ToString();
         }
 
         private sealed class ExprIterator : XPath2NodeIterator

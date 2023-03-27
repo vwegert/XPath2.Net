@@ -259,7 +259,15 @@ namespace XPath2.Tests
         #endregion
 
         #region isolated tests for ExprNode
-        // TODO support ExprNode
+        [Fact]
+        public void ExprNode_WhenRenderingParsedExpression1_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("1, 'a', $b");
+            Assert.IsType<ExprNode>(exp.ExpressionTree);
+            var node = (ExprNode)exp.ExpressionTree;
+            Assert.Equal("1, 'a', $b", node.Render());
+            Assert.Equal("1, 'a', $b", exp.Render());
+        }
         #endregion
 
         #region isolated tests for FilterExprNode
