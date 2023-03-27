@@ -309,7 +309,68 @@ namespace XPath2.Tests
         #endregion
 
         #region isolated tests for FuncNode
-        // TODO support FuncNode
+        [Fact]
+        public void FuncNode_WhenRenderingParsedExpression1_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("current-date()");
+            Assert.IsType<FuncNode>(exp.ExpressionTree);
+            var node = (FuncNode)exp.ExpressionTree;
+            // rendering a FuncNode will introduce the namespace prefix
+            Assert.Equal("fn:current-date()", node.Render());
+            Assert.Equal("fn:current-date()", exp.Render());
+        }
+
+        [Fact]
+        public void FuncNode_WhenRenderingParsedExpression2_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("fn:current-date()");
+            Assert.IsType<FuncNode>(exp.ExpressionTree);
+            var node = (FuncNode)exp.ExpressionTree;
+            Assert.Equal("fn:current-date()", node.Render());
+            Assert.Equal("fn:current-date()", exp.Render());
+        }
+
+        [Fact]
+        public void FuncNode_WhenRenderingParsedExpression3_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("ceiling(1)");
+            Assert.IsType<FuncNode>(exp.ExpressionTree);
+            var node = (FuncNode)exp.ExpressionTree;
+            // rendering a FuncNode will introduce the namespace prefix
+            Assert.Equal("fn:ceiling(1)", node.Render());
+            Assert.Equal("fn:ceiling(1)", exp.Render());
+        }
+
+        [Fact]
+        public void FuncNode_WhenRenderingParsedExpression4_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("fn:ceiling(1)");
+            Assert.IsType<FuncNode>(exp.ExpressionTree);
+            var node = (FuncNode)exp.ExpressionTree;
+            Assert.Equal("fn:ceiling(1)", node.Render());
+            Assert.Equal("fn:ceiling(1)", exp.Render());
+        }
+
+        [Fact]
+        public void FuncNode_WhenRenderingParsedExpression5_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("concat(1, 'a', 2, 'b')");
+            Assert.IsType<FuncNode>(exp.ExpressionTree);
+            var node = (FuncNode)exp.ExpressionTree;
+            // rendering a FuncNode will introduce the namespace prefix
+            Assert.Equal("fn:concat(1, 'a', 2, 'b')", node.Render());
+            Assert.Equal("fn:concat(1, 'a', 2, 'b')", exp.Render());
+        }
+
+        [Fact]
+        public void FuncNode_WhenRenderingParsedExpression6_ShouldReturnCorrectExpression()
+        {
+            XPath2Expression exp = XPath2Expression.Compile("fn:concat(1, 'a', 2, 'b')");
+            Assert.IsType<FuncNode>(exp.ExpressionTree);
+            var node = (FuncNode)exp.ExpressionTree;
+            Assert.Equal("fn:concat(1, 'a', 2, 'b')", node.Render());
+            Assert.Equal("fn:concat(1, 'a', 2, 'b')", exp.Render());
+        }
         #endregion
 
         #region isolated tests for IfNode

@@ -1,4 +1,4 @@
-﻿// Microsoft Public License (Ms-PL)
+// Microsoft Public License (Ms-PL)
 // See the file License.rtf or License.txt for the license details.
 
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Wmhelp.XPath2.MS;
 using Wmhelp.XPath2.Properties;
 using Wmhelp.XPath2.Proxy;
@@ -85,6 +86,28 @@ namespace Wmhelp.XPath2.AST
             if (_func.Name == "string-to-codepoints")
                 return XPath2ResultType.Number;
             return base.GetItemType(dataPool);
+        }
+
+        /// <inheritdoc/>
+        public override string Render()
+        {
+            StringBuilder sb = new StringBuilder();
+            if (!String.IsNullOrEmpty(_ns))
+            {
+                var prefix = Context.NamespaceManager.LookupPrefix(_ns);
+                sb.Append(prefix + ":");
+            }
+            sb.Append(_name + "(");
+            for (int i = 0; i < Count; i++)
+            {
+                sb.Append(this[i].Render());
+                if (i < Count - 1)
+                {
+                    sb.Append(", ");
+                }
+            }
+            sb.Append(")");
+            return sb.ToString();
         }
 
         private static readonly HashSet<String> s_aggregates;
