@@ -27,6 +27,7 @@ namespace Wmhelp.XPath2.AST
         PRECEDING_NODE, // used by SingletonBinaryOperatorNode
         FOLLOWING_NODE, // used by SingletonBinaryOperatorNode
         UNION,          // used by OrderedBinaryOperatorNode
+        UNION_OP,       // used by OrderedBinaryOperatorNode
         INTERSECT,      // used by OrderedBinaryOperatorNode
         GEN_COMP_EQ,    // used by BinaryOperatorNode
         GEN_COMP_NE,    // used by BinaryOperatorNode
@@ -101,6 +102,8 @@ namespace Wmhelp.XPath2.AST
                 case BinaryOperatorType.FOLLOWING_NODE:
                     return (provider, arg1, arg2) => CoreFuncs.FollowingNode(arg1, arg2);
                 case BinaryOperatorType.UNION:
+                    return (provider, arg1, arg2) => CoreFuncs.Union(Context, arg1, arg2);
+                case BinaryOperatorType.UNION_OP:
                     return (provider, arg1, arg2) => CoreFuncs.Union(Context, arg1, arg2);
                 case BinaryOperatorType.INTERSECT:
                     return (provider, arg1, arg2) => CoreFuncs.Intersect(Context, arg1, arg2);
@@ -183,6 +186,8 @@ namespace Wmhelp.XPath2.AST
                     return this[0].Render() + " >> " + this[1].Render();
                 case BinaryOperatorType.UNION:
                     return this[0].Render() + " union " + this[1].Render();
+                case BinaryOperatorType.UNION_OP:
+                    return this[0].Render() + " | " + this[1].Render();
                 case BinaryOperatorType.INTERSECT:
                     return this[0].Render() + " intersect " + this[1].Render();
                 case BinaryOperatorType.GEN_COMP_EQ:

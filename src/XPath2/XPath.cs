@@ -714,7 +714,7 @@ case 52:
 case 53:
 #line 366 "Xpath.y"
   {
-     yyVal = new OrderedBinaryOperatorNode(context, BinaryOperatorType.UNION, yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.NodeSet);
+     yyVal = new OrderedBinaryOperatorNode(context, BinaryOperatorType.UNION_OP, yyVals[-2+yyTop], yyVals[0+yyTop], XPath2ResultType.NodeSet);
   }
   break;
 case 55:

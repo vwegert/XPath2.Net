@@ -364,7 +364,7 @@ UnionExpr
   }
   | UnionExpr '|' IntersectExceptExpr 
   {
-     $$ = new OrderedBinaryOperatorNode(context, BinaryOperatorType.UNION, $1, $3, XPath2ResultType.NodeSet);
+     $$ = new OrderedBinaryOperatorNode(context, BinaryOperatorType.UNION_OP, $1, $3, XPath2ResultType.NodeSet);
   }
   ;
 
