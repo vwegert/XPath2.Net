@@ -13,24 +13,42 @@ namespace XPath2.Tests
     public class XPathASTRoundtripTest
     {
 
+        #region auxiliary method to keep actual tests less repetitive
+        delegate void NodeModifier<T>(T node) where T : AbstractNode;
+
+        private void PerformASTRoundtripTest<T>(string originalExpression, NodeModifier<T>? modifier = null, string? targetExpression = null) where T : AbstractNode
+        {
+            // compile the expression
+            XPath2Expression exp = XPath2Expression.Compile(originalExpression);
+
+            // check the root node type and cast
+            Assert.IsType<T>(exp.ExpressionTree);
+            var node = (T)exp.ExpressionTree;
+
+            // if desired, perform a modification on the AST
+            if (modifier != null)
+            {
+                modifier(node);
+            }
+
+            // check that the result matches the expectations
+            var expected = targetExpression ?? originalExpression;
+            Assert.Equal(expected, node.Render());
+            Assert.Equal(expected, exp.Render());
+        }
+        #endregion
+
+
         #region isolated tests for AndExprNode
         [Fact]
         public void AndExprNode_WhenRenderingParsedExpression1_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("$a and $b");
-            Assert.IsType<AndExprNode>(exp.ExpressionTree);
-            var node = (AndExprNode)exp.ExpressionTree;
-            Assert.Equal("$a and $b", node.Render());
-            Assert.Equal("$a and $b", exp.Render());
+            PerformASTRoundtripTest<AndExprNode>("$a and $b");
         }
         [Fact]
         public void AndExprNode_WhenRenderingParsedExpression2_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("$a and $b and $c");
-            Assert.IsType<AndExprNode>(exp.ExpressionTree);
-            var node = (AndExprNode)exp.ExpressionTree;
-            Assert.Equal("$a and $b and $c", node.Render());
-            Assert.Equal("$a and $b and $c", exp.Render());
+            PerformASTRoundtripTest<AndExprNode>("$a and $b and $c");
         }
         #endregion
 
@@ -38,61 +56,45 @@ namespace XPath2.Tests
         [Fact]
         public void ArithmeticBinaryOperatorNode_WhenRenderingAddExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 + 2");
-            Assert.IsType<ArithmeticBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (ArithmeticBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 + 2", node.Render());
-            Assert.Equal("1 + 2", exp.Render());
+            PerformASTRoundtripTest<ArithmeticBinaryOperatorNode>("1 + 2");
         }
 
         [Fact]
         public void ArithmeticBinaryOperatorNode_WhenRenderingSubtractExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 - 2");
-            Assert.IsType<ArithmeticBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (ArithmeticBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 - 2", node.Render());
-            Assert.Equal("1 - 2", exp.Render());
+            PerformASTRoundtripTest<ArithmeticBinaryOperatorNode>("1 - 2");
         }
 
         [Fact]
         public void ArithmeticBinaryOperatorNode_WhenRenderingMultiplyExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 * 2");
-            Assert.IsType<ArithmeticBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (ArithmeticBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 * 2", node.Render());
-            Assert.Equal("1 * 2", exp.Render());
+            PerformASTRoundtripTest<ArithmeticBinaryOperatorNode>("1 * 2");
         }
 
         [Fact]
         public void ArithmeticBinaryOperatorNode_WhenRenderingDivideExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 div 2");
-            Assert.IsType<ArithmeticBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (ArithmeticBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 div 2", node.Render());
-            Assert.Equal("1 div 2", exp.Render());
+            PerformASTRoundtripTest<ArithmeticBinaryOperatorNode>("1 div 2");
         }
 
         [Fact]
         public void ArithmeticBinaryOperatorNode_WhenRenderingIntDivideExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 idiv 2");
-            Assert.IsType<ArithmeticBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (ArithmeticBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 idiv 2", node.Render());
-            Assert.Equal("1 idiv 2", exp.Render());
+            PerformASTRoundtripTest<ArithmeticBinaryOperatorNode>("1 idiv 2");
         }
 
         [Fact]
         public void ArithmeticBinaryOperatorNode_WhenRenderingModuloExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 mod 2");
-            Assert.IsType<ArithmeticBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (ArithmeticBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 mod 2", node.Render());
-            Assert.Equal("1 mod 2", exp.Render());
+            PerformASTRoundtripTest<ArithmeticBinaryOperatorNode>("1 mod 2");
+        }
+        [Fact]
+        public void ArithmeticBinaryOperatorNode_WhenChangingOperator_ShouldReturnCorrectExpression()
+        {
+            PerformASTRoundtripTest<ArithmeticBinaryOperatorNode>(
+                "1 div 2",
+                (node) => { node.SetOperatorType(BinaryOperatorType.INT_DIVIDE); },
+                "1 idiv 2");
         }
         #endregion
 
@@ -100,61 +102,46 @@ namespace XPath2.Tests
         [Fact]
         public void AtomizedBinaryOperatorNode_WhenRenderingEQExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 eq 2");
-            Assert.IsType<AtomizedBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (AtomizedBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 eq 2", node.Render());
-            Assert.Equal("1 eq 2", exp.Render());
+            PerformASTRoundtripTest<AtomizedBinaryOperatorNode>("1 eq 2");
         }
 
         [Fact]
         public void AtomizedBinaryOperatorNode_WhenRenderingNEExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 ne 2");
-            Assert.IsType<AtomizedBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (AtomizedBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 ne 2", node.Render());
-            Assert.Equal("1 ne 2", exp.Render());
+            PerformASTRoundtripTest<AtomizedBinaryOperatorNode>("1 ne 2");
         }
 
         [Fact]
         public void AtomizedBinaryOperatorNode_WhenRenderingGTExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 gt 2");
-            Assert.IsType<AtomizedBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (AtomizedBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 gt 2", node.Render());
-            Assert.Equal("1 gt 2", exp.Render());
+            PerformASTRoundtripTest<AtomizedBinaryOperatorNode>("1 gt 2");
         }
 
         [Fact]
         public void AtomizedBinaryOperatorNode_WhenRenderingGEExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 ge 2");
-            Assert.IsType<AtomizedBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (AtomizedBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 ge 2", node.Render());
-            Assert.Equal("1 ge 2", exp.Render());
+            PerformASTRoundtripTest<AtomizedBinaryOperatorNode>("1 ge 2");
         }
 
         [Fact]
         public void AtomizedBinaryOperatorNode_WhenRenderingLTExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 lt 2");
-            Assert.IsType<AtomizedBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (AtomizedBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 lt 2", node.Render());
-            Assert.Equal("1 lt 2", exp.Render());
+            PerformASTRoundtripTest<AtomizedBinaryOperatorNode>("1 lt 2");
         }
 
         [Fact]
         public void AtomizedBinaryOperatorNode_WhenRenderingLEExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 le 2");
-            Assert.IsType<AtomizedBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (AtomizedBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 le 2", node.Render());
-            Assert.Equal("1 le 2", exp.Render());
+            PerformASTRoundtripTest<AtomizedBinaryOperatorNode>("1 le 2");
+        }
+
+        [Fact]
+        public void AtomizedBinaryOperatorNode_WhenChanginOperator_ShouldReturnCorrectExpression()
+        {
+            PerformASTRoundtripTest<AtomizedBinaryOperatorNode>(
+                "1 le 2",
+                (node) => { node.SetOperatorType(BinaryOperatorType.VAL_COMP_GE); },
+                "1 ge 2");
         }
         #endregion
 
@@ -162,23 +149,19 @@ namespace XPath2.Tests
         [Fact]
         public void AtomizedUnaryOperatorNode_AfterChangingToPlus_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("- 42");
-            Assert.IsType<AtomizedUnaryOperatorNode>(exp.ExpressionTree);
-            var node = (AtomizedUnaryOperatorNode)exp.ExpressionTree;
-            node.SetOperatorType(UnaryOperatorType.PLUS);
-            Assert.Equal("+42", node.Render());
-            Assert.Equal("+42", exp.Render());
+            PerformASTRoundtripTest<AtomizedUnaryOperatorNode>(
+                "-42",
+                (node) => { node.SetOperatorType(UnaryOperatorType.PLUS); },
+                "+42");
         }
 
         [Fact]
         public void AtomizedUnaryOperatorNode_AfterChangingToMinus_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("+ 42");
-            Assert.IsType<AtomizedUnaryOperatorNode>(exp.ExpressionTree);
-            var node = (AtomizedUnaryOperatorNode)exp.ExpressionTree;
-            node.SetOperatorType(UnaryOperatorType.MINUS);
-            Assert.Equal("-42", node.Render());
-            Assert.Equal("-42", exp.Render());
+            PerformASTRoundtripTest<AtomizedUnaryOperatorNode>(
+                "+42",
+                (node) => { node.SetOperatorType(UnaryOperatorType.MINUS); },
+                "-42");
         }
         #endregion
 
@@ -186,71 +169,52 @@ namespace XPath2.Tests
         [Fact]
         public void BinaryOperatorNode_WhenRenderingEQExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 = 2");
-            Assert.IsType<BinaryOperatorNode>(exp.ExpressionTree);
-            var node = (BinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 = 2", node.Render());
-            Assert.Equal("1 = 2", exp.Render());
+            PerformASTRoundtripTest<BinaryOperatorNode>("1 = 2"); ;
         }
 
         [Fact]
         public void BinaryOperatorNode_WhenRenderingNEExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 != 2");
-            Assert.IsType<BinaryOperatorNode>(exp.ExpressionTree);
-            var node = (BinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 != 2", node.Render());
-            Assert.Equal("1 != 2", exp.Render());
+            PerformASTRoundtripTest<BinaryOperatorNode>("1 != 2");
         }
 
         [Fact]
         public void BinaryOperatorNode_WhenRenderingGTExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 > 2");
-            Assert.IsType<BinaryOperatorNode>(exp.ExpressionTree);
-            var node = (BinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 > 2", node.Render());
-            Assert.Equal("1 > 2", exp.Render());
+            PerformASTRoundtripTest<BinaryOperatorNode>("1 > 2");
         }
 
         [Fact]
         public void BinaryOperatorNode_WhenRenderingGEExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 >= 2");
-            Assert.IsType<BinaryOperatorNode>(exp.ExpressionTree);
-            var node = (BinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 >= 2", node.Render());
-            Assert.Equal("1 >= 2", exp.Render());
+            PerformASTRoundtripTest<BinaryOperatorNode>("1 >= 2");
         }
 
         [Fact]
         public void BinaryOperatorNode_WhenRenderingLTExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 < 2");
-            Assert.IsType<BinaryOperatorNode>(exp.ExpressionTree);
-            var node = (BinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 < 2", node.Render());
-            Assert.Equal("1 < 2", exp.Render());
+            PerformASTRoundtripTest<BinaryOperatorNode>("1 < 2");
         }
 
         [Fact]
         public void BinaryOperatorNode_WhenRenderingLEExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 <= 2");
-            Assert.IsType<BinaryOperatorNode>(exp.ExpressionTree);
-            var node = (BinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 <= 2", node.Render());
-            Assert.Equal("1 <= 2", exp.Render());
+            PerformASTRoundtripTest<BinaryOperatorNode>("1 <= 2");
         }
 
         [Fact]
         public void BinaryOperatorNode_WhenRenderingExceptExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 except 2");
-            Assert.IsType<BinaryOperatorNode>(exp.ExpressionTree);
-            var node = (BinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 except 2", node.Render());
-            Assert.Equal("1 except 2", exp.Render());
+            PerformASTRoundtripTest<BinaryOperatorNode>("1 except 2");
+        }
+
+        [Fact]
+        public void BinaryOperatorNode_WhenChangingOperator_ShouldReturnCorrectExpression()
+        {
+            PerformASTRoundtripTest<BinaryOperatorNode>(
+                "1 < 2",
+                (node) => { node.SetOperatorType(BinaryOperatorType.GEN_COMP_GT); },
+                "1 > 2");
         }
         #endregion
 
@@ -262,11 +226,7 @@ namespace XPath2.Tests
         [Fact]
         public void ExprNode_WhenRenderingParsedExpression1_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1, 'a', $b");
-            Assert.IsType<ExprNode>(exp.ExpressionTree);
-            var node = (ExprNode)exp.ExpressionTree;
-            Assert.Equal("1, 'a', $b", node.Render());
-            Assert.Equal("1, 'a', $b", exp.Render());
+            PerformASTRoundtripTest<ExprNode>("(1, 'a', $b)");
         }
         #endregion
 
@@ -278,41 +238,51 @@ namespace XPath2.Tests
         [Fact]
         public void ForNode_WhenRenderingParsedExpression1_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("for $foo1 in $bar1 return 1");
-            Assert.IsType<ForNode>(exp.ExpressionTree);
-            var node = (ForNode)exp.ExpressionTree;
-            Assert.Equal("for $foo1 in $bar1 return 1", node.Render());
-            Assert.Equal("for $foo1 in $bar1 return 1", exp.Render());
+            PerformASTRoundtripTest<ForNode>("for $foo1 in $bar1 return 1");
         }
 
         [Fact]
         public void ForNode_WhenRenderingParsedExpression2_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("for $foo1 in $bar1, $foo2 in $bar2 return 1");
-            Assert.IsType<ForNode>(exp.ExpressionTree);
-            var node = (ForNode)exp.ExpressionTree;
-            Assert.Equal("for $foo1 in $bar1, $foo2 in $bar2 return 1", node.Render());
-            Assert.Equal("for $foo1 in $bar1, $foo2 in $bar2 return 1", exp.Render());
+            PerformASTRoundtripTest<ForNode>("for $foo1 in $bar1, $foo2 in $bar2 return 1");
         }
 
         [Fact]
         public void ForNode_WhenRenderingParsedExpression3_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("for $foo1 in $bar1, $foo2 in $bar2, $foo3 in $bar3 return 1");
-            Assert.IsType<ForNode>(exp.ExpressionTree);
-            var node = (ForNode)exp.ExpressionTree;
-            Assert.Equal("for $foo1 in $bar1, $foo2 in $bar2, $foo3 in $bar3 return 1", node.Render());
-            Assert.Equal("for $foo1 in $bar1, $foo2 in $bar2, $foo3 in $bar3 return 1", exp.Render());
+            PerformASTRoundtripTest<ForNode>("for $foo1 in $bar1, $foo2 in $bar2, $foo3 in $bar3 return 1");
         }
 
         [Fact]
         public void ForNode_WhenRenderingParsedExpression4_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("for $foo1 in $bar1, $foo2 in $bar2, $foo3 in $bar3, $foo4 in $bar4 return 1");
-            Assert.IsType<ForNode>(exp.ExpressionTree);
-            var node = (ForNode)exp.ExpressionTree;
-            Assert.Equal("for $foo1 in $bar1, $foo2 in $bar2, $foo3 in $bar3, $foo4 in $bar4 return 1", node.Render());
-            Assert.Equal("for $foo1 in $bar1, $foo2 in $bar2, $foo3 in $bar3, $foo4 in $bar4 return 1", exp.Render());
+            PerformASTRoundtripTest<ForNode>("for $foo1 in $bar1, $foo2 in $bar2, $foo3 in $bar3, $foo4 in $bar4 return 1");
+        }
+
+        [Fact]
+        public void ForNode_WhenChangingReferenceName_ShouldReturnCorrectExpression()
+        {
+            PerformASTRoundtripTest<ForNode>(
+                "for $foo1 in $bar1 return 1",
+                (node) => { ((VarRefNode)node[0]).SetVarName("baz42"); },
+                "for $foo1 in $baz42 return 1");
+        }
+
+        [Fact]
+        public void ForNode_WhenChangingVariableName_ShouldReturnCorrectExpression()
+        {
+            PerformASTRoundtripTest<ForNode>(
+                "for $foo1 in $bar1 return 1",
+                (node) => { node.SetVarName("foo42"); },
+                "for $foo42 in $bar1 return 1");
+        }
+        [Fact]
+        public void ForNode_WhenChangingVariableNameWithPrefix_ShouldReturnCorrectExpression()
+        {
+            PerformASTRoundtripTest<ForNode>(
+                "for $foo1 in $bar1 return 1",
+                (node) => { node.SetVarName("foo42", "pfx"); },
+                "for $pfx:foo42 in $bar1 return 1");
         }
         #endregion
 
@@ -320,64 +290,40 @@ namespace XPath2.Tests
         [Fact]
         public void FuncNode_WhenRenderingParsedExpression1_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("current-date()");
-            Assert.IsType<FuncNode>(exp.ExpressionTree);
-            var node = (FuncNode)exp.ExpressionTree;
             // rendering a FuncNode will introduce the namespace prefix
-            Assert.Equal("fn:current-date()", node.Render());
-            Assert.Equal("fn:current-date()", exp.Render());
+            PerformASTRoundtripTest<FuncNode>("current-date()", null, "fn:current-date()");
         }
 
         [Fact]
         public void FuncNode_WhenRenderingParsedExpression2_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("fn:current-date()");
-            Assert.IsType<FuncNode>(exp.ExpressionTree);
-            var node = (FuncNode)exp.ExpressionTree;
-            Assert.Equal("fn:current-date()", node.Render());
-            Assert.Equal("fn:current-date()", exp.Render());
+            PerformASTRoundtripTest<FuncNode>("fn:current-date()");
         }
 
         [Fact]
         public void FuncNode_WhenRenderingParsedExpression3_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("ceiling(1)");
-            Assert.IsType<FuncNode>(exp.ExpressionTree);
-            var node = (FuncNode)exp.ExpressionTree;
             // rendering a FuncNode will introduce the namespace prefix
-            Assert.Equal("fn:ceiling(1)", node.Render());
-            Assert.Equal("fn:ceiling(1)", exp.Render());
+            PerformASTRoundtripTest<FuncNode>("ceiling(1)", null, "fn:ceiling(1)");
         }
 
         [Fact]
         public void FuncNode_WhenRenderingParsedExpression4_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("fn:ceiling(1)");
-            Assert.IsType<FuncNode>(exp.ExpressionTree);
-            var node = (FuncNode)exp.ExpressionTree;
-            Assert.Equal("fn:ceiling(1)", node.Render());
-            Assert.Equal("fn:ceiling(1)", exp.Render());
+            PerformASTRoundtripTest<FuncNode>("fn:ceiling(1)");
         }
 
         [Fact]
         public void FuncNode_WhenRenderingParsedExpression5_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("concat(1, 'a', 2, 'b')");
-            Assert.IsType<FuncNode>(exp.ExpressionTree);
-            var node = (FuncNode)exp.ExpressionTree;
             // rendering a FuncNode will introduce the namespace prefix
-            Assert.Equal("fn:concat(1, 'a', 2, 'b')", node.Render());
-            Assert.Equal("fn:concat(1, 'a', 2, 'b')", exp.Render());
+            PerformASTRoundtripTest<FuncNode>("concat(1, 'a', 2, 'b')", null, "fn:concat(1, 'a', 2, 'b')");
         }
 
         [Fact]
         public void FuncNode_WhenRenderingParsedExpression6_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("fn:concat(1, 'a', 2, 'b')");
-            Assert.IsType<FuncNode>(exp.ExpressionTree);
-            var node = (FuncNode)exp.ExpressionTree;
-            Assert.Equal("fn:concat(1, 'a', 2, 'b')", node.Render());
-            Assert.Equal("fn:concat(1, 'a', 2, 'b')", exp.Render());
+            PerformASTRoundtripTest<FuncNode>("fn:concat(1, 'a', 2, 'b')");
         }
         #endregion
 
@@ -385,11 +331,7 @@ namespace XPath2.Tests
         [Fact]
         public void IfNode_WhenRenderingParsedExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("if ( 1 < 2 ) then 3 else 4");
-            Assert.IsType<IfNode>(exp.ExpressionTree);
-            var node = (IfNode)exp.ExpressionTree;
-            Assert.Equal("if ( 1 < 2 ) then 3 else 4", node.Render());
-            Assert.Equal("if ( 1 < 2 ) then 3 else 4", exp.Render());
+            PerformASTRoundtripTest<IfNode>("if ( 1 < 2 ) then 3 else 4");
         }
         #endregion
 
@@ -397,21 +339,13 @@ namespace XPath2.Tests
         [Fact]
         public void OrderedBinaryOperatorNode_WhenRenderingUnionExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 union 2");
-            Assert.IsType<OrderedBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (OrderedBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 union 2", node.Render());
-            Assert.Equal("1 union 2", exp.Render());
+            PerformASTRoundtripTest<OrderedBinaryOperatorNode>("1 union 2");
         }
 
         [Fact]
         public void OrderedBinaryOperatorNode_WhenRenderingIntersectExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 intersect 2");
-            Assert.IsType<OrderedBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (OrderedBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 intersect 2", node.Render());
-            Assert.Equal("1 intersect 2", exp.Render());
+            PerformASTRoundtripTest<OrderedBinaryOperatorNode>("1 intersect 2");
         }
         #endregion
 
@@ -419,20 +353,12 @@ namespace XPath2.Tests
         [Fact]
         public void OrExprNode_WhenRenderingParsedExpression1_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("$a or $b");
-            Assert.IsType<OrExprNode>(exp.ExpressionTree);
-            var node = (OrExprNode)exp.ExpressionTree;
-            Assert.Equal("$a or $b", node.Render());
-            Assert.Equal("$a or $b", exp.Render());
+            PerformASTRoundtripTest<OrExprNode>("$a or $b");
         }
         [Fact]
         public void OrExprNode_WhenRenderingParsedExpression2_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("$a or $b or $c");
-            Assert.IsType<OrExprNode>(exp.ExpressionTree);
-            var node = (OrExprNode)exp.ExpressionTree;
-            Assert.Equal("$a or $b or $c", node.Render());
-            Assert.Equal("$a or $b or $c", exp.Render());
+            PerformASTRoundtripTest<OrExprNode>("$a or $b or $c");
         }
         #endregion
 
@@ -448,23 +374,20 @@ namespace XPath2.Tests
         [Fact]
         public void RangeNode_WhenRenderingParsedExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 to 4");
-            Assert.IsType<RangeNode>(exp.ExpressionTree);
-            var node = (RangeNode)exp.ExpressionTree;
-            Assert.Equal("1 to 4", node.Render());
-            Assert.Equal("1 to 4", exp.Render());
+            PerformASTRoundtripTest<RangeNode>("1 to 4");
         }
 
         [Fact]
         public void RangeNode_WhenRenderingChangedExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 to 4");
-            Assert.IsType<RangeNode>(exp.ExpressionTree);
-            var node = (RangeNode)exp.ExpressionTree;
-            ((ValueNode)node[0]).SetValue(17);
-            ((ValueNode)node[1]).SetValue(23);
-            Assert.Equal("17 to 23", node.Render());
-            Assert.Equal("17 to 23", exp.Render());
+            PerformASTRoundtripTest<RangeNode>(
+                "1 to 4",
+                (node) =>
+                {
+                    ((ValueNode)node[0]).SetValue(17);
+                    ((ValueNode)node[1]).SetValue(23);
+                },
+                "17 to 23");
         }
         #endregion
 
@@ -472,109 +395,93 @@ namespace XPath2.Tests
         [Fact]
         public void SingletonBinaryOperatorNode_WhenRenderingSameExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 is 2");
-            Assert.IsType<SingletonBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (SingletonBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 is 2", node.Render());
-            Assert.Equal("1 is 2", exp.Render());
+            PerformASTRoundtripTest<SingletonBinaryOperatorNode>("1 is 2");
         }
 
         [Fact]
         public void SingletonBinaryOperatorNode_WhenRenderingPrecedingExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 << 2");
-            Assert.IsType<SingletonBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (SingletonBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 << 2", node.Render());
-            Assert.Equal("1 << 2", exp.Render());
+            PerformASTRoundtripTest<SingletonBinaryOperatorNode>("1 << 2");
         }
 
         [Fact]
         public void SingletonBinaryOperatorNode_WhenRenderingFollowingExpression_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("1 >> 2");
-            Assert.IsType<SingletonBinaryOperatorNode>(exp.ExpressionTree);
-            var node = (SingletonBinaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("1 >> 2", node.Render());
-            Assert.Equal("1 >> 2", exp.Render());
+            PerformASTRoundtripTest<SingletonBinaryOperatorNode>("1 >> 2");
         }
         #endregion
 
         #region isolated tests for UnaryOperatorNode
         [Fact]
+        public void UnaryOperatorNode_WhenRenderingParsedSomeExpression_ShouldReturnCorrectExpression()
+        {
+            PerformASTRoundtripTest<UnaryOperatorNode>("some $a in (1, 2, 3) satisfies $a = 1");
+        }
+
+        [Fact]
+        public void UnaryOperatorNode_WhenRenderingParsedEveryExpression_ShouldReturnCorrectExpression()
+        {
+            PerformASTRoundtripTest<UnaryOperatorNode>("every $a in (1, 2, 3) satisfies $a = 1");
+        }
+
+        [Fact]
         public void UnaryOperatorNode_AfterChangingSomeToEvery_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("some $a in (1, 2, 3) satisfies $a = 1");
-            Assert.IsType<UnaryOperatorNode>(exp.ExpressionTree);
-            var node = (UnaryOperatorNode)exp.ExpressionTree;
-            node.SetOperatorType(UnaryOperatorType.EVERY);
-            Assert.StartsWith("every", node.Render());
-            Assert.StartsWith("every", exp.Render());
+            PerformASTRoundtripTest<UnaryOperatorNode>(
+                "some $a in (1, 2, 3) satisfies $a = 1",
+                (node) => { node.SetOperatorType(UnaryOperatorType.EVERY); },
+                "every $a in (1, 2, 3) satisfies $a = 1");
         }
 
         [Fact]
         public void UnaryOperatorNode_AfterChangingEveryToSome_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("every $a in (1, 2, 3) satisfies $a = 1");
-            Assert.IsType<UnaryOperatorNode>(exp.ExpressionTree);
-            var node = (UnaryOperatorNode)exp.ExpressionTree;
-            node.SetOperatorType(UnaryOperatorType.SOME);
-            Assert.StartsWith("some", node.Render());
-            Assert.StartsWith("some", exp.Render());
+            PerformASTRoundtripTest<UnaryOperatorNode>(
+                "every $a in (1, 2, 3) satisfies $a = 1",
+                (node) => { node.SetOperatorType(UnaryOperatorType.SOME); },
+                "some $a in (1, 2, 3) satisfies $a = 1");
         }
 
         [Fact]
         public void UnaryOperatorNode_AfterChangingInstanceOfToTreatAs_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("5 instance of xs:integer");
-            Assert.IsType<UnaryOperatorNode>(exp.ExpressionTree);
-            var node = (UnaryOperatorNode)exp.ExpressionTree;
-            node.SetOperatorType(UnaryOperatorType.TREAT_AS);
-            Assert.StartsWith("5 treat as", node.Render());
-            Assert.StartsWith("5 treat as", exp.Render());
+            PerformASTRoundtripTest<UnaryOperatorNode>(
+                "5 instance of xs:integer",
+                (node) => { node.SetOperatorType(UnaryOperatorType.TREAT_AS); },
+                "5 treat as xs:integer");
         }
 
         [Fact]
         public void UnaryOperatorNode_AfterChangingTreatAsToInstanceOf_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("5 treat as xs:integer");
-            Assert.IsType<UnaryOperatorNode>(exp.ExpressionTree);
-            var node = (UnaryOperatorNode)exp.ExpressionTree;
-            node.SetOperatorType(UnaryOperatorType.INSTANCE_OF);
-            Assert.StartsWith("5 instance of", node.Render());
-            Assert.StartsWith("5 instance of", exp.Render());
+            PerformASTRoundtripTest<UnaryOperatorNode>(
+                "5 treat as xs:integer",
+                (node) => { node.SetOperatorType(UnaryOperatorType.INSTANCE_OF); },
+                "5 instance of xs:integer");
         }
 
         [Fact]
         public void UnaryOperatorNode_AfterChangingInstanceOfToCastable_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("5 instance of xs:integer");
-            Assert.IsType<UnaryOperatorNode>(exp.ExpressionTree);
-            var node = (UnaryOperatorNode)exp.ExpressionTree;
-            node.SetOperatorType(UnaryOperatorType.CASTABLE);
-            Assert.StartsWith("5 castable as", node.Render());
-            Assert.StartsWith("5 castable as", exp.Render());
+            PerformASTRoundtripTest<UnaryOperatorNode>(
+                "5 instance of xs:integer",
+                (node) => { node.SetOperatorType(UnaryOperatorType.CASTABLE); },
+                "5 castable as xs:integer");
         }
 
         [Fact]
         public void UnaryOperatorNode_AfterChangingInstanceOfToCastAs_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("5 instance of xs:integer");
-            Assert.IsType<UnaryOperatorNode>(exp.ExpressionTree);
-            var node = (UnaryOperatorNode)exp.ExpressionTree;
-            node.SetOperatorType(UnaryOperatorType.CAST_TO);
-            Assert.StartsWith("5 cast as", node.Render());
-            Assert.StartsWith("5 cast as", exp.Render());
+            PerformASTRoundtripTest<UnaryOperatorNode>(
+                "5 instance of xs:integer",
+                (node) => { node.SetOperatorType(UnaryOperatorType.CAST_TO); },
+                "5 cast as xs:integer");
         }
 
         [Fact]
         public void UnaryOperatorNode_UnchangedRootPathExpr_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("/");
-            Assert.IsType<UnaryOperatorNode>(exp.ExpressionTree);
-            var node = (UnaryOperatorNode)exp.ExpressionTree;
-            Assert.Equal("/", node.Render());
-            Assert.Equal("/", exp.Render());
+            PerformASTRoundtripTest<UnaryOperatorNode>("/");
         }
 
         // TODO Test for CAST_TO_ITEM (requires FunctionNode rendering)
@@ -584,23 +491,19 @@ namespace XPath2.Tests
         [Fact]
         public void ValueNode_AfterChangingValueToInteger_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("123");
-            Assert.IsType<ValueNode>(exp.ExpressionTree);
-            var node = (ValueNode)exp.ExpressionTree;
-            node.SetValue(42);
-            Assert.Equal("42", node.Render());
-            Assert.Equal("42", exp.Render());
+            PerformASTRoundtripTest<ValueNode>(
+                "123",
+                (node) => { node.SetValue(42); },
+                "42");
         }
 
         [Fact]
         public void ValueNode_AfterChangingValueToString_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("'abc'");
-            Assert.IsType<ValueNode>(exp.ExpressionTree);
-            var node = (ValueNode)exp.ExpressionTree;
-            node.SetValue("FooBar");
-            Assert.Equal("'FooBar'", node.Render());
-            Assert.Equal("'FooBar'", exp.Render());
+            PerformASTRoundtripTest<ValueNode>(
+                "'abc'",
+                (node) => { node.SetValue("FooBar"); },
+                "'FooBar'");
         }
         #endregion
 
@@ -608,23 +511,19 @@ namespace XPath2.Tests
         [Fact]
         public void VarRefNode_AfterChangingLocalName_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("$var");
-            Assert.IsType<VarRefNode>(exp.ExpressionTree);
-            var node = (VarRefNode)exp.ExpressionTree;
-            node.SetVarName("foo");
-            Assert.Equal("$foo", node.Render());
-            Assert.Equal("$foo", exp.Render());
+            PerformASTRoundtripTest<VarRefNode>(
+                "$var",
+                (node) => { node.SetVarName("foo"); },
+                "$foo");
         }
 
         [Fact]
         public void VarRefNode_AfterChangingQName_ShouldReturnCorrectExpression()
         {
-            XPath2Expression exp = XPath2Expression.Compile("$var");
-            Assert.IsType<VarRefNode>(exp.ExpressionTree);
-            var node = (VarRefNode)exp.ExpressionTree;
-            node.SetVarName("foo", "xyz");
-            Assert.Equal("$xyz:foo", node.Render());
-            Assert.Equal("$xyz:foo", exp.Render());
+            PerformASTRoundtripTest<VarRefNode>(
+                "$var",
+                (node) => { node.SetVarName("foo", "xyz"); },
+                "$xyz:foo");
         }
         #endregion
 

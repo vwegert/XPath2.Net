@@ -143,9 +143,9 @@ namespace Wmhelp.XPath2.AST
                 case UnaryOperatorType.MINUS:
                     return "-" + this[0].Render();
                 case UnaryOperatorType.SOME:
-                    return "some " + this[0].Render();
+                    return ((ForNode)this[0]).RenderWithKeywords("some", "satisfies");
                 case UnaryOperatorType.EVERY:
-                    return "every " + this[0].Render();
+                    return ((ForNode)this[0]).RenderWithKeywords("every", "satisfies"); ;
                 case UnaryOperatorType.INSTANCE_OF:
                     if (_destType == null)
                         throw new InvalidOperationException("Unable to render this operator without a destination type.");

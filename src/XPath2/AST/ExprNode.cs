@@ -64,10 +64,18 @@ namespace Wmhelp.XPath2.AST
         public override string Render()
         {
             StringBuilder sb = new StringBuilder();
+            if (Count > 1)
+            {
+                sb.Append("(");
+            }
             sb.Append(this[0].Render());
             for (int i = 1; i < Count; i++)
             {
                 sb.Append(", " + this[i].Render());
+            }
+            if (Count > 1)
+            {
+                sb.Append(")");
             }
             return sb.ToString();
         }

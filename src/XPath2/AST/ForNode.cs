@@ -15,7 +15,7 @@ namespace Wmhelp.XPath2.AST
     /// </summary>
     public sealed class ForNode : AbstractNode
     {
-        private readonly Tokenizer.VarName _varName;
+        private Tokenizer.VarName _varName;
         private NameBinder.ReferenceLink _varRef;
 
         public ForNode(XPath2Context context, Tokenizer.VarName varName, object expr)
@@ -41,6 +41,22 @@ namespace Wmhelp.XPath2.AST
             _varRef = Context.RunningContext.NameBinder.PushVar(qname);
             this[1].Bind();
             Context.RunningContext.NameBinder.PopVar();
+        }
+
+        /// <summary>
+        /// Changes the loop variable name of this AST node. This method will attempt to fix the bindings if told to do so.
+        /// Caution: Using this method might render the AST unusable for execution and evaluation, e. g. by breaking the variable references.
+        /// </summary>
+        /// <param name="localName"></param>
+        /// <param name="prefix"></param>
+        /// <param name="recreateBindings">whether to allow recreating of the variable reference binding</param>
+        public void SetVarName(string localName, string prefix = "", bool recreateBindings = true)
+        {
+            _varName = new Tokenizer.VarName(prefix, localName);
+            if ((_varRef != null) && recreateBindings)
+            {
+                Bind();
+            }
         }
 
         public override object Execute(IContextProvider provider, object[] dataPool)
@@ -69,8 +85,13 @@ namespace Wmhelp.XPath2.AST
         /// <inheritdoc/>
         public override string Render()
         {
+            return RenderWithKeywords("for", "return");
+        }
+
+        public string RenderWithKeywords(string operatorKeyword, string resultKeyword)
+        {
             StringBuilder sb = new StringBuilder();
-            sb.Append("for ");
+            sb.Append(operatorKeyword + " "); // for
             AbstractNode resultNode = null;
             sb.Append(this.RenderForClauseOperator());
             for (int i = 1; i < this.Count; i++)
@@ -86,10 +107,10 @@ namespace Wmhelp.XPath2.AST
                 }
                 else
                 {
-                    resultNode = this[i];                
+                    resultNode = this[i];
                 }
             }
-            sb.Append(" return ");
+            sb.Append(" " + resultKeyword + " "); // return
             sb.Append(resultNode.Render());
             return sb.ToString();
         }
