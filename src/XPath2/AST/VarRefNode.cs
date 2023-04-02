@@ -18,6 +18,7 @@ namespace Wmhelp.XPath2.AST
         private Tokenizer.VarName _varName;
         private NameBinder.ReferenceLink _varRef;
 
+        public Tokenizer.VarName VarName => _varName;
         public NameBinder.ReferenceLink VarRef => _varRef;
 
         public XmlQualifiedName QNVarName

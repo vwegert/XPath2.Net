@@ -18,6 +18,8 @@ namespace Wmhelp.XPath2.AST
         private Tokenizer.VarName _varName;
         private NameBinder.ReferenceLink _varRef;
 
+        public Tokenizer.VarName VarName => _varName;
+
         public ForNode(XPath2Context context, Tokenizer.VarName varName, object expr)
             : base(context)
         {

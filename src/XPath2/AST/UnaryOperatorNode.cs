@@ -41,6 +41,10 @@ namespace Wmhelp.XPath2.AST
         protected bool _isString;
         private readonly XPath2ResultType _resultType;
 
+        public UnaryOperatorType OperatorType => _unaryOperatorType;
+        public bool IsString => _isString;
+        public XPath2ResultType ResultType => _resultType;
+
         public UnaryOperatorNode(XPath2Context context, UnaryOperatorType operatorType, object node, XPath2ResultType resultType)
             : base(context)
         {

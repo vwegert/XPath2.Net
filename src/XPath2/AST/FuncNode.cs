@@ -22,6 +22,9 @@ namespace Wmhelp.XPath2.AST
         private readonly String _ns;
         private readonly XPathFunctionDef _func;
 
+        public string Name => _name;
+        public string Namespace => _ns;
+
         public FuncNode(XPath2Context context, string name, string ns)
             : base(context)
         {

@@ -21,6 +21,8 @@ namespace Wmhelp.XPath2.AST
 
         public PathStep FirstStep => _path[0];
 
+        public PathStep[] Steps => _path;
+
         public PathExprNode(XPath2Context context, PathStep pathStep)
             : base(context)
         {

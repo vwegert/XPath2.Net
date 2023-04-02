@@ -1,4 +1,4 @@
-﻿// Microsoft Public License (Ms-PL)
+// Microsoft Public License (Ms-PL)
 // See the file License.rtf or License.txt for the license details.
 
 // Copyright (c) 2011, Semyon A. Chertkov (semyonc@gmail.com)
@@ -38,6 +38,11 @@ namespace Wmhelp.XPath2.AST
         public readonly object nodeTest;
         public readonly XPath2ExprType type;
         public readonly AbstractNode node;
+
+        public object NodeTest => nodeTest;
+        public XPath2ExprType ExpressionType => type;
+        public AbstractNode Node => node;
+
 
         public PathStep Next { get; private set; }
 

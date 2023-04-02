@@ -1,4 +1,4 @@
-﻿//     
+//     
 //      Copyright (c) 2006 Microsoft Corporation.  All rights reserved.
 //     
 //      The use and distribution terms for this software are contained in the file
@@ -82,6 +82,8 @@ namespace Wmhelp.XPath2.MS
         /// True if matches any namespace
         /// </summary>
         public bool IsNamespaceWildcard => (object) Namespace == (object) wildcard;
+
+        public bool IsExclude => exclude;
 
         private bool IsNameSubsetOf(XmlQualifiedNameTest other)
         {

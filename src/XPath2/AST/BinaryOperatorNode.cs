@@ -54,6 +54,10 @@ namespace Wmhelp.XPath2.AST
         protected BinaryOperatorType _binaryOperatorType;
         private readonly XPath2ResultType _resultType;
 
+        public BinaryOperatorType OperatorType => _binaryOperatorType;
+        public XPath2ResultType ResultType => _resultType;
+
+
         public BinaryOperatorNode(XPath2Context context, BinaryOperatorType operatorType, object node1, object node2,
             XPath2ResultType resultType)
             : base(context)
